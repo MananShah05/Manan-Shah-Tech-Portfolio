@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --bg: #f5f2ec;
+  --bg-warm: #ede9e1;
+  --bg-deep: #e8e3d9;
+  --fg: #1a1a18;
+  --fg-muted: #6b6860;
+  --fg-subtle: #a39e94;
+  --accent: #1b4332;
+  --accent-light: #2d6a4f;
+  --accent-glow: rgba(27, 67, 50, 0.15);
+  --secondary: #c45c26;
+  --secondary-soft: #d97b4a;
+  --taupe: #8a8478;
+  --glass-bg: rgba(245, 242, 236, 0.6);
+  --glass-border: rgba(26, 26, 24, 0.06);
+  --glass-hover: rgba(245, 242, 236, 0.8);
+  --grid-opacity: 0.025;
+  --selection-bg: rgba(27, 67, 50, 0.15);
+  --scrollbar-track: #f5f2ec;
+  --scrollbar-thumb: #d4cfc5;
+  --scrollbar-thumb-hover: #b5b0a4;
+  --dock-bg: rgba(245, 242, 236, 0.7);
+  --dock-border: rgba(26, 26, 24, 0.08);
+  --dock-item-bg: rgba(245, 242, 236, 0.9);
+  --dock-item-border: rgba(26, 26, 24, 0.06);
+  --dock-label-bg: rgba(245, 242, 236, 0.9);
+  --dock-label-border: rgba(26, 26, 24, 0.08);
+  --dock-label-text: #1a1a18;
+}
+
+.dark {
+  --bg: #0a0a0a;
+  --bg-warm: #111111;
+  --bg-deep: #1a1a1a;
+  --fg: #f5f2ec;
+  --fg-muted: #a1a1aa;
+  --fg-subtle: #71717a;
+  --accent: #2d6a4f;
+  --accent-light: #40916c;
+  --accent-glow: rgba(45, 106, 79, 0.2);
+  --secondary: #f97316;
+  --secondary-soft: #fb923c;
+  --taupe: #8a8478;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.07);
+  --grid-opacity: 0.03;
+  --selection-bg: rgba(45, 106, 79, 0.3);
+  --scrollbar-track: #0a0a0a;
+  --scrollbar-thumb: #27272a;
+  --scrollbar-thumb-hover: #3f3f46;
+  --dock-bg: rgba(17, 17, 17, 0.7);
+  --dock-border: rgba(255, 255, 255, 0.08);
+  --dock-item-bg: rgba(255, 255, 255, 0.05);
+  --dock-item-border: rgba(255, 255, 255, 0.08);
+  --dock-label-bg: rgba(17, 17, 17, 0.9);
+  --dock-label-border: rgba(255, 255, 255, 0.1);
+  --dock-label-text: #f5f2ec;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  cursor: none;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--fg);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: "Instrument Serif", Georgia, serif;
+  }
+
+  .font-sans {
+    font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .font-mono {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  .glass-light {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid var(--glass-border);
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+  }
+
+  .glass-light-hover {
+    background: var(--glass-hover);
+    backdrop-filter: blur(32px) saturate(1.6);
+    -webkit-backdrop-filter: blur(32px) saturate(1.6);
+    border: 1px solid var(--glass-border);
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+  }
+
+  .glow-green {
+    box-shadow: 0 0 60px var(--accent-glow), 0 0 120px rgba(27, 67, 50, 0.04);
+  }
+
+  .glow-green-subtle {
+    box-shadow: 0 0 30px var(--accent-glow);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
