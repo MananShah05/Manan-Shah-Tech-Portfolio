@@ -9,6 +9,8 @@ interface CTAButtonProps {
   icon?: "arrow" | "download" | "mail" | "none";
   onClick?: () => void;
   className?: string;
+  target?: string;
+  rel?: string;
 }
 
 const iconMap = {
@@ -25,6 +27,8 @@ export default function CTAButton({
   icon = "arrow",
   onClick,
   className = "",
+  target,
+  rel,
 }: CTAButtonProps) {
   const Icon = iconMap[icon];
 
@@ -43,6 +47,8 @@ export default function CTAButton({
     <Component
       href={href}
       onClick={onClick}
+      target={target}
+      rel={rel}
       className={`${baseStyles} ${variants[variant]} ${className}`}
       style={
         variant === "primary"

@@ -107,7 +107,13 @@ export default function Contact() {
                 <CTAButton href="mailto:mananshah.ms.01@gmail.com" variant="primary" icon="mail">
                   Email Me
                 </CTAButton>
-                <CTAButton href="#" variant="secondary" icon="download">
+                <CTAButton 
+                  href="https://drive.google.com/file/d/1Hg_5THcDMntE1FB6_WQC_cfwi8xy29Rz/view?usp=sharing" 
+                  variant="secondary" 
+                  icon="download"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Resume
                 </CTAButton>
               </div>
