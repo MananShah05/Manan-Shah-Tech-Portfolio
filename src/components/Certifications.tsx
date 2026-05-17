@@ -45,8 +45,8 @@ export default function Certifications() {
     <section className="relative py-16 md:py-24">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <SectionHeading
-          label="08 — Credentials"
-          title="Credentials that complement the code."
+          label="08 — Certifications"
+          title="Certifications that complement the code."
           subtitle="Specialized domain knowledge in finance and machine learning theory."
         />
 

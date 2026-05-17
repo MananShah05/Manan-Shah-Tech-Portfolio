@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, FileText, Brain, Award, Globe } from "lucide-react";
 import NeuralNetwork from "./NeuralNetwork";
-import BuilderDashboard from "./BuilderDashboard";
+import DeveloperDashboard from "./DeveloperDashboard";
 import FloatingMetric from "./FloatingMetric";
 
 const cycleWords = ["read", "reason", "predict", "extract", "deploy"];
@@ -10,7 +10,7 @@ const cycleWords = ["read", "reason", "predict", "extract", "deploy"];
 const trustChips = [
   { label: "Published Research", icon: <FileText size={12} /> },
   { label: "Finance Certified", icon: <Award size={12} /> },
-  { label: "Full-Stack Builder", icon: <Brain size={12} /> },
+  { label: "Full-Stack Developer", icon: <Brain size={12} /> },
   { label: "Open to Roles", icon: <Globe size={12} /> },
 ];
 
@@ -182,7 +182,7 @@ export default function Hero() {
               className="text-[15px] md:text-base max-w-md leading-relaxed mb-8"
               style={{ color: "var(--fg-muted)" }}
             >
-              Final Year IT Engineer · DJSCE Mumbai · AI/ML Builder ·
+              Final Year IT Engineer · DJSCE Mumbai · AI/ML Developer ·
               Research-Oriented
             </motion.p>
 
@@ -367,8 +367,8 @@ export default function Hero() {
                   ))}
                 </div>
 
-                {/* Builder Dashboard */}
-                <BuilderDashboard />
+                {/* Developer Dashboard */}
+                <DeveloperDashboard />
               </motion.div>
 
               {/* Floating metric cards — right perimeter */}
@@ -391,17 +391,6 @@ export default function Hero() {
                   orbitX={7}
                   orbitY={5}
                   orbitDuration={5}
-                />
-              </div>
-
-              <div className="absolute -bottom-6 -right-2 md:-bottom-10 md:-right-8 lg:-right-10 z-20">
-                <FloatingMetric
-                  label="Stack"
-                  value="NLP × Finance × ML"
-                  delay={0.3}
-                  orbitX={5}
-                  orbitY={6}
-                  orbitDuration={7}
                 />
               </div>
 

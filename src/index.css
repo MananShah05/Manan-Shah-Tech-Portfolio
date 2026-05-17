@@ -2,7 +2,7 @@
 
 @theme {
   --font-serif: "Instrument Serif", Georgia, serif;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
@@ -20,7 +20,7 @@
   --secondary-soft: #d97b4a;
   --taupe: #8a8478;
   --glass-bg: rgba(245, 242, 236, 0.6);
-  --glass-border: rgba(26, 26, 24, 0.06);
+  --glass-border: rgba(26, 26, 24, 0.15);
   --glass-hover: rgba(245, 242, 236, 0.8);
   --grid-opacity: 0.025;
   --selection-bg: rgba(27, 67, 50, 0.15);
@@ -71,7 +71,7 @@ html {
 }
 
 body {
-  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   background-color: var(--bg);
   color: var(--fg);
   -webkit-font-smoothing: antialiased;
@@ -109,7 +109,7 @@ body {
   }
 
   .font-sans {
-    font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   }
 
   .font-mono {

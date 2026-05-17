@@ -66,13 +66,13 @@ const statusLines = [
 ];
 
 const personalityTags = [
-  { label: "Builder mode: ON", icon: <Zap size={10} /> },
+  { label: "Developer mode: ON", icon: <Zap size={10} /> },
   { label: "Systems thinker", icon: <Target size={10} /> },
   { label: "Finance-aware engineer", icon: <Shield size={10} /> },
   { label: "Ships before it's perfect", icon: <Rocket size={10} /> },
 ];
 
-export default function BuilderDashboard() {
+export default function DeveloperDashboard() {
   const [activeLine, setActiveLine] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
@@ -118,7 +118,7 @@ export default function BuilderDashboard() {
           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "var(--taupe)", opacity: 0.4 }} />
           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "var(--accent)", opacity: 0.5 }} />
           <span className="ml-2 text-[10px] font-mono uppercase tracking-[0.15em]" style={{ color: "var(--fg-subtle)" }}>
-            builder.dashboard
+            developer.dashboard
           </span>
         </div>
         <div className="flex items-center gap-1.5">

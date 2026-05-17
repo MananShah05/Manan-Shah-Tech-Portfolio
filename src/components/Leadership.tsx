@@ -17,7 +17,7 @@ const roles = [
   {
     title: "Curator",
     org: "TEDxDJSCE",
-    period: "Oct 2024 – Present",
+    period: "Oct 2024 – Oct 2025",
     icon: <Mic size={18} />,
     points: [
       "Curated a diverse lineup of visionary industry leaders, innovators, and thought-provoking speakers for the flagship annual TEDx conference.",

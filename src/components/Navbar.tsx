@@ -16,6 +16,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { isDark, toggle } = useTheme();
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -35,11 +36,10 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
             ? "bg-[var(--bg)]/70 backdrop-blur-xl border-b border-[var(--glass-border)]"
             : "bg-transparent"
-        }`}
+          }`}
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
           <div className="flex items-center justify-between h-16 md:h-20">
@@ -52,21 +52,31 @@ export default function Navbar() {
               Manan Shah
             </motion.a>
 
-            <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
+            <div 
+              className="hidden md:flex items-center gap-1.5 md:translate-x-16"
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              {navLinks.map((link, idx) => (
                 <button
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
-                  className="text-[13px] font-medium transition-colors duration-300 relative group"
-                  style={{ color: "var(--fg-muted)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--fg)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--fg-muted)")}
+                  onMouseEnter={() => setHoveredIndex(idx)}
+                  className="text-[13px] font-medium relative px-3.5 py-1.5 rounded-full transition-colors duration-200"
+                  style={{ 
+                    color: hoveredIndex === idx ? "var(--fg)" : "var(--fg-muted)",
+                  }}
                 >
-                  {link.label}
-                  <span
-                    className="absolute -bottom-1 left-0 w-0 h-px group-hover:w-full transition-all duration-300"
-                    style={{ backgroundColor: "var(--accent)" }}
-                  />
+                  <span className="relative z-10">{link.label}</span>
+                  {hoveredIndex === idx && (
+                    <motion.span
+                      layoutId="nav-hover-bg"
+                      className="absolute inset-0 rounded-full bg-[var(--accent)]/[0.06] border border-[var(--accent)]/[0.12]"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
                 </button>
               ))}
             </div>

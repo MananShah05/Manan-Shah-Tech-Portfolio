@@ -39,7 +39,7 @@ const projects = [
       "Built a web interface for uploading media and receiving confidence scores with explainable heatmap visualizations.",
     ],
     impact:
-      "Achieved 91% detection accuracy on Indian media benchmarks, with a published research paper under review.",
+      "Achieved 91% detection accuracy on Indian media benchmarks.",
     stack: ["Python", "PyTorch", "OpenCV", "FastAPI", "React", "TensorFlow"],
     icon: <Brain size={22} />,
     color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
@@ -61,7 +61,7 @@ const projects = [
       "Optimized embedding inference to run on CPU-only infrastructure, eliminating GPU costs entirely.",
     ],
     impact:
-      "Cut document research time from hours to seconds. Deployed on $0 cloud credits with sub-200ms query latency.",
+      "Cut document research time from hours to seconds. Deployed with sub-200ms query latency.",
     stack: ["Python", "FastAPI", "Vector DB", "Transformers", "React", "Tailwind"],
     icon: <Search size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",

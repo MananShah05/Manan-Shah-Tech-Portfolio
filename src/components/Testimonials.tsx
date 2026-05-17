@@ -4,25 +4,25 @@ import { Quote } from "lucide-react";
 
 const testimonials = [
   {
-    label: "Mentor Feedback",
+    label: "CTO Feedback",
     quote:
-      "Manan consistently shipped production-grade NLP pipelines with clean, well-documented code. His ability to translate research papers into working systems is rare at this stage. He thinks like an engineer and executes like a researcher.",
-    author: "Senior ML Engineer",
-    role: "Applied Intelligence Team",
+      "Manan is an exceptionally talented developer. He took our core concepts and engineered a scalable, production-grade NLP architecture with flawless full-stack integration. His attention to code quality and UI/UX design is exemplary.",
+    author: "Taha Kothari",
+    role: "CTO @ Hatimi",
   },
   {
-    label: "Team Collaboration",
+    label: "CEO Feedback",
     quote:
-      "Working with Manan was seamless. He took ownership of the document intelligence pipeline, communicated blockers early, and always considered the downstream impact of his model decisions on the broader product.",
-    author: "Product Manager",
-    role: "AI Platform Team",
+      "Manan brings a rare combination of raw technical depth and refined product intuition. He designed and shipped beautiful user interfaces and robust APIs for our platform, moving at incredible speed. A true modern developer.",
+    author: "Manish Mondal",
+    role: "CEO @ Scripty",
   },
   {
-    label: "Research Execution",
+    label: "Founder Feedback",
     quote:
-      "Manan shipped a full deepfake detection system in under 10 weeks — from dataset curation to published paper draft. The quality of his research methodology and his attention to reproducibility exceeded every expectation.",
-    author: "Research Advisor",
-    role: "Media Integrity Lab",
+      "Manan's passion for leveraging AI to solve complex, real-world problems was central to our project's success. He is highly collaborative, thinks deeply about system architecture, and consistently delivers high-impact results.",
+    author: "Ayush Jain",
+    role: "Founder @ Grofo Foundation",
   },
 ];
 

@@ -407,14 +407,14 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 2.4, ease: EASE }}
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontSize: 14,
               letterSpacing: "0.08em",
               color: "rgba(148, 163, 184, 0.55)",
               marginTop: 28,
             }}
           >
-            AI/ML Builder · Research-Oriented · Final Year IT Engineer
+            AI/ML Developer · Research-Oriented · Final Year IT Engineer
           </motion.p>
 
           {/* Skip hint */}

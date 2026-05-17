@@ -26,6 +26,14 @@ const skillCategories = [
     title: "Domains & Concepts",
     skills: ["Finance (AMFI)", "Insurance", "System Design", "Agile", "CI/CD", "Cloud"],
   },
+  {
+    title: "Design & Motion",
+    skills: ["After Effects", "Photoshop", "Canva", "Creative Cloud", "GIMP"],
+  },
+  {
+    title: "3D & Spatial",
+    skills: ["Blender", "Cinema 4D", "Spline"],
+  },
 ];
 
 export default function Skills() {
