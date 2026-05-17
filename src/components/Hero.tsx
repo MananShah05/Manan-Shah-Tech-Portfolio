@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, FileText, Brain, Award, Globe } from "lucide-react";
 import NeuralNetwork from "./NeuralNetwork";
 import DeveloperDashboard from "./DeveloperDashboard";
-import FloatingMetric from "./FloatingMetric";
 
 const cycleWords = ["read", "reason", "predict", "extract", "deploy"];
 
@@ -43,6 +42,7 @@ export default function Hero() {
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
+
 
   return (
     <section
@@ -95,7 +95,7 @@ export default function Hero() {
           }}
         />
 
-        {/* Bottom fade mask to blend smoothly into the next section */}
+        {/* Bottom fade mask */}
         <div
           className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-10"
           style={{
@@ -152,7 +152,7 @@ export default function Hero() {
                     {cycleWords[activeWord]}
                   </motion.span>
                   <motion.span
-                    className="absolute -bottom-1 left-0 h-[2px]"
+                    className="absolute -bottom-1 left-0 h-0.5"
                     style={{ backgroundColor: "var(--accent)", opacity: 0.2 }}
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
@@ -206,8 +206,13 @@ export default function Hero() {
                   whileHover={{ y: -3, scale: 1.03 }}
                   className="glass-light rounded-full px-4 py-2 flex items-center gap-2 cursor-default"
                 >
-                  <span style={{ color: "var(--accent)", opacity: 0.5 }}>{chip.icon}</span>
-                  <span className="text-[11px] font-medium" style={{ color: "var(--fg-muted)" }}>
+                  <span style={{ color: "var(--accent)", opacity: 0.5 }}>
+                    {chip.icon}
+                  </span>
+                  <span
+                    className="text-[11px] font-medium"
+                    style={{ color: "var(--fg-muted)" }}
+                  >
                     {chip.label}
                   </span>
                 </motion.div>
@@ -290,132 +295,31 @@ export default function Hero() {
                 className="text-xs font-mono transition-colors duration-300 cursor-pointer"
                 style={{ color: "var(--fg-subtle)" }}
               >
-                <span className="mr-1.5" style={{ color: "var(--accent)", opacity: 0.4 }}>$</span>
+                <span
+                  className="mr-1.5"
+                  style={{ color: "var(--accent)", opacity: 0.4 }}
+                >
+                  $
+                </span>
                 open live terminal
               </motion.button>
             </motion.div>
           </div>
 
-          {/* RIGHT — Technical visual */}
+          {/* RIGHT — Developer Dashboard with floating windows */}
           <motion.div
             style={{ y: panelY }}
             initial={{ opacity: 0, x: 60, scale: 0.95 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 1.2,
+              delay: 0.8,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="order-1 lg:order-2 relative"
           >
             <div className="relative w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto">
-              {/* Main glass panel */}
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{
-                  duration: 7,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="glass-light rounded-3xl p-6 md:p-8 relative"
-                style={{ boxShadow: "0 0 60px var(--accent-glow), 0 0 120px rgba(27, 67, 50, 0.04)" }}
-              >
-                {/* Panel header */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: "rgba(45, 106, 79, 0.1)" }}
-                    >
-                      <Brain size={15} style={{ color: "var(--accent)", opacity: 0.7 }} />
-                    </div>
-                    <div>
-                      <div className="text-xs font-semibold" style={{ color: "var(--fg)" }}>
-                        Neural Interface
-                      </div>
-                      <div className="text-[10px] font-mono" style={{ color: "var(--fg-subtle)" }}>
-                        v2.4.1 · online
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span
-                      className="w-1.5 h-1.5 rounded-full animate-pulse"
-                      style={{ backgroundColor: "var(--accent)" }}
-                    />
-                    <span className="text-[10px] font-mono" style={{ color: "var(--accent)", opacity: 0.6 }}>
-                      LIVE
-                    </span>
-                  </div>
-                </div>
-
-                {/* System metrics */}
-                <div className="grid grid-cols-3 gap-3 mb-6">
-                  {[
-                    { label: "LeetCode", value: "40+", color: "var(--accent)" },
-                    { label: "DSA Solved", value: "60+", color: "var(--secondary)" },
-                    { label: "Hackathons", value: "5+", color: "var(--accent)" },
-                  ].map((m) => (
-                    <div
-                      key={m.label}
-                      className="rounded-xl p-3"
-                      style={{ backgroundColor: `${m.color}10` }}
-                    >
-                      <div className="font-mono text-sm font-semibold" style={{ color: "var(--fg)" }}>
-                        {m.value}
-                      </div>
-                      <div className="text-[9px] font-mono uppercase tracking-wider mt-0.5" style={{ color: "var(--fg-subtle)" }}>
-                        {m.label}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Developer Dashboard */}
-                <DeveloperDashboard />
-              </motion.div>
-
-              {/* Floating metric cards — right perimeter */}
-              <div className="absolute -top-6 -right-2 md:-top-10 md:-right-8 lg:-right-10">
-                <FloatingMetric
-                  label="Projects"
-                  value="5+"
-                  delay={0}
-                  orbitX={6}
-                  orbitY={5}
-                  orbitDuration={5.5}
-                />
-              </div>
-
-              <div className="absolute top-[45%] -right-2 md:-right-10 lg:-right-14 z-20">
-                <FloatingMetric
-                  label="Experience"
-                  value="3+"
-                  delay={0.15}
-                  orbitX={7}
-                  orbitY={5}
-                  orbitDuration={5}
-                />
-              </div>
-
-              {/* Left-side floating cards — positioned low to avoid headline */}
-              <div className="absolute top-[65%] -left-4 md:-left-10">
-                <FloatingMetric
-                  label="Research Papers"
-                  value="1"
-                  delay={0.45}
-                  orbitX={5}
-                  orbitY={6}
-                  orbitDuration={6}
-                />
-              </div>
-
-              <div className="absolute top-[85%] -left-2 md:-left-8">
-                <FloatingMetric
-                  label="Focus"
-                  value="Applied AI"
-                  delay={0.6}
-                  orbitX={4}
-                  orbitY={5}
-                  orbitDuration={5.5}
-                />
-              </div>
+              <DeveloperDashboard />
             </div>
           </motion.div>
         </div>

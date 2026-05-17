@@ -75,12 +75,12 @@ export default function CustomCursor() {
     <>
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-[6px] h-[6px] rounded-full bg-[#1b4332] pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[#1b4332] pointer-events-none z-9999 mix-blend-difference"
         style={{ willChange: "transform" }}
       />
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#1b4332]/30 pointer-events-none z-[9998] mix-blend-difference transition-[border-color] duration-300"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#1b4332]/30 pointer-events-none z-9998 mix-blend-difference transition-[border-color] duration-300"
         style={{ willChange: "transform" }}
       />
     </>
