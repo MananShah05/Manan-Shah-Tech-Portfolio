@@ -167,7 +167,7 @@ function useCinematicAudio() {
       const humGain = ctx.createGain();
       humOsc.type = "sawtooth";
       humOsc.frequency.setValueAtTime(55, ctx.currentTime);
-      
+
       const filter = ctx.createBiquadFilter();
       filter.type = "lowpass";
       filter.frequency.setValueAtTime(100, ctx.currentTime);
@@ -350,7 +350,7 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
                 color: "rgba(148, 163, 184, 0.6)",
               }}
             >
-              Initializing identity…
+              INITIALIZING SYSTEM ....
             </span>
           </motion.div>
 

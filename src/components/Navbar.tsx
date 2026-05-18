@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
+import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -18,11 +19,38 @@ export default function Navbar() {
   const { isDark, toggle } = useTheme();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  // Cross-component table of contents visibility sync state
+  const [isTOCVisible, setIsTOCVisible] = useState(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("toc-visible");
+      return stored !== "false";
+    }
+    return true;
+  });
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ visible: boolean }>;
+      setIsTOCVisible(customEvent.detail.visible);
+    };
+
+    window.addEventListener("dynamic-island-visibility", handleVisibilityChange);
+    return () => window.removeEventListener("dynamic-island-visibility", handleVisibilityChange);
+  }, []);
+
+  const restoreTOC = () => {
+    localStorage.setItem("toc-visible", "true");
+    setIsTOCVisible(true);
+    window.dispatchEvent(
+      new CustomEvent("dynamic-island-visibility", { detail: { visible: true } })
+    );
+  };
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
@@ -37,8 +65,8 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-            ? "bg-[var(--bg)]/70 backdrop-blur-xl border-b border-[var(--glass-border)]"
-            : "bg-transparent"
+          ? "bg-[var(--bg)]/70 backdrop-blur-xl border-b border-[var(--glass-border)]"
+          : "bg-transparent"
           }`}
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
@@ -52,8 +80,8 @@ export default function Navbar() {
               Manan Shah
             </motion.a>
 
-            <div 
-              className="hidden md:flex items-center gap-1.5 md:translate-x-16"
+            <div
+              className="hidden md:flex items-center gap-1.5 md:translate-x-4"
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {navLinks.map((link, idx) => (
@@ -62,7 +90,7 @@ export default function Navbar() {
                   onClick={() => handleNavClick(link.href)}
                   onMouseEnter={() => setHoveredIndex(idx)}
                   className="text-[13px] font-medium relative px-3.5 py-1.5 rounded-full transition-colors duration-200"
-                  style={{ 
+                  style={{
                     color: hoveredIndex === idx ? "var(--fg)" : "var(--fg-muted)",
                   }}
                 >
@@ -83,42 +111,15 @@ export default function Navbar() {
 
             <div className="hidden md:flex items-center gap-3">
               {/* Theme toggle */}
-              <motion.button
-                onClick={toggle}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-300"
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center"
                 style={{
                   backgroundColor: "var(--glass-bg)",
                   border: "1px solid var(--glass-border)",
-                  color: "var(--fg-muted)",
                 }}
-                aria-label="Toggle theme"
               >
-                <AnimatePresence mode="wait">
-                  {isDark ? (
-                    <motion.div
-                      key="moon"
-                      initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Moon size={15} />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="sun"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Sun size={15} />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.button>
+                <AnimatedThemeToggler isDark={isDark} onToggle={toggle} />
+              </div>
 
               <span
                 className="hidden lg:inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-mono"
@@ -143,22 +144,71 @@ export default function Navbar() {
               >
                 Get in Touch
               </motion.button>
+
+              {/* Restore Table of Contents Button (only rendered when TOC is hidden) */}
+              <AnimatePresence>
+                {!isTOCVisible && (
+                  <motion.button
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={restoreTOC}
+                    className="w-9 h-9 rounded-xl flex items-center justify-center border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-xl text-[var(--fg-muted)] hover:text-[var(--fg)] transition-all cursor-pointer shadow-sm shrink-0"
+                    title="Restore Table of Contents"
+                  >
+                    <svg
+                      className="w-4.5 h-4.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                  </motion.button>
+                )}
+              </AnimatePresence>
             </div>
 
             <div className="flex md:hidden items-center gap-2">
-              <motion.button
-                onClick={toggle}
-                whileTap={{ scale: 0.95 }}
+              <div
                 className="w-9 h-9 rounded-xl flex items-center justify-center"
                 style={{
                   backgroundColor: "var(--glass-bg)",
                   border: "1px solid var(--glass-border)",
-                  color: "var(--fg)",
                 }}
-                aria-label="Toggle theme"
               >
-                {isDark ? <Moon size={15} /> : <Sun size={15} />}
-              </motion.button>
+                <AnimatedThemeToggler isDark={isDark} onToggle={toggle} />
+              </div>
+
+              {/* Mobile Table of Contents Restore Button */}
+              <AnimatePresence>
+                {!isTOCVisible && (
+                  <motion.button
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={restoreTOC}
+                    className="w-9 h-9 rounded-xl flex items-center justify-center border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-xl text-[var(--fg-muted)] hover:text-[var(--fg)] transition-all cursor-pointer shrink-0"
+                    title="Restore Table of Contents"
+                  >
+                    <svg
+                      className="w-4.5 h-4.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                  </motion.button>
+                )}
+              </AnimatePresence>
+
               <button
                 className="p-2"
                 style={{ color: "var(--fg)" }}

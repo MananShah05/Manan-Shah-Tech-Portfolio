@@ -19,6 +19,7 @@ import Certifications from "./components/Certifications";
 import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import { DynamicIslandTOC } from "@/components/ui/dynamic-island-toc";
 import {
   Home,
   User,
@@ -88,6 +89,7 @@ function AppContent() {
       <AmbientBackground />
       <ScrollProgress />
       <Navbar />
+      {!showOpener && <DynamicIslandTOC />}
       <main>
         <Hero />
         <SectionDivider />
