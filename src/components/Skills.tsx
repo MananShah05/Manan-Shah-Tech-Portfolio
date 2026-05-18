@@ -41,7 +41,7 @@ export default function Skills() {
     <section id="skills" className="relative py-24 md:py-32">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <SectionHeading
-          label="05 — Skills"
+          //label="Skills"
           title="A toolkit built for intelligent systems."
           subtitle="From transformer models and vector databases to production APIs and financial data pipelines — the stack I use to ship AI products."
         />

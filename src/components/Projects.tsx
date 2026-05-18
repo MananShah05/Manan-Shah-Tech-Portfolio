@@ -22,8 +22,8 @@ const projects = [
     icon: <FileText size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
     links: [
-      { label: "GitHub", url: "#" },
-      { label: "Live Demo", url: "#" }
+      // { label: "GitHub", url: "#" },
+      { label: "Under Development", url: "#" }
     ],
   },
   {
@@ -44,8 +44,7 @@ const projects = [
     icon: <Brain size={22} />,
     color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
     links: [
-      { label: "Paper", url: "#" },
-      { label: "GitHub", url: "#" }
+      { label: "Paper", url: "https://drive.google.com/file/d/18ksc9KRMQ_dCvlaj3sISPSgaqiMPABZz/view?usp=sharing" },
     ],
   },
   {
@@ -66,7 +65,7 @@ const projects = [
     icon: <Search size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
     links: [
-      { label: "GitHub", url: "#" }
+      { label: "Under Development", url: "#" }
     ],
   },
 ];
@@ -88,7 +87,7 @@ export default function Projects() {
       </div>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         <SectionHeading
-          label="04 — Projects"
+          label="Projects"
           title="Intelligent systems, shipped to production."
           subtitle="From transformer-based document extraction to published deepfake research — each project represents applied ML solving real-world problems."
         />

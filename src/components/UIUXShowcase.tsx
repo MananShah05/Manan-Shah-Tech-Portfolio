@@ -1,42 +1,101 @@
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
-import { LayoutDashboard, Brain, Monitor, Palette, Trophy, Code, Rocket, Star } from "lucide-react";
+import { Palette, ShoppingBag, Headphones, Layout } from "lucide-react";
 
 const showcases = [
   {
-    title: "AI Model Monitoring Dashboard",
-    desc: "A real-time dashboard for tracking NLP model performance, inference latency, and prediction confidence across document extraction pipelines.",
-    icon: <Brain size={18} />,
+    title: "Adidas Shoes UI/UX",
+    period: "Apr 2024",
+    desc: "Designed UI/UX for Adidas shoes, focusing on enhancing online shopping experience. Created intuitive interfaces in Figma to drive customer engagement.",
+    icon: <ShoppingBag size={18} />,
     color: "bg-[var(--accent)]/8 border-[var(--accent)]/15",
     iconColor: "text-[var(--accent)]",
     preview: (
-      <div className="flex flex-col items-center justify-center py-6 h-[140px] opacity-60">
-        <Brain size={24} style={{ color: "var(--fg-subtle)", marginBottom: "12px" }} />
-        <span className="text-xs font-mono tracking-widest uppercase" style={{ color: "var(--fg-subtle)" }}>Live Preview Coming Soon</span>
+      <div className="relative w-full h-[140px] rounded-lg overflow-hidden group" style={{ border: "1px solid var(--glass-border)" }}>
+        <iframe
+          src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FsVScETWlt17ZiyXkcV0JNm%2FAdidas-Site%3Fnode-id%3D0-1%26t%3D3BIsHeEmBMKyrE7u-1"
+          className="absolute top-0 left-0 w-full h-full border-0 pointer-events-none"
+          title="Adidas Design Site Preview"
+        />
+        <a
+          href="https://www.figma.com/design/sVScETWlt17ZiyXkcV0JNm/Adidas-Site?node-id=0-1&t=3BIsHeEmBMKyrE7u-1"
+          target="_blank"
+          rel="noreferrer"
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]"
+          style={{ backgroundColor: "rgba(26, 26, 24, 0.2)" }}
+        >
+          <div className="px-4 py-2 rounded-full text-[10px] font-mono tracking-widest uppercase flex items-center gap-2" style={{ backgroundColor: "var(--glass-bg)", color: "var(--fg)", border: "1px solid var(--glass-border)" }}>
+            Open Figma File <span style={{ color: "var(--accent)" }}>↗</span>
+          </div>
+        </a>
       </div>
     ),
   },
   {
-    title: "Document Intelligence Interface",
-    desc: "An extraction review UI with side-by-side document preview, highlighted entity annotations, and confidence scoring for human-in-the-loop validation.",
-    icon: <LayoutDashboard size={18} />,
+    title: "Gaming Headphones (ROG Headphones)",
+    period: "Jan 2024",
+    desc: "Developed a responsive UI/UX design for ROG gaming headphones, emphasizing user-centric design. Created an immersive interface for the gaming community.",
+    icon: <Headphones size={18} />,
     color: "bg-[var(--secondary)]/8 border-[var(--secondary)]/15",
     iconColor: "text-[var(--secondary)]",
     preview: (
-      <div className="flex flex-col items-center justify-center py-6 h-[140px] opacity-60">
-        <LayoutDashboard size={24} style={{ color: "var(--fg-subtle)", marginBottom: "12px" }} />
-        <span className="text-xs font-mono tracking-widest uppercase" style={{ color: "var(--fg-subtle)" }}>Live Preview Coming Soon</span>
+      <div className="relative w-full h-[140px] rounded-lg overflow-hidden group" style={{ border: "1px solid var(--glass-border)" }}>
+        <iframe
+          src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FVX39Uk8foyrhLyFuHEQQkj%2FProject-2%3Fnode-id%3D0-1%26t%3DxRcMVSF1BXza6k1z-1"
+          className="absolute top-0 left-0 w-full h-full border-0 pointer-events-none"
+          title="ROG Headphones Design Preview"
+        />
+        <a
+          href="https://www.figma.com/design/VX39Uk8foyrhLyFuHEQQkj/Project-2?node-id=0-1&t=xRcMVSF1BXza6k1z-1"
+          target="_blank"
+          rel="noreferrer"
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]"
+          style={{ backgroundColor: "rgba(26, 26, 24, 0.2)" }}
+        >
+          <div className="px-4 py-2 rounded-full text-[10px] font-mono tracking-widest uppercase flex items-center gap-2" style={{ backgroundColor: "var(--glass-bg)", color: "var(--fg)", border: "1px solid var(--glass-border)" }}>
+            Open Figma File <span style={{ color: "var(--secondary)" }}>↗</span>
+          </div>
+        </a>
+      </div>
+    ),
+  },
+  {
+    title: "Website Landing Page",
+    period: "Mar 2024",
+    desc: "Developed a comprehensive, high-fidelity responsive landing page mockup. Crafted bespoke interactive sections, unified system typography, and clean layouts in Figma.",
+    icon: <Layout size={18} />,
+    color: "bg-[var(--accent)]/8 border-[var(--accent)]/15",
+    iconColor: "text-[var(--accent)]",
+    preview: (
+      <div className="relative w-full h-[140px] rounded-lg overflow-hidden group" style={{ border: "1px solid var(--glass-border)" }}>
+        <iframe
+          src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FIAFSq7OmpPqO8ncaJvPzd1%2FWebsite-Landing-Page%3Fnode-id%3D3-2%26t%3DdhGmmRBcAKpTR39q-1"
+          className="absolute top-0 left-0 w-full h-full border-0 pointer-events-none"
+          title="Website Landing Page Preview"
+        />
+        <a
+          href="https://www.figma.com/proto/IAFSq7OmpPqO8ncaJvPzd1/Website-Landing-Page?node-id=3-2&t=dhGmmRBcAKpTR39q-1"
+          target="_blank"
+          rel="noreferrer"
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]"
+          style={{ backgroundColor: "rgba(26, 26, 24, 0.2)" }}
+        >
+          <div className="px-4 py-2 rounded-full text-[10px] font-mono tracking-widest uppercase flex items-center gap-2" style={{ backgroundColor: "var(--glass-bg)", color: "var(--fg)", border: "1px solid var(--glass-border)" }}>
+            Open Prototype <span style={{ color: "var(--accent)" }}>↗</span>
+          </div>
+        </a>
       </div>
     ),
   },
   {
     title: "Transcend Frames",
+    period: "Active Portfolio",
     desc: "A creative freelancer portfolio site featuring fluid animations, bespoke typography, and a modern editorial layout. Built for high-end visual storytelling.",
     icon: <Palette size={18} />,
     color: "bg-[var(--accent)]/8 border-[var(--accent)]/15",
     iconColor: "text-[var(--accent)]",
     preview: (
-      <div className="relative w-full h-[180px] rounded-lg overflow-hidden group" style={{ border: "1px solid var(--glass-border)" }}>
+      <div className="relative w-full h-[140px] rounded-lg overflow-hidden group" style={{ border: "1px solid var(--glass-border)" }}>
         <iframe
           src="https://transcend-frames.vercel.app/"
           className="absolute top-0 left-0 w-[400%] h-[400%] border-0 pointer-events-none"
@@ -44,9 +103,9 @@ const showcases = [
           tabIndex={-1}
           title="Transcend Frames Preview"
         />
-        <a 
-          href="https://transcend-frames.vercel.app/" 
-          target="_blank" 
+        <a
+          href="https://transcend-frames.vercel.app/"
+          target="_blank"
           rel="noreferrer"
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]"
           style={{ backgroundColor: "rgba(26, 26, 24, 0.2)" }}
@@ -58,46 +117,6 @@ const showcases = [
       </div>
     ),
   },
-  {
-    title: "Deepfake Analysis Report",
-    desc: "A forensic analysis interface showing frame-level confidence heatmaps, frequency-domain visualizations, and explainable detection reasoning.",
-    icon: <Monitor size={18} />,
-    color: "bg-[var(--secondary)]/8 border-[var(--secondary)]/15",
-    iconColor: "text-[var(--secondary)]",
-    preview: (
-      <div className="flex flex-col items-center justify-center py-6 h-[140px] opacity-60">
-        <Monitor size={24} style={{ color: "var(--fg-subtle)", marginBottom: "12px" }} />
-        <span className="text-xs font-mono tracking-widest uppercase" style={{ color: "var(--fg-subtle)" }}>Live Preview Coming Soon</span>
-      </div>
-    ),
-  },
-];
-
-const timeline = [
-  {
-    year: "2024",
-    title: "1st Place — National AI Hackathon",
-    desc: "Built an autonomous agent for document extraction. Won ₹50,000 cash prize among 200+ competing teams.",
-    icon: <Trophy size={16} />,
-  },
-  {
-    year: "2023",
-    title: "Top 5 Finalist — Smart India Hackathon",
-    desc: "Developed a deepfake detection pipeline for media integrity. Presented to government stakeholders.",
-    icon: <Star size={16} />,
-  },
-  {
-    year: "2023",
-    title: "Best Use of Cloud — CodeFest",
-    desc: "Shipped a highly scalable semantic search API using serverless architecture in 36 hours.",
-    icon: <Code size={16} />,
-  },
-  {
-    year: "2022",
-    title: "First Hackathon — SparkIT",
-    desc: "Built a rudimentary ML classifier for spam detection. Sparked my journey into production AI.",
-    icon: <Rocket size={16} />,
-  },
 ];
 
 export default function UIUXShowcase() {
@@ -105,9 +124,9 @@ export default function UIUXShowcase() {
     <section id="design" className="relative py-24 md:py-32">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <SectionHeading
-          label="06 — Design & Competitions"
-          title="Interfaces I've crafted. Battles I've won."
-          subtitle="From polished product UIs to high-pressure hackathon prototypes — building things that look great and work under pressure."
+          label="UI UX Design"
+          title="Interfaces and interactive designs."
+          subtitle="Polished digital products, responsive web interfaces, and high-fidelity prototypes designed for seamless user experiences."
         />
 
         {/* ── Design Showcase Grid ── */}
@@ -126,13 +145,20 @@ export default function UIUXShowcase() {
               whileHover={{ y: -4, scale: 1.01 }}
               className="glass-light rounded-3xl p-6 md:p-8 group cursor-default"
             >
-              <div className="flex items-center gap-3 mb-5">
-                <div className={`w-9 h-9 rounded-xl ${item.color} flex items-center justify-center ${item.iconColor}`}>
-                  {item.icon}
+              <div className="flex items-center justify-between mb-5 flex-wrap gap-2">
+                <div className="flex items-center gap-3">
+                  <div className={`w-9 h-9 rounded-xl ${item.color} flex items-center justify-center ${item.iconColor}`}>
+                    {item.icon}
+                  </div>
+                  <h3 className="font-sans text-base md:text-lg font-semibold" style={{ color: "var(--fg)" }}>
+                    {item.title}
+                  </h3>
                 </div>
-                <h3 className="font-sans text-base md:text-lg font-semibold" style={{ color: "var(--fg)" }}>
-                  {item.title}
-                </h3>
+                {item.period && (
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md" style={{ backgroundColor: "rgba(26, 26, 24, 0.025)", border: "1px solid var(--glass-border)", color: "var(--fg-muted)" }}>
+                    {item.period}
+                  </span>
+                )}
               </div>
               <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--fg-subtle)" }}>
                 {item.desc}
@@ -147,7 +173,8 @@ export default function UIUXShowcase() {
           ))}
         </div>
 
-        {/* ── Hackathon Timeline ── */}
+        {/* ── Hackathon Timeline commented out for now ── */}
+        {/*
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -177,7 +204,6 @@ export default function UIUXShowcase() {
                 transition={{ duration: 0.6, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
                 className="relative pl-8 md:pl-12 pb-12 last:pb-0"
               >
-                {/* Timeline Dot */}
                 <div
                   className="absolute left-[-16px] top-1 w-8 h-8 rounded-full flex items-center justify-center"
                   style={{
@@ -190,7 +216,6 @@ export default function UIUXShowcase() {
                   {item.icon}
                 </div>
 
-                {/* Content Card */}
                 <div className="glass-light rounded-3xl p-6 md:p-8 relative group transition-colors duration-300">
                   <div
                     className="inline-block px-3 py-1 mb-4 rounded-md text-[11px] font-mono tracking-widest font-bold"
@@ -209,6 +234,7 @@ export default function UIUXShowcase() {
             ))}
           </div>
         </motion.div>
+        */}
       </div>
     </section>
   );

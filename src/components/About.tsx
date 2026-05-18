@@ -1,43 +1,46 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "./SectionHeading";
-import { Brain, FlaskConical, Globe, GraduationCap, LineChart, Coffee } from "lucide-react";
+import { FlaskConical, GraduationCap, Coffee, User, Layers, Rocket } from "lucide-react";
 
-const focusAreas = [
+const principles = [
   {
-    icon: <Brain size={18} strokeWidth={2} />,
-    title: "Applied NLP",
-    desc: "Building production pipelines for document intelligence and semantic search.",
+    icon: <FlaskConical size={16} strokeWidth={1.7} />,
+    title: "Research-Driven",
+    desc: "Approaching problems with analytical depth, experimentation, and a strong emphasis on continuous learning and iteration.",
   },
   {
-    icon: <FlaskConical size={18} strokeWidth={2} />,
-    title: "Deepfake Research",
-    desc: "Published methodologies for detection in Indian media landscapes.",
+    icon: <User size={16} strokeWidth={1.7} />,
+    title: "Human-Centered",
+    desc: "Designing systems with clarity, usability, and meaningful real-world interaction at the core of the experience.",
   },
   {
-    icon: <LineChart size={18} strokeWidth={2} />,
-    title: "FinTech Fluent",
-    desc: "AMFI & NISM certified. Finance is a design constraint I code around.",
+    icon: <Layers size={16} strokeWidth={1.7} />,
+    title: "Systems-Oriented",
+    desc: "Building with scalability, maintainability, and long-term architectural thinking in mind.",
   },
   {
-    icon: <Globe size={18} strokeWidth={2} />,
-    title: "$0 Infra AI",
-    desc: "Shipping robust products using serverless and open-source models.",
+    icon: <Rocket size={16} strokeWidth={1.7} />,
+    title: "Deployment-Focused",
+    desc: "Transforming ideas into production-ready systems optimized for practical implementation and real-world usage.",
   },
 ];
 
 export default function About() {
+  const [activeEdu, setActiveEdu] = useState<'college' | 'school' | null>(null);
+
   return (
-    <section id="about" className="relative py-24 md:py-32">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
+    <section id="about" className="relative py-14 md:py-16 about-core-section">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         <SectionHeading
-          label="02 — Identity"
+          label="ABOUT ME"
           title="Bridging Research & Humanity"
           subtitle="I build production NLP pipelines, research deepfake methodologies, and believe that the best engineers are intensely curious about the world outside of code."
         />
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 mt-8 md:mt-16">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 mt-6 md:mt-8">
           {/* ── LEFT: Narrative Text ── */}
-          <div className="lg:col-span-7 flex flex-col gap-10">
+          <div className="lg:col-span-7 flex flex-col gap-6">
             {/* Background block */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -45,7 +48,7 @@ export default function About() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="flex items-center gap-3 mb-5">
+              <div className="flex items-center gap-3 mb-3">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center glass-light" style={{ color: "var(--accent)" }}>
                   <GraduationCap size={16} />
                 </div>
@@ -53,19 +56,134 @@ export default function About() {
                   Background
                 </h3>
               </div>
-              <p className="text-[17px] leading-relaxed mb-5 font-medium text-balance" style={{ color: "var(--fg)" }}>
+              <p className="text-[16px] leading-relaxed mb-4 font-medium text-balance" style={{ color: "var(--fg)" }}>
                 I am a final-year B.Tech Information Technology engineer at DJSCE, Mumbai, graduating in 2027.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-6 text-[13px] font-mono tracking-wide" style={{ color: "var(--fg-muted)" }}>
-                <div className="glass-light px-3.5 py-2 rounded-lg" style={{ border: "1px solid var(--glass-border)" }}>
+              <div className="text-[10px] font-mono tracking-wider mb-2 opacity-65 flex items-center gap-1.5" style={{ color: "var(--fg-muted)" }}>
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+                <span>Hover or click badges to view institution & coursework</span>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 mb-3 text-[12px] font-mono tracking-wide select-none" style={{ color: "var(--fg-muted)" }}>
+                {/* College Badge */}
+                <div 
+                  onMouseEnter={() => setActiveEdu('college')}
+                  onMouseLeave={() => setActiveEdu(null)}
+                  onClick={() => setActiveEdu(activeEdu === 'college' ? null : 'college')}
+                  className={`glass-light px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
+                    activeEdu === 'college' ? 'border-[var(--accent)] bg-[var(--accent)]/[0.04]' : 'border-[var(--glass-border)] hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/[0.01]'
+                  }`}
+                >
                   B.Tech CGPA: <span className="font-semibold" style={{ color: "var(--fg)" }}>8.65</span> <span className="mx-1 opacity-50">|</span> Honours in DevOps: <span className="font-semibold" style={{ color: "var(--fg)" }}>9.5</span>
                 </div>
-                <div className="glass-light px-3.5 py-2 rounded-lg" style={{ border: "1px solid var(--glass-border)" }}>
+                
+                {/* School Badge */}
+                <div 
+                  onMouseEnter={() => setActiveEdu('school')}
+                  onMouseLeave={() => setActiveEdu(null)}
+                  onClick={() => setActiveEdu(activeEdu === 'school' ? null : 'school')}
+                  className={`glass-light px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
+                    activeEdu === 'school' ? 'border-[var(--accent)] bg-[var(--accent)]/[0.04]' : 'border-[var(--glass-border)] hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/[0.01]'
+                  }`}
+                >
                   10th Grade: <span className="font-semibold" style={{ color: "var(--fg)" }}>92.14%</span>
                 </div>
               </div>
-              <p className="text-[15px] leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+
+              {/* Interactive Detail Popover/Card */}
+              <AnimatePresence mode="wait">
+                {activeEdu && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, y: -8 }}
+                    animate={{ opacity: 1, height: "auto", y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -8 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden mb-3"
+                  >
+                    <div 
+                      className="glass-light rounded-xl p-4 border relative overflow-hidden" 
+                      style={{ borderColor: "var(--glass-border)" }}
+                    >
+                      <div 
+                        className="absolute top-0 right-0 w-24 h-24 rounded-full blur-3xl pointer-events-none"
+                        style={{ 
+                          backgroundColor: activeEdu === 'college' ? "var(--accent)" : "var(--secondary)", 
+                          opacity: 0.12 
+                        }}
+                      />
+                      
+                      {activeEdu === 'college' ? (
+                        <div>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
+                            <h4 className="font-sans font-bold text-[13px]" style={{ color: "var(--fg)" }}>
+                              Dwarkadas J Sanghvi College of Engineering
+                            </h4>
+                          </div>
+                          <p className="text-[10px] font-mono uppercase tracking-wider mb-2" style={{ color: "var(--fg-subtle)" }}>
+                            Relevant Coursework
+                          </p>
+                          <div className="flex flex-wrap gap-1">
+                            {[
+                              "Operating Systems", "Data Structures", "Analysis of Algorithms", 
+                              "Artificial Intelligence", "Machine Learning", "Computer Networks", 
+                              "Advanced Java", "Formal Languages & Automata", "Big Data Infrastructure", 
+                              "Digital Signal Processing", "Corporate & Personal Finance", "Infrastructure Security"
+                            ].map(course => (
+                              <span 
+                                key={course} 
+                                className="px-1.5 py-0.5 rounded text-[10px] font-medium" 
+                                style={{ 
+                                  backgroundColor: "rgba(26, 26, 24, 0.025)", 
+                                  border: "1px solid var(--glass-border)", 
+                                  color: "var(--fg-muted)" 
+                                }}
+                              >
+                                {course}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <div className="flex items-center gap-2 mb-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
+                            <h4 className="font-sans font-bold text-[13px]" style={{ color: "var(--fg)" }}>
+                              Savitridevi Hariram Agarwal International School
+                            </h4>
+                          </div>
+                          <div className="flex gap-4 mb-2 text-[10px] font-mono">
+                            <div>
+                              <span style={{ color: "var(--fg-subtle)" }}>Board: </span>
+                              <span className="font-semibold" style={{ color: "var(--fg)" }}>IGCSE</span>
+                            </div>
+                          </div>
+                          <p className="text-[10px] font-mono uppercase tracking-wider mb-2" style={{ color: "var(--fg-subtle)" }}>
+                            Key Focus Subjects
+                          </p>
+                          <div className="flex flex-wrap gap-1">
+                            {["Physics", "Chemistry", "Biology", "Computers"].map(subject => (
+                              <span 
+                                key={subject} 
+                                className="px-1.5 py-0.5 rounded text-[10px] font-medium" 
+                                style={{ 
+                                  backgroundColor: "rgba(26, 26, 24, 0.025)", 
+                                  border: "1px solid var(--glass-border)", 
+                                  color: "var(--fg-muted)" 
+                                }}
+                              >
+                                {subject}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <p className="text-[14px] leading-relaxed text-justify" style={{ color: "var(--fg-muted)" }}>
                 My work sits at the intersection of applied machine learning and product engineering. Beyond the algorithms, I am driven by a deep curiosity for how people actually interact with technology, striving to design systems that feel distinctly human and intuitive.
               </p>
             </motion.div>
@@ -77,7 +195,7 @@ export default function About() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="flex items-center gap-3 mb-5">
+              <div className="flex items-center gap-3 mb-3">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center glass-light" style={{ color: "var(--accent)" }}>
                   <Coffee size={16} />
                 </div>
@@ -85,45 +203,66 @@ export default function About() {
                   Beyond the Screen
                 </h3>
               </div>
-              <p className="text-[15px] leading-relaxed" style={{ color: "var(--fg-muted)" }}>
-                When I'm not deep in PyTorch or fine-tuning language models, you'll likely find me exploring Mumbai's vibrant cafe culture, reading about behavioral economics, or playing a quick game of chess. I believe that the most creative engineering solutions often come from drawing inspiration across entirely different disciplines.
+              <p className="text-[14px] leading-relaxed text-justify" style={{ color: "var(--fg-muted)" }}>
+                Beyond technical development, I maintain a strong interest in strategic thinking, behavioral economics, and interdisciplinary problem-solving. I value analytical depth, structured decision-making, and continuous learning, which influence both my engineering approach and research mindset. I believe impactful technology is built not only through technical expertise, but also through understanding human behavior, systems, and real-world context.
               </p>
             </motion.div>
           </div>
 
-          {/* ── RIGHT: Focus Area Bento Cards ── */}
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {focusAreas.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{
-                  duration: 0.6,
-                  delay: i * 0.1,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="glass-light rounded-3xl p-6 group cursor-default flex flex-col justify-between"
-              >
-                <div
-                  className="w-10 h-10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500"
-                  style={{ backgroundColor: "rgba(45, 106, 79, 0.08)", color: "var(--accent)" }}
-                >
-                  {item.icon}
+          {/* ── RIGHT: Core Principles Glass Panel ── */}
+          <motion.div
+            className="lg:col-span-5"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="core-panel relative overflow-hidden rounded-[24px] border">
+              <div
+                className="absolute -top-16 right-6 w-44 h-44 rounded-full blur-3xl"
+                style={{ background: "radial-gradient(circle, rgba(27, 67, 50, 0.18), rgba(27, 67, 50, 0))" }}
+              />
+              <div className="core-panel-content px-5 py-6 md:px-6 md:py-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.3em]" style={{ color: "var(--taupe)" }}>
+                      Core Principles
+                    </span>
+                    <span className="h-px w-8" style={{ backgroundColor: "rgba(26, 26, 24, 0.12)" }} />
+                  </div>
+                  <span className="font-mono text-[9px] uppercase tracking-[0.28em]" style={{ color: "var(--fg-subtle)" }}>
+                    Design Philosophy
+                  </span>
                 </div>
-                <div>
-                  <h4 className="font-sans font-bold text-[14px] mb-2" style={{ color: "var(--fg)" }}>
-                    {item.title}
-                  </h4>
-                  <p className="text-[12px] leading-relaxed" style={{ color: "var(--fg-subtle)" }}>
-                    {item.desc}
-                  </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+                  {principles.map((item) => (
+                    <div
+                      key={item.title}
+                      className="core-block -m-px border p-4 md:p-5"
+                      style={{ borderColor: "var(--glass-border)" }}
+                    >
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center mb-2.5"
+                        style={{
+                          backgroundColor: "rgba(27, 67, 50, 0.08)",
+                          color: "var(--accent)",
+                          border: "1px solid rgba(27, 67, 50, 0.12)",
+                        }}
+                      >
+                        {item.icon}
+                      </div>
+                      <h4 className="font-sans font-semibold text-[13px] mb-1" style={{ color: "var(--fg)" }}>
+                        {item.title}
+                      </h4>
+                      <p className="text-[11px] leading-relaxed" style={{ color: "var(--fg-muted)" }}>
+                        {item.desc}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -112,28 +112,16 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-12 items-center min-h-[80vh]">
           {/* LEFT — Identity & messaging */}
           <div className="order-2 lg:order-1 flex flex-col justify-center">
-            {/* Top label */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="mb-8"
-            >
-              <span
-                className="font-mono text-[11px] uppercase tracking-[0.25em]"
-                style={{ color: "var(--fg-subtle)" }}
-              >
-                01 — Live System
-              </span>
-            </motion.div>
+            {/* Top label removed */}
+
 
             {/* Main headline */}
-            <div className="mb-8">
+            <div className="mb-6">
               <motion.h1
                 initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="font-serif text-[clamp(2.8rem,6.5vw,5.5rem)] leading-[1.05] tracking-[-0.02em]"
+                className="font-serif text-[clamp(2.6rem,6.2vw,5rem)] leading-[1.05] tracking-[-0.02em]"
                 style={{ color: "var(--fg)" }}
               >
                 Building systems
@@ -166,7 +154,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="font-serif text-[clamp(2.8rem,6.5vw,5.5rem)] leading-[1.05] tracking-[-0.02em] mt-1"
+                className="font-serif text-[clamp(2.6rem,6.2vw,5rem)] leading-[1.05] tracking-[-0.02em] mt-1"
                 style={{ color: "var(--fg)" }}
               >
                 and respond
@@ -179,19 +167,19 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[15px] md:text-base max-w-md leading-relaxed mb-8"
+              className="text-[15px] md:text-base max-w-md leading-relaxed mb-5"
               style={{ color: "var(--fg-muted)" }}
             >
               Final Year IT Engineer · DJSCE Mumbai · AI/ML Developer ·
               Research-Oriented
             </motion.p>
 
-            {/* Trust chips */}
+            {/* Trust chips (aligned horizontally) */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-wrap gap-2.5 mb-6"
+              className="flex flex-wrap lg:flex-nowrap items-center gap-2 mb-5 overflow-visible"
             >
               {trustChips.map((chip, i) => (
                 <motion.div
@@ -204,7 +192,7 @@ export default function Hero() {
                     ease: [0.22, 1, 0.36, 1] as const,
                   }}
                   whileHover={{ y: -3, scale: 1.03 }}
-                  className="glass-light rounded-full px-4 py-2 flex items-center gap-2 cursor-default"
+                  className="glass-light rounded-full px-3 py-1.5 flex items-center gap-1.5 cursor-default whitespace-nowrap"
                 >
                   <span style={{ color: "var(--accent)", opacity: 0.5 }}>
                     {chip.icon}
@@ -224,7 +212,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.35 }}
-              className="mb-8"
+              className="mb-6"
             >
               <div
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-mono"
@@ -253,7 +241,7 @@ export default function Hero() {
                 onClick={() => handleNavClick("#projects")}
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
-                className="group relative px-7 py-3.5 rounded-xl text-sm font-semibold text-white overflow-hidden cursor-pointer"
+                className="group relative px-5 py-2.5 rounded-xl text-sm font-semibold text-white overflow-hidden cursor-pointer"
                 style={{ backgroundColor: "var(--accent)" }}
               >
                 <span className="relative z-10 flex items-center gap-2">
@@ -276,10 +264,10 @@ export default function Hero() {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavClick("#contact")}
+                onClick={() => window.open("https://drive.google.com/file/d/1Hg_5THcDMntE1FB6_WQC_cfwi8xy29Rz/view?usp=sharing", "_blank")}
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
-                className="px-7 py-3.5 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300"
+                className="px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300"
                 style={{
                   backgroundColor: "var(--glass-bg)",
                   color: "var(--fg)",
@@ -287,21 +275,6 @@ export default function Hero() {
                 }}
               >
                 View Resume
-              </motion.button>
-
-              <motion.button
-                onClick={() => handleNavClick("#contact")}
-                whileHover={{ y: -2 }}
-                className="text-xs font-mono transition-colors duration-300 cursor-pointer"
-                style={{ color: "var(--fg-subtle)" }}
-              >
-                <span
-                  className="mr-1.5"
-                  style={{ color: "var(--accent)", opacity: 0.4 }}
-                >
-                  $
-                </span>
-                open live terminal
               </motion.button>
             </motion.div>
           </div>

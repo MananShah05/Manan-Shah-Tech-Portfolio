@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
-import { TrendingUp, Users } from "lucide-react";
+import { TrendingUp, Users, Palette, Video } from "lucide-react";
 
 const experiences = [
   {
@@ -24,6 +24,26 @@ const experiences = [
       "Built lead scoring models using quantitative segmentation; created Excel dashboards with charts and summary tables to present cost-benefit findings to senior management.",
     ],
   },
+  {
+    role: "Creative Director @ Design & Visual Intern",
+    org: "Hatimi Retreats",
+    period: "Sep 2025 – Dec 2025",
+    icon: <Palette size={18} />,
+    bullets: [
+      "Improved UI/UX consistency and usability, enhancing customer engagement and brand recall.",
+      "Iterated designs based on stakeholder feedback, usability considerations, and business goals.",
+    ],
+  },
+  {
+    role: "Creative Media Associate (Intern)",
+    org: "Grofo Foundation",
+    period: "Jun 2025 – Aug 2025",
+    icon: <Video size={18} />,
+    bullets: [
+      "Designed and produced training content for Streax India's CSR initiative.",
+      "Executed video shoots and post-production using Adobe Premiere Pro and After Effects.",
+    ],
+  },
 ];
 
 export default function Experience() {
@@ -31,7 +51,7 @@ export default function Experience() {
     <section id="experience" className="relative py-24 md:py-32">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <SectionHeading
-          label="03 — Experience"
+          label="Experience"
           title="Real roles. Real models. Real impact."
           subtitle="Internships and research that sharpened my ability to ship production-grade AI systems and communicate technical insight to stakeholders."
         />

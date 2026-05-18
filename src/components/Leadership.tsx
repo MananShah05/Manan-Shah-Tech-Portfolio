@@ -26,8 +26,8 @@ const roles = [
     ],
   },
   {
-    title: "Creatives",
-    org: "DJS E-Cell",
+    title: "Creatives Head",
+    org: "DJS ECELL",
     period: "Oct 2024 – Aug 2025",
     icon: <Lightbulb size={18} />,
     points: [
@@ -43,9 +43,9 @@ export default function Leadership() {
     <section id="leadership" className="relative py-24 md:py-32">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <SectionHeading
-          label="07 — Leadership"
+          label="Leadership & Co-curricular Activities"
           title="Ownership beyond the codebase."
-          subtitle="Leading technical teams, shaping AI culture on campus, and delivering outcomes through collaboration and clear communication."
+          subtitle="Leading technical initiatives, organizing flagship campus summits, and shaping creative direction across institutional platforms."
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

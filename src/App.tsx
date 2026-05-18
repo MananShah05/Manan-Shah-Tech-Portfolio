@@ -22,10 +22,10 @@ import Footer from "./components/Footer";
 import {
   Home,
   User,
+  Wrench,
   Briefcase,
   FolderGit2,
-  Wrench,
-  Palette,
+  Award,
   Mail,
 } from "lucide-react";
 
@@ -41,6 +41,11 @@ const dockItems = [
     onClick: () => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" }),
   },
   {
+    icon: <Wrench size={20} strokeWidth={1.8} />,
+    label: "Skills",
+    onClick: () => document.querySelector("#skills")?.scrollIntoView({ behavior: "smooth" }),
+  },
+  {
     icon: <Briefcase size={20} strokeWidth={1.8} />,
     label: "Experience",
     onClick: () => document.querySelector("#experience")?.scrollIntoView({ behavior: "smooth" }),
@@ -51,14 +56,9 @@ const dockItems = [
     onClick: () => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }),
   },
   {
-    icon: <Wrench size={20} strokeWidth={1.8} />,
-    label: "Skills",
-    onClick: () => document.querySelector("#skills")?.scrollIntoView({ behavior: "smooth" }),
-  },
-  {
-    icon: <Palette size={20} strokeWidth={1.8} />,
-    label: "Design",
-    onClick: () => document.querySelector("#design")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Award size={20} strokeWidth={1.8} />,
+    label: "Certifications",
+    onClick: () => document.querySelector("#certifications")?.scrollIntoView({ behavior: "smooth" }),
   },
   {
     icon: <Mail size={20} strokeWidth={1.8} />,
@@ -93,10 +93,6 @@ function AppContent() {
         <SectionDivider />
         <About />
         <SectionDivider />
-        <Experience />
-        <SectionDivider />
-        <Projects />
-        <SectionDivider />
         {/* Particles background spans Skills through Contact */}
         <div className="relative">
           <div className="absolute inset-0 pointer-events-auto" style={{ zIndex: 0 }}>
@@ -120,10 +116,15 @@ function AppContent() {
           <div className="relative" style={{ zIndex: 1 }}>
             <Skills />
             <SectionDivider />
+            <Experience />
+            <SectionDivider />
+            <Projects />
+            <SectionDivider />
+            <Certifications />
+            <SectionDivider />
             <UIUXShowcase />
             <SectionDivider />
             <Leadership />
-            <Certifications />
             <SectionDivider />
             <Testimonials />
             <SectionDivider />
