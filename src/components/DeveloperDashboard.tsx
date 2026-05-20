@@ -134,7 +134,7 @@ const personalityTags = [
   { label: "Developer mode: ON", icon: <Zap size={10} /> },
   { label: "Systems thinker", icon: <Target size={10} /> },
   { label: "Finance-aware engineer", icon: <Shield size={10} /> },
-  { label: "Ships before it's perfect", icon: <Rocket size={10} /> },
+  { label: "Build → Measure → Improve", icon: <Rocket size={10} /> },
 ];
 
 export default function DeveloperDashboard() {
@@ -351,16 +351,17 @@ export default function DeveloperDashboard() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 1.5 + i * 0.1 }}
                 whileHover={{ y: -2, scale: 1.04 }}
-                className="flex items-center justify-center gap-1.5 px-2 py-1.5 sm:px-3 sm:py-2 rounded-full text-[8.5px] sm:text-[9.5px] md:text-[10px] font-mono cursor-default w-full text-center"
+                className="flex items-center justify-start gap-1.5 px-2.5 py-1 sm:px-3 sm:py-2 rounded-full font-mono cursor-default w-full"
                 style={{
                   backgroundColor: "rgba(45, 106, 79, 0.06)",
                   border: "1px solid rgba(45, 106, 79, 0.12)",
                   color: "var(--accent)",
-                  whiteSpace: "nowrap",
                 }}
               >
-                {tag.icon}
-                <span style={{ whiteSpace: "nowrap" }}>{tag.label}</span>
+                <div className="flex-shrink-0 flex items-center justify-start">
+                  {tag.icon}
+                </div>
+                <span className={`whitespace-nowrap text-left leading-tight tracking-tight ${i === 3 ? 'text-[5.5px] sm:text-[6px] md:text-[7px]' : 'text-[6px] sm:text-[7px] md:text-[8px]'}`}>{tag.label}</span>
               </motion.div>
             ))}
           </div>
