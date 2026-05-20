@@ -220,37 +220,39 @@ export default function DeveloperDashboard() {
       onPointerLeave={handlePointerLeave}
     >
       {/* 4 Floating Metric Cards */}
-      <FloatingCard positionClass="top-[-40px] right-[-60px] md:top-[-20px] md:right-[-90px]" delay={1.4} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
-        <span className="text-(--accent)"><Brain size={14} /></span>
-        <div>
-          <div className="font-mono text-sm font-bold text-(--fg)">5+</div>
-          <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Projects</div>
-        </div>
-      </FloatingCard>
+      <div className="hidden md:block">
+        <FloatingCard positionClass="top-[-40px] right-[-60px] md:top-[-20px] md:right-[-90px]" delay={1.4} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
+          <span className="text-(--accent)"><Brain size={14} /></span>
+          <div>
+            <div className="font-mono text-sm font-bold text-(--fg)">5+</div>
+            <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Projects</div>
+          </div>
+        </FloatingCard>
 
-      <FloatingCard positionClass="top-[120px] right-[-40px] md:top-[160px] md:right-[-70px]" delay={1.6} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
-        <span className="text-(--secondary)"><Award size={14} /></span>
-        <div>
-          <div className="font-mono text-sm font-bold text-(--fg)">3+</div>
-          <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Experience</div>
-        </div>
-      </FloatingCard>
+        <FloatingCard positionClass="top-[120px] right-[-40px] md:top-[160px] md:right-[-70px]" delay={1.6} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
+          <span className="text-(--secondary)"><Award size={14} /></span>
+          <div>
+            <div className="font-mono text-sm font-bold text-(--fg)">3+</div>
+            <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Experience</div>
+          </div>
+        </FloatingCard>
 
-      <FloatingCard positionClass="bottom-[-30px] left-[-30px] md:bottom-[-20px] md:left-[-70px]" delay={1.8} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
-        <span className="text-(--accent)"><FileText size={14} /></span>
-        <div>
-          <div className="font-mono text-sm font-bold text-(--fg)">1</div>
-          <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Research</div>
-        </div>
-      </FloatingCard>
+        <FloatingCard positionClass="bottom-[-30px] left-[-30px] md:bottom-[-20px] md:left-[-70px]" delay={1.8} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
+          <span className="text-(--accent)"><FileText size={14} /></span>
+          <div>
+            <div className="font-mono text-sm font-bold text-(--fg)">1</div>
+            <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Research</div>
+          </div>
+        </FloatingCard>
 
-      <FloatingCard positionClass="top-[-30px] left-[-20px] md:top-[-10px] md:left-[-60px]" delay={2.0} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
-        <span className="text-(--fg-subtle)"><Globe size={14} /></span>
-        <div>
-          <div className="font-mono text-xs font-bold text-(--fg)">Applied AI</div>
-          <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Focus</div>
-        </div>
-      </FloatingCard>
+        <FloatingCard positionClass="top-[-30px] left-[-20px] md:top-[-10px] md:left-[-60px]" delay={2.0} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
+          <span className="text-(--fg-subtle)"><Globe size={14} /></span>
+          <div>
+            <div className="font-mono text-xs font-bold text-(--fg)">Applied AI</div>
+            <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Focus</div>
+          </div>
+        </FloatingCard>
+      </div>
 
       {/* Main Dashboard Panel */}
       <motion.div

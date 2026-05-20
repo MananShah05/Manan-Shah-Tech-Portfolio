@@ -81,7 +81,7 @@ export default function Contact() {
                 style={{ backgroundColor: "var(--secondary)", opacity: 0.05 }}
               />
 
-              <div className="relative z-10">
+              <div className="relative z-10 text-center lg:text-left">
                 <h3 className="font-serif text-2xl md:text-3xl mb-4" style={{ color: "var(--fg)" }}>
                   Direct Connection
                 </h3>
@@ -96,7 +96,7 @@ export default function Contact() {
                   </span>
                   <a
                     href="mailto:mananshah.ms.01@gmail.com"
-                    className="group inline-flex items-center gap-2 text-lg md:text-2xl font-mono tracking-tight font-semibold hover:text-[var(--accent)] transition-colors duration-300"
+                    className="group inline-flex items-center gap-2 text-base md:text-2xl font-mono tracking-tight font-semibold hover:text-[var(--accent)] transition-colors duration-300 mx-auto lg:mx-0"
                   >
                     <span className="relative">
                       mananshah.ms.01@gmail.com
@@ -124,7 +124,7 @@ export default function Contact() {
                   <span className="font-mono text-[10px] uppercase tracking-[0.25em] block mb-3" style={{ color: "var(--fg-subtle)" }}>
                     Connect Channels
                   </span>
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3 justify-center lg:justify-start">
                     {socialChannels.map((channel) => (
                       <a
                         key={channel.ariaLabel}
@@ -143,9 +143,9 @@ export default function Contact() {
               </div>
 
               {/* ── Download Resume Button ── */}
-              <div className="relative z-10 mt-auto">
+              <div className="relative z-10 mt-auto flex justify-center lg:justify-start">
                 <CTAButton
-                  href="https://drive.google.com/file/d/1Hg_5THcDMntE1FB6_WQC_cfwi8xy29Rz/view?usp=sharing"
+                  href="https://drive.google.com/drive/folders/1wxNikownhCSbqn9dmFCRce7f4ZjpgjuU?usp=sharing"
                   variant="primary"
                   icon="download"
                   target="_blank"

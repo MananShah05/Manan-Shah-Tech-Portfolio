@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { FlaskConical, GraduationCap, Coffee, User, Layers, Rocket } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 const principles = [
   {
@@ -28,6 +29,7 @@ const principles = [
 
 export default function About() {
   const [activeEdu, setActiveEdu] = useState<'college' | 'school' | null>(null);
+  const { isDark } = useTheme();
 
   return (
     <section id="about" className="relative py-14 md:py-16 about-core-section">
@@ -113,15 +115,36 @@ export default function About() {
                         }}
                       />
                       
+                      {/* Creative Glassmorphic Timeframe Badge */}
+                      <div 
+                        className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-[10px] font-semibold font-mono tracking-wider border select-none transition-all duration-300 pointer-events-none"
+                        style={{
+                          backgroundColor: activeEdu === 'college' 
+                            ? (isDark ? "rgba(82, 183, 136, 0.15)" : "rgba(45, 106, 79, 0.08)")
+                            : (isDark ? "rgba(251, 146, 60, 0.15)" : "rgba(196, 92, 38, 0.08)"),
+                          borderColor: activeEdu === 'college' 
+                            ? (isDark ? "rgba(82, 183, 136, 0.45)" : "rgba(45, 106, 79, 0.35)")
+                            : (isDark ? "rgba(251, 146, 60, 0.45)" : "rgba(196, 92, 38, 0.35)"),
+                          color: activeEdu === 'college' 
+                            ? (isDark ? "#52b788" : "#2d6a4f")
+                            : (isDark ? "#fb923c" : "#c45c26"),
+                          boxShadow: activeEdu === 'college' 
+                            ? (isDark ? "0 0 16px rgba(82, 183, 136, 0.25)" : "0 0 10px rgba(45, 106, 79, 0.08)")
+                            : (isDark ? "0 0 16px rgba(251, 146, 60, 0.25)" : "0 0 10px rgba(196, 92, 38, 0.08)")
+                        }}
+                      >
+                        {activeEdu === 'college' ? "2023 - 2027" : "2020 - 2021"}
+                      </div>
+
                       {activeEdu === 'college' ? (
                         <div>
-                          <div className="flex items-center gap-2 mb-2">
+                          <div className="flex items-center gap-2 mb-1.5 pr-20">
                             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
-                            <h4 className="font-sans font-bold text-[13px]" style={{ color: "var(--fg)" }}>
+                            <h4 className="font-sans font-bold text-[13px] leading-tight" style={{ color: "var(--fg)" }}>
                               Dwarkadas J Sanghvi College of Engineering
                             </h4>
                           </div>
-                          <p className="text-[10px] font-mono uppercase tracking-wider mb-2" style={{ color: "var(--fg-subtle)" }}>
+                          <p className="text-[10px] font-mono uppercase tracking-wider mb-2 mt-3" style={{ color: "var(--fg-subtle)" }}>
                             Relevant Coursework
                           </p>
                           <div className="flex flex-wrap gap-1">
@@ -147,9 +170,9 @@ export default function About() {
                         </div>
                       ) : (
                         <div>
-                          <div className="flex items-center gap-2 mb-1.5">
+                          <div className="flex items-center gap-2 mb-1.5 pr-20">
                             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
-                            <h4 className="font-sans font-bold text-[13px]" style={{ color: "var(--fg)" }}>
+                            <h4 className="font-sans font-bold text-[13px] leading-tight" style={{ color: "var(--fg)" }}>
                               Savitridevi Hariram Agarwal International School
                             </h4>
                           </div>
@@ -159,7 +182,7 @@ export default function About() {
                               <span className="font-semibold" style={{ color: "var(--fg)" }}>IGCSE</span>
                             </div>
                           </div>
-                          <p className="text-[10px] font-mono uppercase tracking-wider mb-2" style={{ color: "var(--fg-subtle)" }}>
+                          <p className="text-[10px] font-mono uppercase tracking-wider mb-2 mt-3" style={{ color: "var(--fg-subtle)" }}>
                             Key Focus Subjects
                           </p>
                           <div className="flex flex-wrap gap-1">

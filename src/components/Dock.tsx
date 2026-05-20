@@ -14,6 +14,7 @@ import {
   useState,
 } from "react";
 import type { ReactNode, MouseEvent } from "react";
+import { LayoutGrid, X } from "lucide-react";
 import "./Dock.css";
 
 interface SpringOptions {
@@ -166,6 +167,42 @@ export default function Dock({
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
 
+  const [isMobile, setIsMobile] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+
+    const handleScroll = () => {
+      setIsExpanded(false);
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        setIsExpanded(true);
+      }, 400); // 400ms after scroll stops to maximize
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
+    // Default to expanded on load
+    setIsExpanded(true);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, [isMobile]);
+
   const maxHeight = useMemo(
     () => Math.max(dockHeight, magnification + magnification / 2 + 4),
     [magnification, dockHeight]
@@ -174,40 +211,66 @@ export default function Dock({
   const height = useSpring(heightRow, spring);
 
   return (
-    <motion.div
-      style={{ height, scrollbarWidth: "none" }}
-      className="dock-outer"
+    <div
+      style={{
+        position: "fixed",
+        bottom: "1rem",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 100,
+        pointerEvents: "none",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+      }}
     >
       <motion.div
-        onMouseMove={({ pageX }: MouseEvent) => {
+        onMouseMove={isMobile ? undefined : ({ pageX }: MouseEvent) => {
           isHovered.set(1);
           mouseX.set(pageX);
         }}
-        onMouseLeave={() => {
+        onMouseLeave={isMobile ? undefined : () => {
           isHovered.set(0);
           mouseX.set(Infinity);
         }}
-        className={`dock-panel ${className}`}
-        style={{ height: panelHeight }}
+        onClick={() => {
+          if (isMobile && !isExpanded) {
+            setIsExpanded(true);
+          }
+        }}
+        className={`dock-panel ${className} ${isMobile && !isExpanded ? "dock-collapsed" : ""}`}
+        style={{
+          height: isMobile ? undefined : height,
+          pointerEvents: "auto",
+          cursor: isMobile && !isExpanded ? "pointer" : "default",
+        }}
         role="toolbar"
         aria-label="Application dock"
       >
+        {isMobile && (
+          <div className="dock-collapsed-icon">
+            <LayoutGrid size={20} className="text-[var(--fg)]" />
+          </div>
+        )}
+
         {items.map((item, index) => (
           <DockItem
             key={index}
-            onClick={item.onClick}
+            onClick={() => {
+              if (item.onClick) item.onClick();
+            }}
             className={item.className}
             mouseX={mouseX}
             spring={spring}
-            distance={distance}
-            magnification={magnification}
-            baseItemSize={baseItemSize}
+            distance={isMobile ? 0 : distance}
+            magnification={isMobile ? 40 : magnification}
+            baseItemSize={isMobile ? 40 : baseItemSize}
           >
             <DockIcon>{item.icon}</DockIcon>
             <DockLabel>{item.label}</DockLabel>
           </DockItem>
         ))}
       </motion.div>
-    </motion.div>
+    </div>
   );
 }

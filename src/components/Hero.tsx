@@ -265,7 +265,7 @@ export default function Hero() {
               </motion.button>
 
               <motion.button
-                onClick={() => window.open("https://drive.google.com/file/d/1Hg_5THcDMntE1FB6_WQC_cfwi8xy29Rz/view?usp=sharing", "_blank")}
+                onClick={() => window.open("https://drive.google.com/drive/folders/1wxNikownhCSbqn9dmFCRce7f4ZjpgjuU?usp=sharing", "_blank")}
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 className="px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300"

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
@@ -15,7 +14,6 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const { isDark, toggle } = useTheme();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -53,7 +51,6 @@ export default function Navbar() {
   };
 
   const handleNavClick = (href: string) => {
-    setMobileOpen(false);
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
@@ -208,51 +205,10 @@ export default function Navbar() {
                   </motion.button>
                 )}
               </AnimatePresence>
-
-              <button
-                className="p-2"
-                style={{ color: "var(--fg)" }}
-                onClick={() => setMobileOpen(!mobileOpen)}
-                aria-label="Toggle menu"
-              >
-                {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-              </button>
             </div>
           </div>
         </div>
       </motion.nav>
-
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 md:hidden"
-            style={{
-              backgroundColor: "var(--bg)",
-              opacity: 0.97,
-            }}
-          >
-            <div className="flex flex-col items-center justify-center h-full gap-8">
-              {navLinks.map((link, i) => (
-                <motion.button
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.08 }}
-                  onClick={() => handleNavClick(link.href)}
-                  className="text-2xl font-serif italic transition-colors"
-                  style={{ color: "var(--fg)" }}
-                >
-                  {link.label}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }

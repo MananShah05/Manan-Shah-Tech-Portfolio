@@ -408,10 +408,11 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
             transition={{ duration: 1, delay: 2.4, ease: EASE }}
             style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontSize: 14,
-              letterSpacing: "0.08em",
+              fontSize: "clamp(9px, 2.6vw, 14px)",
+              letterSpacing: "clamp(0.03em, 0.5vw, 0.08em)",
               color: "rgba(148, 163, 184, 0.55)",
               marginTop: 28,
+              whiteSpace: "nowrap",
             }}
           >
             AI/ML Developer · Research-Oriented · Final Year IT Engineer
