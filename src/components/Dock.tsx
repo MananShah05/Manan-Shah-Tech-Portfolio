@@ -293,7 +293,7 @@ export default function Dock({
     <div
       style={{
         position: "fixed",
-        bottom: "1rem",
+        bottom: isMobile ? "3rem" : "1rem",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 100,

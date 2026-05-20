@@ -72,7 +72,7 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="relative py-12 md:py-24 lg:py-32">
+    <section id="projects" className="relative py-12 md:py-16 lg:py-20">
       {/* ShapeGrid background */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.4]">
         <ShapeGrid

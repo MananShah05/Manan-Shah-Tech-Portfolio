@@ -67,13 +67,13 @@ export default function About() {
                 <span>Hover or click badges to view institution & coursework</span>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-3 text-[12px] font-mono tracking-wide select-none" style={{ color: "var(--fg-muted)" }}>
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3 text-[10px] sm:text-[12px] font-mono tracking-tighter sm:tracking-wide select-none whitespace-nowrap" style={{ color: "var(--fg-muted)" }}>
                 {/* College Badge */}
                 <div 
                   onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu('college'); }}
                   onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu(null); }}
                   onClick={() => setActiveEdu(activeEdu === 'college' ? null : 'college')}
-                  className={`glass-light px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
+                  className={`glass-light px-2 sm:px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
                     activeEdu === 'college' ? 'border-(--accent) bg-(--accent)/4' : 'border-(--glass-border) hover:border-(--accent)/30 hover:bg-(--accent)/1'
                   }`}
                 >
