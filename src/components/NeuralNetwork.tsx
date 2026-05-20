@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 interface Particle {
   x: number;
@@ -14,6 +15,7 @@ interface Particle {
 }
 
 export default function NeuralNetwork() {
+  const isMobile = useIsMobile();
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
@@ -190,7 +192,11 @@ export default function NeuralNetwork() {
         container.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div

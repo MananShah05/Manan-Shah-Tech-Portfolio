@@ -6,6 +6,13 @@ import "./index.css";
 
 function LenisProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    // Lenis smooth scroll is desktop-only. On touch devices, native momentum
+    // scrolling is already hardware-accelerated, and Lenis's rAF-driven easing
+    // fires continuous micro-scroll events that break scroll-dependent UI
+    // (like the dock collapse/expand).
+    const isTouchDevice = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    if (isTouchDevice) return;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

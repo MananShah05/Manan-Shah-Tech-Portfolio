@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Renderer, Camera, Geometry, Program, Mesh } from "ogl";
+import { useIsMobile } from "../hooks/useIsMobile";
 import "./Particles.css";
 
 const defaultColors = ["#ffffff", "#ffffff", "#ffffff"];
@@ -115,6 +116,7 @@ export default function Particles({
   pixelRatio = 1,
   className,
 }: ParticlesProps) {
+  const isMobile = useIsMobile();
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
@@ -257,7 +259,12 @@ export default function Particles({
     cameraDistance,
     disableRotation,
     pixelRatio,
+    isMobile,
   ]);
+
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div ref={containerRef} className={`particles-container ${className}`} />

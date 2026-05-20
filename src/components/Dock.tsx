@@ -14,7 +14,7 @@ import {
   useState,
 } from "react";
 import type { ReactNode, MouseEvent } from "react";
-import { LayoutGrid, X } from "lucide-react";
+import { LayoutGrid } from "lucide-react";
 import "./Dock.css";
 
 interface SpringOptions {
@@ -30,7 +30,8 @@ interface DockItemData {
   className?: string;
 }
 
-interface DockItemProps {
+// ─── Desktop DockItem — spring-magnification driven ───────────────────────
+interface DesktopDockItemProps {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
@@ -41,7 +42,7 @@ interface DockItemProps {
   baseItemSize: number;
 }
 
-function DockItem({
+function DesktopDockItem({
   children,
   className = "",
   onClick,
@@ -50,15 +51,12 @@ function DockItem({
   distance,
   magnification,
   baseItemSize,
-}: DockItemProps) {
+}: DesktopDockItemProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isHovered = useMotionValue(0);
 
   const mouseDistance = useTransform(mouseX, (val: number) => {
-    const rect = ref.current?.getBoundingClientRect() ?? {
-      x: 0,
-      width: baseItemSize,
-    };
+    const rect = ref.current?.getBoundingClientRect() ?? { x: 0, width: baseItemSize };
     return val - rect.x - baseItemSize / 2;
   });
 
@@ -72,10 +70,7 @@ function DockItem({
   return (
     <motion.div
       ref={ref}
-      style={{
-        width: size,
-        height: size,
-      }}
+      style={{ width: size, height: size }}
       onHoverStart={() => isHovered.set(1)}
       onHoverEnd={() => isHovered.set(0)}
       onFocus={() => isHovered.set(1)}
@@ -97,6 +92,32 @@ function DockItem({
   );
 }
 
+// ─── Mobile DockItem — pure CSS sizing, no Framer spring ──────────────────
+interface MobileDockItemProps {
+  children: ReactNode;
+  className?: string;
+  onClick?: () => void;
+}
+
+function MobileDockItem({
+  children,
+  className = "",
+  onClick,
+}: MobileDockItemProps) {
+  return (
+    <div
+      onClick={onClick}
+      className={`dock-item ${className}`}
+      tabIndex={0}
+      role="button"
+      aria-haspopup="true"
+    >
+      {children}
+    </div>
+  );
+}
+
+// ─── DockLabel ────────────────────────────────────────────────────────────
 interface DockLabelProps {
   children: ReactNode;
   className?: string;
@@ -119,10 +140,10 @@ function DockLabel({ children, className = "", ...rest }: DockLabelProps) {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: 0 }}
+          initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: -10 }}
-          exit={{ opacity: 0, y: 0 }}
-          transition={{ duration: 0.2 }}
+          exit={{ opacity: 0, y: 4 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
           className={`dock-label ${className}`}
           role="tooltip"
           style={{ x: "-50%" }}
@@ -134,6 +155,7 @@ function DockLabel({ children, className = "", ...rest }: DockLabelProps) {
   );
 }
 
+// ─── DockIcon ─────────────────────────────────────────────────────────────
 interface DockIconProps {
   children: ReactNode;
   className?: string;
@@ -143,6 +165,7 @@ function DockIcon({ children, className = "" }: DockIconProps) {
   return <div className={`dock-icon ${className}`}>{children}</div>;
 }
 
+// ─── Dock ─────────────────────────────────────────────────────────────────
 interface DockProps {
   items: DockItemData[];
   className?: string;
@@ -167,48 +190,104 @@ export default function Dock({
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
 
-  const [isMobile, setIsMobile] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    }
+    return false;
+  });
 
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollTimeoutRef = useRef<number | null>(null);
+  const lastScrollYRef = useRef(0);
+  const isScrollingRef = useRef(false);
+  const lastInputTimeRef = useRef(0);
+  const [clickedLabelIndex, setClickedLabelIndex] = useState<number | null>(null);
+  const labelTimeoutRef = useRef<number | null>(null);
+
+  // Detect touch device
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const mq = window.matchMedia("(hover: none) and (pointer: coarse)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
+  // Track scrolling for mobile dock collapse without flicker after scroll end
   useEffect(() => {
     if (!isMobile) return;
+    lastScrollYRef.current = window.scrollY;
 
-    let scrollTimeout: ReturnType<typeof setTimeout>;
+    const markUserInput = () => {
+      lastInputTimeRef.current = Date.now();
+    };
 
     const handleScroll = () => {
-      setIsExpanded(false);
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        setIsExpanded(true);
-      }, 400); // 400ms after scroll stops to maximize
+      const currentY = window.scrollY;
+      const delta = Math.abs(currentY - lastScrollYRef.current);
+      lastScrollYRef.current = currentY;
+
+      if (delta < 2) {
+        return;
+      }
+
+      const now = Date.now();
+      const recentlyInteracted = now - lastInputTimeRef.current < 400;
+      if (!recentlyInteracted && !isScrollingRef.current) {
+        return;
+      }
+
+      if (!isScrollingRef.current) {
+        isScrollingRef.current = true;
+        setIsScrolling(true);
+      }
+
+      if (scrollTimeoutRef.current) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
+
+      scrollTimeoutRef.current = window.setTimeout(() => {
+        isScrollingRef.current = false;
+        setIsScrolling(false);
+      }, 160);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
-    // Default to expanded on load
-    setIsExpanded(true);
-
+    window.addEventListener("touchstart", markUserInput, { passive: true });
+    window.addEventListener("touchmove", markUserInput, { passive: true });
+    window.addEventListener("touchend", markUserInput, { passive: true });
+    window.addEventListener("pointerdown", markUserInput, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout);
+      window.removeEventListener("touchstart", markUserInput);
+      window.removeEventListener("touchmove", markUserInput);
+      window.removeEventListener("touchend", markUserInput);
+      window.removeEventListener("pointerdown", markUserInput);
+      if (scrollTimeoutRef.current) {
+        window.clearTimeout(scrollTimeoutRef.current);
+        scrollTimeoutRef.current = null;
+      }
+      if (labelTimeoutRef.current) {
+        window.clearTimeout(labelTimeoutRef.current);
+        labelTimeoutRef.current = null;
+      }
     };
   }, [isMobile]);
 
   const maxHeight = useMemo(
-    () => Math.max(dockHeight, magnification + magnification / 2 + 4),
-    [magnification, dockHeight]
+    () => magnification + (panelHeight - baseItemSize),
+    [magnification, panelHeight, baseItemSize]
   );
   const heightRow = useTransform(isHovered, [0, 1], [panelHeight, maxHeight]);
   const height = useSpring(heightRow, spring);
+
+  const panelClass = [
+    "dock-panel",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div
@@ -219,58 +298,80 @@ export default function Dock({
         transform: "translateX(-50%)",
         zIndex: 100,
         pointerEvents: "none",
-        width: "100%",
+        width: "fit-content",
         display: "flex",
         justifyContent: "center",
       }}
     >
-      <motion.div
-        onMouseMove={isMobile ? undefined : ({ pageX }: MouseEvent) => {
-          isHovered.set(1);
-          mouseX.set(pageX);
-        }}
-        onMouseLeave={isMobile ? undefined : () => {
-          isHovered.set(0);
-          mouseX.set(Infinity);
-        }}
-        onClick={() => {
-          if (isMobile && !isExpanded) {
-            setIsExpanded(true);
-          }
-        }}
-        className={`dock-panel ${className} ${isMobile && !isExpanded ? "dock-collapsed" : ""}`}
-        style={{
-          height: isMobile ? undefined : height,
-          pointerEvents: "auto",
-          cursor: isMobile && !isExpanded ? "pointer" : "default",
-        }}
-        role="toolbar"
-        aria-label="Application dock"
-      >
-        {isMobile && (
-          <div className="dock-collapsed-icon">
-            <LayoutGrid size={20} className="text-[var(--fg)]" />
-          </div>
-        )}
+      {isMobile ? (
+        /* ── Mobile: plain div, fully CSS-controlled ── */
+        <div
+          className={`${panelClass} ${isScrolling ? "dock-scrolling" : ""}`}
+          role="toolbar"
+          aria-label="Application dock"
+          style={{ pointerEvents: "auto", position: "relative" }}
+          data-lenis-prevent="true"
+        >
+          {items.map((item, index) => (
+            <MobileDockItem
+              key={index}
+              onClick={() => {
+                // fade label on tap
+                setClickedLabelIndex(index);
+                if (labelTimeoutRef.current) {
+                  window.clearTimeout(labelTimeoutRef.current);
+                }
+                labelTimeoutRef.current = window.setTimeout(() => {
+                  setClickedLabelIndex(null);
+                  labelTimeoutRef.current = null;
+                }, 400);
 
-        {items.map((item, index) => (
-          <DockItem
-            key={index}
-            onClick={() => {
-              if (item.onClick) item.onClick();
-            }}
-            className={item.className}
-            mouseX={mouseX}
-            spring={spring}
-            distance={isMobile ? 0 : distance}
-            magnification={isMobile ? 40 : magnification}
-            baseItemSize={isMobile ? 40 : baseItemSize}
-          >
-            <DockIcon>{item.icon}</DockIcon>
-            <DockLabel>{item.label}</DockLabel>
-          </DockItem>
-        ))}
-      </motion.div>
+                if (item.onClick) item.onClick();
+              }}
+              className={`${item.className} ${clickedLabelIndex === index ? "label-clicked" : ""}`}
+            >
+              <DockIcon>{item.icon}</DockIcon>
+              <span className="dock-mobile-label">{item.label}</span>
+            </MobileDockItem>
+          ))}
+          <div className="dock-collapsed-indicator">
+            <LayoutGrid size={20} className="opacity-60" style={{ color: "var(--fg)" }} />
+          </div>
+        </div>
+      ) : (
+        /* ── Desktop: Framer Motion spring magnification ── */
+        <motion.div
+          onMouseMove={({ pageX }: MouseEvent) => {
+            isHovered.set(1);
+            mouseX.set(pageX);
+          }}
+          onMouseLeave={() => {
+            isHovered.set(0);
+            mouseX.set(Infinity);
+          }}
+          className={panelClass}
+          style={{ height, pointerEvents: "auto" }}
+          role="toolbar"
+          aria-label="Application dock"
+        >
+          {items.map((item, index) => (
+            <DesktopDockItem
+              key={index}
+              onClick={item.onClick}
+              className={item.className}
+              mouseX={mouseX}
+              spring={spring}
+              distance={distance}
+              magnification={magnification}
+              baseItemSize={baseItemSize}
+            >
+              <DockIcon>{item.icon}</DockIcon>
+              <DockLabel>{item.label}</DockLabel>
+            </DesktopDockItem>
+          ))}
+        </motion.div>
+      )}
     </div>
   );
 }
+

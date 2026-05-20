@@ -31,7 +31,7 @@ const timeline = [
 
 export default function Hackathons() {
   return (
-    <section id="hackathons" className="relative py-24 md:py-32">
+    <section id="hackathons" className="relative py-12 md:py-24 lg:py-32">
       <div className="max-w-[900px] mx-auto px-6 md:px-10 lg:px-16">
         <SectionHeading
           label="07 — Competitions"

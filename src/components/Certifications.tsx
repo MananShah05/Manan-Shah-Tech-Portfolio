@@ -50,7 +50,7 @@ const certs = [
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="relative py-16 md:py-24">
+    <section id="certifications" className="relative py-10 md:py-24">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <SectionHeading
           //label="Certifications"

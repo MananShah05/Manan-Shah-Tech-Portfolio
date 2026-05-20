@@ -1,6 +1,13 @@
 import { motion } from "framer-motion";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function AmbientBackground() {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return null;
+  }
+
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       <motion.div

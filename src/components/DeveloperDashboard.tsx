@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, ReactNode } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Zap, Target, TrendingUp, Clock, GitCommit, Rocket, Shield, Brain, Award, FileText, Globe } from "lucide-react";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 interface FloatingCardProps {
   children: ReactNode;
@@ -137,6 +138,7 @@ const personalityTags = [
 ];
 
 export default function DeveloperDashboard() {
+  const isMobile = useIsMobile();
   const [activeLine, setActiveLine] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
@@ -147,7 +149,7 @@ export default function DeveloperDashboard() {
   const pointerActiveRef = useRef(false);
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || isMobile) return;
     const rect = containerRef.current.getBoundingClientRect();
     pointerX.set(e.clientX - rect.left);
     pointerY.set(e.clientY - rect.top);
@@ -155,6 +157,7 @@ export default function DeveloperDashboard() {
   };
 
   const handlePointerLeave = () => {
+    if (isMobile) return;
     pointerActiveRef.current = false;
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -165,6 +168,8 @@ export default function DeveloperDashboard() {
 
   // Global pointer tracking so cards react when pointer is near them (even outside container)
   useEffect(() => {
+    if (isMobile) return;
+
     const handleGlobalMove = (e: PointerEvent) => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
@@ -187,7 +192,7 @@ export default function DeveloperDashboard() {
       window.removeEventListener("pointermove", handleGlobalMove);
       window.removeEventListener("pointerout", handleGlobalOut);
     };
-  }, [pointerX, pointerY]);
+  }, [pointerX, pointerY, isMobile]);
 
   useEffect(() => {
     const line = statusLines[activeLine];
@@ -220,39 +225,41 @@ export default function DeveloperDashboard() {
       onPointerLeave={handlePointerLeave}
     >
       {/* 4 Floating Metric Cards */}
-      <div className="hidden md:block">
-        <FloatingCard positionClass="top-[-40px] right-[-60px] md:top-[-20px] md:right-[-90px]" delay={1.4} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
-          <span className="text-(--accent)"><Brain size={14} /></span>
-          <div>
-            <div className="font-mono text-sm font-bold text-(--fg)">5+</div>
-            <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Projects</div>
-          </div>
-        </FloatingCard>
+      {!isMobile && (
+        <div className="hidden md:block">
+          <FloatingCard positionClass="top-[-40px] right-[-60px] md:top-[-20px] md:right-[-90px]" delay={1.4} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
+            <span className="text-(--accent)"><Brain size={14} /></span>
+            <div>
+              <div className="font-mono text-sm font-bold text-(--fg)">5+</div>
+              <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Projects</div>
+            </div>
+          </FloatingCard>
 
-        <FloatingCard positionClass="top-[120px] right-[-40px] md:top-[160px] md:right-[-70px]" delay={1.6} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
-          <span className="text-(--secondary)"><Award size={14} /></span>
-          <div>
-            <div className="font-mono text-sm font-bold text-(--fg)">3+</div>
-            <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Experience</div>
-          </div>
-        </FloatingCard>
+          <FloatingCard positionClass="top-[120px] right-[-40px] md:top-[160px] md:right-[-70px]" delay={1.6} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
+            <span className="text-(--secondary)"><Award size={14} /></span>
+            <div>
+              <div className="font-mono text-sm font-bold text-(--fg)">3+</div>
+              <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Experience</div>
+            </div>
+          </FloatingCard>
 
-        <FloatingCard positionClass="bottom-[-30px] left-[-30px] md:bottom-[-20px] md:left-[-70px]" delay={1.8} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
-          <span className="text-(--accent)"><FileText size={14} /></span>
-          <div>
-            <div className="font-mono text-sm font-bold text-(--fg)">1</div>
-            <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Research</div>
-          </div>
-        </FloatingCard>
+          <FloatingCard positionClass="bottom-[-30px] left-[-30px] md:bottom-[-20px] md:left-[-70px]" delay={1.8} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
+            <span className="text-(--accent)"><FileText size={14} /></span>
+            <div>
+              <div className="font-mono text-sm font-bold text-(--fg)">1</div>
+              <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Research</div>
+            </div>
+          </FloatingCard>
 
-        <FloatingCard positionClass="top-[-30px] left-[-20px] md:top-[-10px] md:left-[-60px]" delay={2.0} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
-          <span className="text-(--fg-subtle)"><Globe size={14} /></span>
-          <div>
-            <div className="font-mono text-xs font-bold text-(--fg)">Applied AI</div>
-            <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Focus</div>
-          </div>
-        </FloatingCard>
-      </div>
+          <FloatingCard positionClass="top-[-30px] left-[-20px] md:top-[-10px] md:left-[-60px]" delay={2.0} pointerX={pointerX} pointerY={pointerY} containerRef={containerRef} pointerActiveRef={pointerActiveRef}>
+            <span className="text-(--fg-subtle)"><Globe size={14} /></span>
+            <div>
+              <div className="font-mono text-xs font-bold text-(--fg)">Applied AI</div>
+              <div className="text-[9px] uppercase tracking-wider text-(--fg-subtle)">Focus</div>
+            </div>
+          </FloatingCard>
+        </div>
+      )}
 
       {/* Main Dashboard Panel */}
       <motion.div
@@ -336,7 +343,7 @@ export default function DeveloperDashboard() {
           </div>
 
           {/* Personality tags */}
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 gap-2 md:gap-3 w-full justify-items-center justify-center mt-2">
             {personalityTags.map((tag, i) => (
               <motion.div
                 key={tag.label}
@@ -344,15 +351,16 @@ export default function DeveloperDashboard() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 1.5 + i * 0.1 }}
                 whileHover={{ y: -2, scale: 1.04 }}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-mono cursor-default"
+                className="flex items-center justify-center gap-1.5 px-2 py-1.5 sm:px-3 sm:py-2 rounded-full text-[8.5px] sm:text-[9.5px] md:text-[10px] font-mono cursor-default w-full text-center"
                 style={{
                   backgroundColor: "rgba(45, 106, 79, 0.06)",
                   border: "1px solid rgba(45, 106, 79, 0.12)",
                   color: "var(--accent)",
+                  whiteSpace: "nowrap",
                 }}
               >
                 {tag.icon}
-                <span>{tag.label}</span>
+                <span style={{ whiteSpace: "nowrap" }}>{tag.label}</span>
               </motion.div>
             ))}
           </div>

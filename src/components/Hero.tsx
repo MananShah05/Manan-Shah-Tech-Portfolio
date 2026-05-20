@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, FileText, Brain, Award, Globe } from "lucide-react";
 import NeuralNetwork from "./NeuralNetwork";
 import DeveloperDashboard from "./DeveloperDashboard";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const cycleWords = ["read", "reason", "predict", "extract", "deploy"];
 
@@ -14,6 +15,7 @@ const trustChips = [
 ];
 
 export default function Hero() {
+  const isMobile = useIsMobile();
   const [activeWord, setActiveWord] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -119,7 +121,7 @@ export default function Hero() {
             {/* Main headline */}
             <div className="mb-6">
               <motion.h1
-                initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+                initial={isMobile ? { opacity: 0, y: 40, filter: "blur(0px)" } : { opacity: 0, y: 40, filter: "blur(8px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="font-serif text-[clamp(2.6rem,6.2vw,5rem)] leading-[1.05] tracking-[-0.02em]"
@@ -133,7 +135,7 @@ export default function Hero() {
                     animate={{
                       opacity: isTransitioning ? 0 : 1,
                       y: isTransitioning ? -12 : 0,
-                      filter: isTransitioning ? "blur(4px)" : "blur(0px)",
+                      filter: !isMobile && isTransitioning ? "blur(4px)" : "blur(0px)",
                     }}
                     transition={{ duration: 0.35 }}
                     style={{ color: "var(--accent)" }}
@@ -152,7 +154,7 @@ export default function Hero() {
               </motion.h1>
 
               <motion.h1
-                initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+                initial={isMobile ? { opacity: 0, y: 40, filter: "blur(0px)" } : { opacity: 0, y: 40, filter: "blur(8px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className="font-serif text-[clamp(2.6rem,6.2vw,5rem)] leading-[1.05] tracking-[-0.02em] mt-1"
@@ -180,7 +182,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-wrap lg:flex-nowrap items-center gap-2 mb-5 overflow-visible"
+              className="grid grid-cols-2 lg:flex lg:flex-nowrap items-center gap-2 mb-5 overflow-visible w-full lg:w-auto"
             >
               {trustChips.map((chip, i) => (
                 <motion.div
@@ -193,7 +195,7 @@ export default function Hero() {
                     ease: [0.22, 1, 0.36, 1] as const,
                   }}
                   whileHover={{ y: -3, scale: 1.03 }}
-                  className="glass-light rounded-full px-3 py-1.5 flex items-center gap-1.5 cursor-default whitespace-nowrap"
+                  className="glass-light rounded-full px-3 py-1.5 flex items-center justify-center gap-1.5 cursor-default whitespace-nowrap w-full"
                 >
                   <span style={{ color: "var(--accent)", opacity: 0.5 }}>
                     {chip.icon}

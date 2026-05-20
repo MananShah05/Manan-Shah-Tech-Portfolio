@@ -1,3 +1,6 @@
+
+
+/* ─── Dock Outer Wrapper ─── */
 .dock-outer {
   margin: 0 0.5rem;
   display: flex;
@@ -6,10 +9,12 @@
   pointer-events: none;
 }
 
+/* ─── Dock Panel — Desktop base ─── */
 .dock-panel {
   position: relative;
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   width: fit-content;
   gap: 0.75rem;
   border-radius: 1.25rem;
@@ -23,17 +28,12 @@
     0 1px 3px rgba(0, 0, 0, 0.08);
   pointer-events: auto;
   z-index: 100;
-  transition: 
-    background-color 0.5s ease, 
-    border-color 0.5s ease, 
-    width 0.55s cubic-bezier(0.16, 1, 0.3, 1), 
-    height 0.55s cubic-bezier(0.16, 1, 0.3, 1), 
-    padding 0.55s cubic-bezier(0.16, 1, 0.3, 1), 
-    gap 0.55s cubic-bezier(0.16, 1, 0.3, 1), 
-    border-radius 0.55s cubic-bezier(0.16, 1, 0.3, 1), 
-    box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    background-color 0.5s ease,
+    border-color 0.5s ease;
 }
 
+/* ─── Dock Item — Desktop ─── */
 .dock-item {
   position: relative;
   display: inline-flex;
@@ -48,13 +48,9 @@
     0 1px 2px rgba(0, 0, 0, 0.04);
   cursor: pointer;
   outline: none;
-  transition: 
-    background-color 0.2s ease, 
-    border-color 0.2s ease, 
-    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, 
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, 
-    width 0.55s cubic-bezier(0.16, 1, 0.3, 1), 
-    margin 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .dock-item:hover,
@@ -63,6 +59,7 @@
   border-color: rgba(45, 106, 79, 0.2);
 }
 
+/* ─── Dock Icon ─── */
 .dock-icon {
   display: flex;
   align-items: center;
@@ -70,6 +67,7 @@
   color: var(--fg);
 }
 
+/* ─── Dock Label (desktop tooltip) ─── */
 .dock-label {
   position: absolute;
   top: -2rem;
@@ -91,71 +89,175 @@
   transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
 }
 
-/* Mobile Collapsed State Transitions */
-.dock-panel.dock-collapsed {
-  width: 48px !important;
-  height: 48px !important;
-  border-radius: 50% !important;
-  padding: 0 !important;
-  gap: 0 !important;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  box-shadow: 
-    0 8px 32px -8px rgba(45, 106, 79, 0.3),
-    0 2px 10px rgba(0, 0, 0, 0.15);
-}
-
+/* Desktop: collapsed icon is hidden */
 .dock-collapsed-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.6);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: none;
 }
 
-.dock-panel.dock-collapsed .dock-collapsed-icon {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  pointer-events: auto;
-  cursor: pointer;
-  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-}
+/* ══════════════════════════════════════════════════════════════════
+   MOBILE — Blooming / Collapsing Dock
+══════════════════════════════════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
 
-.dock-panel.dock-collapsed .dock-item {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transform: scale(0.6) !important;
-  width: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: none !important;
-  box-shadow: none !important;
-  transition: 
-    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-    width 0.55s cubic-bezier(0.16, 1, 0.3, 1), 
-    margin 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (max-width: 768px) {
+  /* ── Panel: Static Pill on Mobile ── */
   .dock-panel {
-    gap: 0.375rem;
-    padding: 0.25rem 0.375rem 0.25rem;
-    border-radius: 1rem;
     align-items: center;
-    max-width: calc(100vw - 1.5rem);
-    box-sizing: border-box;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    justify-content: center;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+
+    /* Static Pill dimensions */
+    height: 48px;
+    padding: 0 0.625rem;
+    gap: 0.5rem;
+    border-radius: 24px;
+    box-shadow:
+      0 4px 24px -4px rgba(0, 0, 0, 0.15),
+      0 1px 3px rgba(0, 0, 0, 0.08);
+
+    transform: translateY(0px);
+    transition:
+      background-color 0.5s ease,
+      border-color 0.5s ease,
+      width 460ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      padding 460ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      border-radius 460ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      transform 460ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      gap 460ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .dock-panel::-webkit-scrollbar {
+
+  /* When scrolling, shrink to circle and sink down */
+  .dock-panel.dock-scrolling {
+    width: 48px;
+    padding: 0;
+    gap: 0;
+    border-radius: 50%;
+    transform: translateY(8px);
+    transition:
+      background-color 0.5s ease,
+      border-color 0.5s ease,
+      width 380ms cubic-bezier(0.4, 0, 0.2, 1),
+      padding 380ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-radius 380ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 380ms cubic-bezier(0.4, 0, 0.2, 1),
+      gap 380ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ── Dock Items ── */
+  .dock-panel .dock-item {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    overflow: visible; /* Let labels float */
+    transition: 
+      background-color 0.2s ease, 
+      border-color 0.2s ease,
+      width 460ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      opacity 460ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      margin 460ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Dissolve and shrink items when collapsed */
+  .dock-panel.dock-scrolling .dock-item {
+    width: 0px;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: 
+      background-color 0.2s ease, 
+      border-color 0.2s ease,
+      width 380ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 380ms cubic-bezier(0.4, 0, 0.2, 1),
+      margin 380ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0ms !important;
+  }
+
+  /* Stagger icons fading in when expanding */
+  .dock-panel:not(.dock-scrolling) .dock-item:nth-child(1) { transition-delay: 0ms; }
+  .dock-panel:not(.dock-scrolling) .dock-item:nth-child(2) { transition-delay: 20ms; }
+  .dock-panel:not(.dock-scrolling) .dock-item:nth-child(3) { transition-delay: 40ms; }
+  .dock-panel:not(.dock-scrolling) .dock-item:nth-child(4) { transition-delay: 60ms; }
+  .dock-panel:not(.dock-scrolling) .dock-item:nth-child(5) { transition-delay: 80ms; }
+  .dock-panel:not(.dock-scrolling) .dock-item:nth-child(6) { transition-delay: 100ms; }
+
+  /* ── Icons ── */
+  .dock-panel .dock-icon {
+    opacity: 1;
+    transform: scale(1);
+    transition: transform 460ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .dock-panel.dock-scrolling .dock-icon {
+    transform: scale(0.4);
+    transition: transform 380ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ── Collapsed Indicator ── */
+  .dock-collapsed-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: 
+      opacity 460ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      transform 460ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .dock-panel.dock-scrolling .dock-collapsed-indicator {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    transition: 
+      opacity 380ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 380ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ── Mobile-Specific Hover Dock Label ── */
+  .dock-mobile-label {
+    position: absolute;
+    top: -2.25rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    width: fit-content;
+    white-space: pre;
+    border-radius: 0.5rem;
+    border: 1px solid var(--dock-label-border);
+    background: var(--dock-label-bg);
+    padding: 0.25rem 0.625rem;
+    font-size: 0.6875rem;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-weight: 500;
+    color: var(--dock-label-text);
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 110;
+  }
+
+  /* Show labels only on hover or active/touch states */
+  .dock-item:hover .dock-mobile-label,
+  .dock-item:active .dock-mobile-label,
+  .dock-item:focus-within .dock-mobile-label {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Fade label when an item has been tapped */
+  .dock-item.label-clicked .dock-mobile-label {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+    transition:
+      opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Hide default desktop label completely on mobile */
+  .dock-label {
     display: none;
   }
 }

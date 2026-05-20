@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 /* ─── Config ─── */
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -215,6 +216,7 @@ function useCinematicAudio() {
 }
 
 export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
+  const isMobile = useIsMobile();
   useCinematicAudio();
   const [phase, setPhase] = useState<"intro" | "exit">("intro");
   const [dims, setDims] = useState({ w: 0, h: 0 });
@@ -285,7 +287,7 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
           animate={{ opacity: 1 }}
           transition={{ duration: 2, delay: 0.3 }}
         >
-          {dims.w > 0 && <ParticleNetwork width={dims.w} height={dims.h} />}
+          {!isMobile && dims.w > 0 && <ParticleNetwork width={dims.w} height={dims.h} />}
         </motion.div>
 
         {/* ── BG: Faint grid ── */}

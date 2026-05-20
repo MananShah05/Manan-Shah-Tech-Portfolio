@@ -32,7 +32,7 @@ export default function About() {
   const { isDark } = useTheme();
 
   return (
-    <section id="about" className="relative py-14 md:py-16 about-core-section">
+    <section id="about" className="relative py-10 md:py-16 about-core-section">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         <SectionHeading
           label="ABOUT ME"
@@ -63,18 +63,18 @@ export default function About() {
               </p>
 
               <div className="text-[10px] font-mono tracking-wider mb-2 opacity-65 flex items-center gap-1.5" style={{ color: "var(--fg-muted)" }}>
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-(--accent) animate-pulse" />
                 <span>Hover or click badges to view institution & coursework</span>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 mb-3 text-[12px] font-mono tracking-wide select-none" style={{ color: "var(--fg-muted)" }}>
                 {/* College Badge */}
                 <div 
-                  onMouseEnter={() => setActiveEdu('college')}
-                  onMouseLeave={() => setActiveEdu(null)}
+                  onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu('college'); }}
+                  onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu(null); }}
                   onClick={() => setActiveEdu(activeEdu === 'college' ? null : 'college')}
                   className={`glass-light px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
-                    activeEdu === 'college' ? 'border-[var(--accent)] bg-[var(--accent)]/[0.04]' : 'border-[var(--glass-border)] hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/[0.01]'
+                    activeEdu === 'college' ? 'border-(--accent) bg-(--accent)/4' : 'border-(--glass-border) hover:border-(--accent)/30 hover:bg-(--accent)/1'
                   }`}
                 >
                   B.Tech CGPA: <span className="font-semibold" style={{ color: "var(--fg)" }}>8.65</span> <span className="mx-1 opacity-50">|</span> Honours in DevOps: <span className="font-semibold" style={{ color: "var(--fg)" }}>9.5</span>
@@ -82,11 +82,11 @@ export default function About() {
                 
                 {/* School Badge */}
                 <div 
-                  onMouseEnter={() => setActiveEdu('school')}
-                  onMouseLeave={() => setActiveEdu(null)}
+                  onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu('school'); }}
+                  onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu(null); }}
                   onClick={() => setActiveEdu(activeEdu === 'school' ? null : 'school')}
                   className={`glass-light px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
-                    activeEdu === 'school' ? 'border-[var(--accent)] bg-[var(--accent)]/[0.04]' : 'border-[var(--glass-border)] hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/[0.01]'
+                    activeEdu === 'school' ? 'border-(--accent) bg-(--accent)/4' : 'border-(--glass-border) hover:border-(--accent)/30 hover:bg-(--accent)/1'
                   }`}
                 >
                   10th Grade: <span className="font-semibold" style={{ color: "var(--fg)" }}>92.14%</span>
@@ -138,8 +138,8 @@ export default function About() {
 
                       {activeEdu === 'college' ? (
                         <div>
-                          <div className="flex items-center gap-2 mb-1.5 pr-20">
-                            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
+                          <div className="flex items-start gap-2 mb-1.5 pr-28 sm:pr-32">
+                            <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: "var(--accent)" }} />
                             <h4 className="font-sans font-bold text-[13px] leading-tight" style={{ color: "var(--fg)" }}>
                               Dwarkadas J Sanghvi College of Engineering
                             </h4>
@@ -170,8 +170,8 @@ export default function About() {
                         </div>
                       ) : (
                         <div>
-                          <div className="flex items-center gap-2 mb-1.5 pr-20">
-                            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
+                          <div className="flex items-start gap-2 mb-1.5 pr-28 sm:pr-32">
+                            <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: "var(--accent)" }} />
                             <h4 className="font-sans font-bold text-[13px] leading-tight" style={{ color: "var(--fg)" }}>
                               Savitridevi Hariram Agarwal International School
                             </h4>
@@ -240,7 +240,7 @@ export default function About() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="core-panel relative overflow-hidden rounded-[24px] border">
+            <div className="core-panel relative overflow-hidden rounded-3xl border">
               <div
                 className="absolute -top-16 right-6 w-44 h-44 rounded-full blur-3xl"
                 style={{ background: "radial-gradient(circle, rgba(27, 67, 50, 0.18), rgba(27, 67, 50, 0))" }}

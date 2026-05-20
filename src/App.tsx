@@ -78,7 +78,7 @@ function AppContent() {
 
   return (
     <div
-      className="relative min-h-screen selection:bg-[var(--selection-bg)]"
+      className="relative min-h-screen selection:bg-(--selection-bg)"
       style={{
         backgroundColor: "var(--bg)",
         color: "var(--fg)",

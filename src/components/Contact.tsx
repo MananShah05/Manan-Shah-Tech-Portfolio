@@ -53,7 +53,7 @@ const socialChannels = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative py-24 md:py-32">
+    <section id="contact" className="relative py-12 md:py-24 lg:py-32">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         <SectionHeading
           // label="Contact"
@@ -124,7 +124,7 @@ export default function Contact() {
                   <span className="font-mono text-[10px] uppercase tracking-[0.25em] block mb-3" style={{ color: "var(--fg-subtle)" }}>
                     Connect Channels
                   </span>
-                  <div className="flex flex-wrap items-center gap-3 justify-center lg:justify-start">
+                  <div className="flex flex-nowrap items-center gap-2 sm:gap-3 justify-center lg:justify-start">
                     {socialChannels.map((channel) => (
                       <a
                         key={channel.ariaLabel}
@@ -132,7 +132,7 @@ export default function Contact() {
                         target="_blank"
                         rel="noreferrer"
                         aria-label={channel.ariaLabel}
-                        className="w-9 h-9 rounded-xl glass-light flex items-center justify-center text-[var(--fg-muted)] hover:text-[var(--accent)] hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/[0.02] transition-all duration-300"
+                        className="w-9 h-9 flex-shrink-0 rounded-xl glass-light flex items-center justify-center text-[var(--fg-muted)] hover:text-[var(--accent)] hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/[0.02] transition-all duration-300"
                       >
                         {channel.icon}
                       </a>

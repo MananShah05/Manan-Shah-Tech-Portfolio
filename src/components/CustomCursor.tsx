@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function CustomCursor() {
+  const isMobile = useIsMobile();
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const pos = useRef({ x: 0, y: 0 });
@@ -69,18 +71,22 @@ export default function CustomCursor() {
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);
     };
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <>
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[#1b4332] pointer-events-none z-9999 mix-blend-difference"
+        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[#1b4332] pointer-events-none z-[9999] mix-blend-difference"
         style={{ willChange: "transform" }}
       />
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#1b4332]/30 pointer-events-none z-9998 mix-blend-difference transition-[border-color] duration-300"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#1b4332]/30 pointer-events-none z-[9998] mix-blend-difference transition-[border-color] duration-300"
         style={{ willChange: "transform" }}
       />
     </>

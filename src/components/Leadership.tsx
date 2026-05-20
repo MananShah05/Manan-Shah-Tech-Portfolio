@@ -40,7 +40,7 @@ const roles = [
 
 export default function Leadership() {
   return (
-    <section id="leadership" className="relative py-24 md:py-32">
+    <section id="leadership" className="relative py-12 md:py-24 lg:py-32">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
         <SectionHeading
           label="Leadership & Co-curricular Activities"

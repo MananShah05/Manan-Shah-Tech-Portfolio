@@ -218,6 +218,23 @@ body {
     transition: background-color 0.5s ease, border-color 0.5s ease;
   }
 
+  /* Prevent pill/chip text from overflowing rounded containers */
+  .glass-light,
+  .core-panel,
+  .dock-panel,
+  .floating-metric-card {
+    /* allow children to shrink below their content width when needed */
+    min-width: 0;
+    /* allow long words to break and avoid bleeding out of rounded borders */
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Ensure flex children can shrink to avoid overflowing parent */
+  .flex > * {
+    min-width: 0;
+  }
+
   .glass-light-hover {
     background: var(--glass-hover);
     -webkit-backdrop-filter: blur(32px) saturate(1.6);
@@ -333,6 +350,29 @@ body {
   .floating-metric-card {
     /* Slightly more opaque on mobile for readability without hover */
     background: var(--glass-hover);
+  }
+
+  .core-panel::after {
+    animation: none !important;
+    display: none !important;
+  }
+
+  .glass-light,
+  .glass-light-hover {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* Small-screen pill wrapping: allow text to wrap inside rounded glass pills to avoid overflow */
+@media (max-width: 640px) {
+  .glass-light.whitespace-nowrap,
+  .glass-light .whitespace-nowrap,
+  .rounded-full.whitespace-nowrap,
+  .rounded-full .whitespace-nowrap {
+    white-space: normal !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
