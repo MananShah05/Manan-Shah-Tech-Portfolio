@@ -195,13 +195,13 @@ export default function Hero() {
                     ease: [0.22, 1, 0.36, 1] as const,
                   }}
                   whileHover={{ y: -3, scale: 1.03 }}
-                  className="glass-light rounded-full px-3 py-1.5 flex items-center justify-center gap-1.5 cursor-default whitespace-nowrap w-full"
+                  className="glass-light rounded-full px-3 py-1.5 flex items-center justify-center gap-1.5 cursor-default whitespace-nowrap keep-nowrap w-full"
                 >
                   <span style={{ color: "var(--accent)", opacity: 0.5 }}>
                     {chip.icon}
                   </span>
                   <span
-                    className="text-[11px] font-medium"
+                    className="text-[11px] font-medium keep-nowrap"
                     style={{ color: "var(--fg-muted)" }}
                   >
                     {chip.label}

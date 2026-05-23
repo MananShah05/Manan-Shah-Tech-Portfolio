@@ -254,6 +254,10 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  .keep-nowrap {
+    white-space: nowrap !important;
+  }
 }
 
 /* ─── Floating Dashboard Ecosystem ─────────────────────────────────────── */
@@ -366,10 +370,10 @@ body {
 
 /* Small-screen pill wrapping: allow text to wrap inside rounded glass pills to avoid overflow */
 @media (max-width: 640px) {
-  .glass-light.whitespace-nowrap,
-  .glass-light .whitespace-nowrap,
-  .rounded-full.whitespace-nowrap,
-  .rounded-full .whitespace-nowrap {
+  .glass-light.whitespace-nowrap:not(.keep-nowrap),
+  .glass-light .whitespace-nowrap:not(.keep-nowrap),
+  .rounded-full.whitespace-nowrap:not(.keep-nowrap),
+  .rounded-full .whitespace-nowrap:not(.keep-nowrap) {
     white-space: normal !important;
     overflow: hidden;
     text-overflow: ellipsis;

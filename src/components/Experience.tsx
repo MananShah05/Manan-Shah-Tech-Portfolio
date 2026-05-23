@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { TrendingUp, Users, Palette, Video } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 const experiences = [
   {
@@ -47,6 +48,7 @@ const experiences = [
 ];
 
 export default function Experience() {
+  const { isDark } = useTheme();
   return (
     <section id="experience" className="relative py-12 md:py-16 lg:py-20">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
@@ -80,7 +82,7 @@ export default function Experience() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+                  <div className="flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
                     <div>
                       <h3 className="font-sans text-xl md:text-2xl font-bold" style={{ color: "var(--fg)" }}>
                         {exp.role}
@@ -90,8 +92,15 @@ export default function Experience() {
                       </p>
                     </div>
                     <span
-                      className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-mono font-semibold whitespace-nowrap"
-                      style={{ backgroundColor: "rgba(26, 26, 24, 0.03)", border: "1px solid var(--glass-border)", color: "var(--fg-muted)" }}
+                      className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-mono font-semibold whitespace-nowrap transition-all duration-300"
+                      style={{
+                        backgroundColor: isDark ? "rgba(82, 183, 136, 0.15)" : "rgba(45, 106, 79, 0.08)",
+                        borderColor: isDark ? "rgba(82, 183, 136, 0.45)" : "rgba(45, 106, 79, 0.35)",
+                        color: isDark ? "#52b788" : "#2d6a4f",
+                        boxShadow: isDark ? "0 0 16px rgba(82, 183, 136, 0.25)" : "0 0 10px rgba(45, 106, 79, 0.08)",
+                        borderWidth: "1px",
+                        borderStyle: "solid"
+                      }}
                     >
                       {exp.period}
                     </span>

@@ -73,7 +73,7 @@ export default function About() {
                   onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu('college'); }}
                   onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu(null); }}
                   onClick={() => setActiveEdu(activeEdu === 'college' ? null : 'college')}
-                  className={`glass-light px-2 sm:px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
+                  className={`glass-light px-4 py-1.5 rounded-full cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
                     activeEdu === 'college' ? 'border-(--accent) bg-(--accent)/4' : 'border-(--glass-border) hover:border-(--accent)/30 hover:bg-(--accent)/1'
                   }`}
                 >
@@ -85,7 +85,7 @@ export default function About() {
                   onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu('school'); }}
                   onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu(null); }}
                   onClick={() => setActiveEdu(activeEdu === 'school' ? null : 'school')}
-                  className={`glass-light px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
+                  className={`glass-light px-4 py-1.5 rounded-full cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
                     activeEdu === 'school' ? 'border-(--accent) bg-(--accent)/4' : 'border-(--glass-border) hover:border-(--accent)/30 hover:bg-(--accent)/1'
                   }`}
                 >
@@ -247,13 +247,11 @@ export default function About() {
               />
               <div className="core-panel-content px-5 py-6 md:px-6 md:py-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.3em]" style={{ color: "var(--taupe)" }}>
-                      Core Principles
-                    </span>
-                    <span className="h-px w-8" style={{ backgroundColor: "rgba(26, 26, 24, 0.12)" }} />
-                  </div>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.28em]" style={{ color: "var(--fg-subtle)" }}>
+                  <span className="font-mono text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.3em] whitespace-nowrap keep-nowrap" style={{ color: "var(--taupe)" }}>
+                    Core Principles
+                  </span>
+                  <span className="h-px w-12 sm:w-20 shrink-0" style={{ backgroundColor: "rgba(26, 26, 24, 0.12)" }} />
+                  <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-[0.15em] sm:tracking-[0.28em] whitespace-nowrap keep-nowrap" style={{ color: "var(--fg-subtle)" }}>
                     Design Philosophy
                   </span>
                 </div>

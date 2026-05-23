@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import CinematicOpener from "./components/CinematicOpener";
+import MobileDesktopWarning from "./components/MobileDesktopWarning";
 import Navbar from "./components/Navbar";
 import CustomCursor from "./components/CustomCursor";
 import ScrollProgress from "./components/ScrollProgress";
@@ -85,6 +86,7 @@ function AppContent() {
       }}
     >
       {showOpener && <CinematicOpener onComplete={() => setShowOpener(false)} />}
+      {!showOpener && <MobileDesktopWarning />}
       <CustomCursor />
       <AmbientBackground />
       <ScrollProgress />
