@@ -407,3 +407,58 @@ embed,
 object {
   vertical-align: unset;
 }
+
+/* ─── Skill Pills ────────────────────────────────────────────────────────── */
+.skill-pill {
+  background-color: rgba(26, 26, 24, 0.03);
+  border: 1px solid rgba(26, 26, 24, 0.08);
+  color: var(--fg-muted);
+  transition: all 0.3s ease;
+}
+
+.dark .skill-pill {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--fg-muted);
+}
+
+.skill-pill:hover {
+  border-color: var(--accent);
+  color: var(--fg) !important;
+  background-color: rgba(27, 67, 50, 0.05);
+}
+
+.dark .skill-pill:hover {
+  border-color: var(--accent-light);
+  color: var(--fg) !important;
+  background-color: rgba(45, 106, 79, 0.1);
+  box-shadow: 0 0 12px rgba(45, 106, 79, 0.25);
+}
+
+/* ─── Status Badge Mobile Expansion ──────────────────────────────────────── */
+.status-badge {
+  outline: none;
+}
+
+.status-expansion {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  opacity: 0;
+  vertical-align: bottom;
+  transition: max-width 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+}
+
+.status-badge:hover .status-expansion,
+.status-badge:focus-within .status-expansion {
+  max-width: 280px;
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .status-expansion {
+    max-width: none !important;
+    opacity: 1 !important;
+  }
+}

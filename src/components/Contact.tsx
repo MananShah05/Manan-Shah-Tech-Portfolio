@@ -23,8 +23,14 @@ const socialChannels = [
     ariaLabel: "Behance",
     href: "https://www.behance.net/mananshah01",
     icon: (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M22.3 8.35h-4.88c-.12-.85-.8-1.46-1.74-1.46-.93 0-1.63.59-1.77 1.46h8.39zm1.7 2.45h-10.1c.14 1.38 1.2 2.37 2.67 2.37 1.28 0 2.22-.64 2.51-1.62h2.24c-.45 2.14-2.28 3.52-4.75 3.52-3 0-4.9-2.1-4.9-5 0-3 1.9-5.1 4.78-5.1 2.87 0 4.88 2.05 4.88 5c0 .35-.04.6-.33.83zm-15.17-5.5h-5.26v11.4h5.36c2.47 0 4.16-1.16 4.16-3.07 0-1.41-.95-2.3-2.27-2.61v-.09c1-.37 1.66-1.17 1.66-2.42.01-1.92-1.59-3.21-3.65-3.21zm-2.73 4.2h2.51c1.07 0 1.63.49 1.63 1.27s-.56 1.27-1.63 1.27h-2.51v-2.54zm0 6.69v-2.83h2.62c1.16 0 1.76.54 1.76 1.41s-.6 1.42-1.76 1.42h-2.62zm15.17-10.19h-4.88v1.11h4.88v-1.11z" />
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9.8" />
+        <path
+          d="M22.3 8.35h-4.88c-.12-.85-.8-1.46-1.74-1.46-.93 0-1.63.59-1.77 1.46h8.39zm1.7 2.45h-10.1c.14 1.38 1.2 2.37 2.67 2.37 1.28 0 2.22-.64 2.51-1.62h2.24c-.45 2.14-2.28 3.52-4.75 3.52-3 0-4.9-2.1-4.9-5 0-3 1.9-5.1 4.78-5.1 2.87 0 4.88 2.05 4.88 5c0 .35-.04.6-.33.83zm-15.17-5.5h-5.26v11.4h5.36c2.47 0 4.16-1.16 4.16-3.07 0-1.41-.95-2.3-2.27-2.61v-.09c1-.37 1.66-1.17 1.66-2.42.01-1.92-1.59-3.21-3.65-3.21zm-2.73 4.2h2.51c1.07 0 1.63.49 1.63 1.27s-.56 1.27-1.63 1.27h-2.51v-2.54zm0 6.69v-2.83h2.62c1.16 0 1.76.54 1.76 1.41s-.6 1.42-1.76 1.42h-2.62zm15.17-10.19h-4.88v1.11h4.88v-1.11z"
+          fill="currentColor"
+          stroke="none"
+          transform="translate(4.5, 5.7) scale(0.58)"
+        />
       </svg>
     ),
   },
@@ -96,14 +102,14 @@ export default function Contact() {
                   </span>
                   <a
                     href="mailto:mananshah.ms.01@gmail.com"
-                    className="group inline-flex items-center gap-2 text-base md:text-2xl font-mono tracking-tight font-semibold hover:text-[var(--accent)] transition-colors duration-300 mx-auto lg:mx-0"
+                    className="group inline-flex items-center gap-1.5 sm:gap-2 text-[13px] min-[360px]:text-sm sm:text-base md:text-2xl font-mono tracking-tight font-semibold hover:text-[var(--accent)] transition-colors duration-300 mx-auto lg:mx-0"
                   >
-                    <span className="relative">
+                    <span className="relative whitespace-nowrap">
                       mananshah.ms.01@gmail.com
                       <span className="absolute left-0 bottom-0 w-full h-[1.5px] bg-[var(--accent)] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                     </span>
-                    <span className="w-7 h-7 rounded-full border border-[var(--glass-border)] flex items-center justify-center group-hover:bg-[var(--accent)] group-hover:text-white group-hover:border-[var(--accent)] transition-all duration-300">
-                      <ArrowRight size={12} className="transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+                    <span className="w-5 h-5 sm:w-7 sm:h-7 flex-shrink-0 rounded-full border border-[var(--glass-border)] flex items-center justify-center group-hover:bg-[var(--accent)] group-hover:text-white group-hover:border-[var(--accent)] transition-all duration-300">
+                      <ArrowRight size={10} className="transform -rotate-45 group-hover:rotate-0 transition-transform duration-300 sm:scale-100 scale-75" />
                     </span>
                   </a>
                 </div>
@@ -113,9 +119,9 @@ export default function Contact() {
                   <span className="font-mono text-[10px] uppercase tracking-[0.25em] block mb-2.5" style={{ color: "var(--fg-subtle)" }}>
                     Current Status
                   </span>
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass-light border border-[var(--glass-border)] text-xs font-mono" style={{ color: "var(--fg-muted)" }}>
-                    <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
-                    <span>Based in Mumbai • Open to SWE & AI/ML Roles</span>
+                  <div className="status-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass-light border border-[var(--glass-border)] text-xs font-mono cursor-pointer transition-all duration-300" tabIndex={0} style={{ color: "var(--fg-muted)" }}>
+                    <span className="w-2 h-2 flex-shrink-0 rounded-full bg-[var(--accent)] animate-pulse" />
+                    <span>Based in Mumbai<span className="status-expansion"> • Open to SWE & AI/ML Roles</span></span>
                   </div>
                 </div>
 

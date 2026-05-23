@@ -72,12 +72,7 @@ export default function Skills() {
                   <motion.span
                     key={skill}
                     whileHover={{ scale: 1.05, y: -1 }}
-                    className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 cursor-default"
-                    style={{
-                      backgroundColor: "rgba(26, 26, 24, 0.03)",
-                      border: "1px solid rgba(26, 26, 24, 0.04)",
-                      color: "var(--fg-muted)",
-                    }}
+                    className="skill-pill px-3 py-1.5 rounded-lg text-sm font-medium cursor-default transition-all duration-300"
                   >
                     {skill}
                   </motion.span>
