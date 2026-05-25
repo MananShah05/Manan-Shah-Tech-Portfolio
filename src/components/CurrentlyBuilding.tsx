@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Hammer } from "lucide-react";
 
 const items = [
-  "InsureDoc v2",
+  "StockIntel",
   "AI Resume Chat",
   "Semantic Search",
   "DeepGuard v2",

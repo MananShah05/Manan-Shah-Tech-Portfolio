@@ -229,7 +229,7 @@ export default function Hero() {
                   className="w-1.5 h-1.5 rounded-full animate-pulse"
                   style={{ backgroundColor: "var(--accent)" }}
                 />
-                Currently Building: InsureDoc v2 · AI Resume Chat · Semantic Search
+                Currently Building: StockIntel · AI Resume Chat · Semantic Search
               </div>
             </motion.div>
 

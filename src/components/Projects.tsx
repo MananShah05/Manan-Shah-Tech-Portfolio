@@ -1,29 +1,109 @@
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import ShapeGrid from "./ShapeGrid";
-import { ArrowUpRight, Brain, FileText, Search } from "lucide-react";
+import { ArrowUpRight, Brain, FileText, Search, X, Maximize2, LineChart, TrendingUp } from "lucide-react";
 
-const projects = [
+// project interface
+type Project = {
+  title: string;
+  summary: string;
+  problem: string;
+  contributions: string[];
+  impact: string;
+  stack: string[];
+  icon: React.ReactNode;
+  color: string;
+  links: { label: string; url: string }[];
+};
+
+const projects: Project[] = [
   {
-    title: "InsureDoc v2 — NLP-Powered Insurance Document Intelligence",
+    title: "RiskMatrix — Multi-Asset Portfolio Risk Analytics Dashboard",
     summary:
-      "An end-to-end NLP system that extracts, validates, and structures data from insurance claim documents using transformer models and custom entity recognition.",
+      "An enterprise-grade portfolio analytics platform that computes volatility, drawdowns, Sharpe ratios, and correlation metrics across multi-asset portfolios using real-time market data.",
     problem:
-      "Insurance claim forms arrived in mixed formats — scanned PDFs, images, handwritten notes — creating bottlenecks and delaying payouts by days.",
+      "Investors often lack a unified system to evaluate portfolio-wide risk exposure across equities, commodities, fixed income, and forex assets. Existing tools provide fragmented analytics without real-time quantitative insights into volatility, drawdowns, or cross-asset correlations.",
     contributions: [
-      "Built an OCR + transformer pipeline using Tesseract and fine-tuned BERT for domain-specific entity extraction on insurance documents.",
-      "Implemented confidence scoring and validation rules to flag low-certainty extractions, achieving 94% field-level accuracy.",
-      "Designed a FastAPI backend with async processing queues, handling 500+ documents per hour on commodity hardware.",
-      "Created a Streamlit dashboard for claims adjusters to review extractions, annotate corrections, and export structured data.",
+      "Built a full-stack portfolio analytics platform using Next.js 14, FastAPI, and PostgreSQL.",
+      "Designed a quantitative metrics engine using pandas and numpy to compute rolling volatility, Sharpe ratio, cumulative returns, and maximum drawdowns.",
+      "Integrated yfinance market data pipelines with asynchronous FastAPI services for real-time portfolio computations.",
+      "Developed interactive financial dashboards with Recharts, correlation heatmaps, and risk visualization components.",
+      "Implemented scalable async PostgreSQL architecture using SQLAlchemy 2.0 and Supabase.",
     ],
     impact:
-      "Reduced average claim processing time by 70% and achieved 88% straight-through processing rate.",
-    stack: ["Python", "FastAPI", "Transformers", "PostgreSQL", "Tesseract", "Streamlit"],
+      "Enabled real-time multi-asset portfolio risk evaluation with automated quantitative analytics and interactive visualizations for volatility, correlation, and performance assessment.",
+    stack: [
+      "Next.js 14",
+      "TypeScript",
+      "FastAPI",
+      "Python",
+      "PostgreSQL",
+      "Supabase",
+      "SQLAlchemy",
+      "pandas",
+      "numpy",
+      "TailwindCSS",
+      "Recharts",
+      "React Query",
+      "Zustand",
+    ],
+    icon: <LineChart size={22} />,
+    color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
+    links: [
+      { label: "Live App", url: "https://quant-vault-1.vercel.app/" }
+    ],
+  },
+  {
+    title: "Financial Lens — Scenario & Sensitivity Analysis Platform",
+    summary:
+      "A quantitative analytics platform for stress testing, rolling correlation analysis, and regression-based financial modeling using live market data.",
+    problem:
+      "Investors often lack accessible tools to evaluate portfolio sensitivity, asset correlation shifts, and market shock scenarios in real time.",
+    contributions: [
+      "Built a full-stack financial analytics platform using Next.js, FastAPI, and pandas.",
+      "Developed stress testing, rolling correlation, and OLS regression engines for quantitative market analysis.",
+      "Integrated live financial market data pipelines using Finnhub APIs.",
+      "Created interactive analytics dashboards with Recharts for scenario visualization and statistical interpretation.",
+    ],
+    impact:
+      "Enabled real-time quantitative scenario analysis and financial risk evaluation through interactive statistical modeling tools.",
+    stack: [
+      "Next.js",
+      "FastAPI",
+      "Python",
+      "pandas",
+      "statsmodels",
+      "Finnhub",
+      "Recharts",
+      "TailwindCSS",
+    ],
+    icon: <TrendingUp size={22} />,
+    color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
+    links: [
+      { label: "Live App", url: "https://financial-lens.vercel.app/" }
+    ],
+  },
+  {
+    title: "StockIntel — AI-Powered Investment Decision Support System",
+    summary:
+      "A full-stack financial intelligence platform that combines sentiment analysis, technical indicators, and valuation metrics for smarter stock evaluation.",
+    problem:
+      "Retail investors often lack access to institutional-grade analytics, struggling to manually synthesize sentiment, technicals, and fundamentals across disjointed tools.",
+    contributions: [
+      "Built a scalable stock analytics platform using FastAPI and Next.js.",
+      "Implemented dynamic evaluation scoring using sentiment, technical momentum, and fundamentals.",
+      "Integrated secure Google OAuth authentication with NextAuth and Neon PostgreSQL.",
+      "Designed responsive dashboards for stock comparison and watchlist tracking.",
+      "Deployed full-stack architecture on Vercel with serverless APIs.",
+    ],
+    impact:
+      "Provided actionable stock insights through unified dashboards, helping users make data-driven investment decisions faster.",
+    stack: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Neon", "NextAuth", "TailwindCSS", "Vercel"],
     icon: <FileText size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
     links: [
-      // { label: "GitHub", url: "#" },
-      { label: "Under Development", url: "#" }
+      { label: "Live App", url: "https://stock-intell.vercel.app/" }
     ],
   },
   {
@@ -45,6 +125,27 @@ const projects = [
     color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
     links: [
       { label: "Paper", url: "https://drive.google.com/file/d/18ksc9KRMQ_dCvlaj3sISPSgaqiMPABZz/view?usp=sharing" },
+    ],
+  },
+  {
+    title: "InsureDoc v2 — NLP-Powered Insurance Document Intelligence",
+    summary:
+      "An end-to-end NLP system that extracts, validates, and structures data from insurance claim documents using transformer models and custom entity recognition.",
+    problem:
+      "Insurance claim forms arrived in mixed formats — scanned PDFs, images, handwritten notes — creating bottlenecks and delaying payouts by days.",
+    contributions: [
+      "Built an OCR + transformer pipeline using Tesseract and fine-tuned BERT for domain-specific entity extraction on insurance documents.",
+      "Implemented confidence scoring and validation rules to flag low-certainty extractions, achieving 94% field-level accuracy.",
+      "Designed a FastAPI backend with async processing queues, handling 500+ documents per hour on commodity hardware.",
+      "Created a Streamlit dashboard for claims adjusters to review extractions, annotate corrections, and export structured data.",
+    ],
+    impact:
+      "Reduced average claim processing time by 70% and achieved 88% straight-through processing rate.",
+    stack: ["Python", "FastAPI", "Transformers", "PostgreSQL", "Tesseract", "Streamlit"],
+    icon: <FileText size={22} />,
+    color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
+    links: [
+      { label: "Under Development", url: "#" }
     ],
   },
   {
@@ -70,7 +171,35 @@ const projects = [
   },
 ];
 
+const TEXT_PROBLEM_CONTEXT = "Problem Context";
+const TEXT_TECHNICAL_CONTRIBUTIONS = "Technical Contributions";
+const TEXT_TECH_STACK = "Tech Stack";
+const TEXT_MEASURABLE_IMPACT = "Measurable Impact";
+
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  // Close modal on escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedProject(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedProject]);
+
   return (
     <section id="projects" className="relative py-12 md:py-16 lg:py-20">
       {/* ShapeGrid background */}
@@ -85,6 +214,7 @@ export default function Projects() {
           hoverTrailAmount={2}
         />
       </div>
+      
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         <SectionHeading
           label="Projects"
@@ -92,9 +222,11 @@ export default function Projects() {
           subtitle="From transformer-based document extraction to published deepfake research — each project represents applied ML solving real-world problems."
         />
 
-        <div className="space-y-8">
+        {/* 3x3 Grid (or rather 1x3 since there are 3 items) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, i) => (
             <motion.div
+              layoutId={`project-card-${project.title}`}
               key={project.title}
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -104,150 +236,256 @@ export default function Projects() {
                 delay: i * 0.12,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              whileHover={{ y: -4 }}
-              className="glass-light rounded-3xl p-6 md:p-10 group cursor-default"
+              onClick={() => setSelectedProject(project)}
+              className="group cursor-pointer rounded-3xl p-6 relative overflow-hidden flex flex-col h-full glass-light border"
+              style={{ borderColor: "var(--glass-border)" }}
+              whileHover={{ y: -4, scale: 1.01 }}
             >
-              <div className="grid lg:grid-cols-12 gap-8">
-                <div className="lg:col-span-8">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center"
-                      style={{ backgroundColor: "rgba(26, 26, 24, 0.03)", color: "var(--accent)" }}
-                    >
-                      {project.icon}
-                    </div>
-                    <h3 className="font-sans text-xl md:text-2xl font-bold" style={{ color: "var(--fg)" }}>
-                      {project.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-[15px] leading-relaxed mb-4" style={{ color: "var(--fg-muted)" }}>
-                    {project.summary}
-                  </p>
-
-                  <div className="mb-5">
-                    <span
-                      className="text-[11px] font-mono font-semibold uppercase tracking-wider"
-                      style={{ color: "var(--accent)" }}
-                    >
-                      Problem
-                    </span>
-                    <p className="text-sm mt-1.5 leading-relaxed" style={{ color: "var(--fg-subtle)" }}>
-                      {project.problem}
-                    </p>
-                  </div>
-
-                  <div className="mb-5">
-                    <span
-                      className="text-[11px] font-mono font-semibold uppercase tracking-wider"
-                      style={{ color: "var(--accent)" }}
-                    >
-                      Technical Contributions
-                    </span>
-                    <ul className="mt-2 space-y-2">
-                      {project.contributions.map((c, j) => (
-                        <li
-                          key={j}
-                          className="flex items-start gap-2.5 text-sm leading-relaxed"
-                          style={{ color: "var(--fg-muted)" }}
-                        >
-                          <span
-                            className="w-1 h-1 rounded-full mt-2 flex-shrink-0"
-                            style={{ backgroundColor: "var(--fg-subtle)" }}
-                          />
-                          {c}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm mb-6">
-                    <span className="font-medium" style={{ color: "var(--fg-subtle)" }}>Impact:</span>
-                    <span className="font-medium" style={{ color: "var(--fg)" }}>
-                      {project.impact}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-4">
-                    {project.links?.map((link) => (
-                      <motion.a
-                        key={link.label}
-                        href={link.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        whileHover={{ y: -2 }}
-                        className="inline-flex items-center gap-1.5 text-[13px] font-mono font-medium transition-colors"
-                        style={{ color: "var(--fg)" }}
-                      >
-                        {link.label}
-                        <ArrowUpRight size={14} style={{ color: "var(--accent)" }} />
-                      </motion.a>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="lg:col-span-4 flex flex-col justify-between">
-                  <div
-                    className={`rounded-2xl bg-gradient-to-br ${project.color} border p-6 mb-6`}
-                    style={{ borderColor: "var(--glass-border)" }}
+              {/* Background gradient hint */}
+              <div 
+                className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-30 group-hover:opacity-50 transition-opacity duration-500`}
+              />
+              
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="flex items-center justify-between mb-5">
+                  <motion.div
+                    layoutId={`project-icon-${project.title}`}
+                    className="w-12 h-12 rounded-xl flex items-center justify-center bg-black/5 dark:bg-white/5"
+                    style={{ color: "var(--accent)" }}
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <span
-                        className="text-[11px] font-mono font-semibold uppercase tracking-wider"
-                        style={{ color: "var(--fg-subtle)" }}
-                      >
-                        Tech Stack
-                      </span>
-                      <ArrowUpRight
-                        size={16}
-                        style={{ color: "var(--fg-subtle)" }}
-                        className="group-hover:text-[var(--accent)] transition-colors"
-                      />
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {project.stack.map((tech) => (
-                        <motion.span
-                          key={tech}
-                          whileHover={{ scale: 1.05, y: -1 }}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors duration-300"
-                          style={{
-                            backgroundColor: "rgba(26, 26, 24, 0.03)",
-                            border: "1px solid var(--glass-border)",
-                            color: "var(--fg-muted)",
-                          }}
-                        >
-                          {tech}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div
-                    className="rounded-2xl p-5 space-y-3"
-                    style={{ backgroundColor: "rgba(26, 26, 24, 0.015)", border: "1px solid var(--glass-border)" }}
+                    {project.icon}
+                  </motion.div>
+                  <motion.div 
+                    layoutId={`project-expand-${project.title}`}
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/5 text-zinc-500 group-hover:text-[var(--accent)] group-hover:bg-[var(--accent)]/10 transition-colors"
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "var(--secondary)", opacity: 0.6 }} />
-                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "var(--taupe)", opacity: 0.4 }} />
-                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: "var(--accent)", opacity: 0.4 }} />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="h-2 w-full rounded-full" style={{ backgroundColor: "rgba(26, 26, 24, 0.08)" }} />
-                      <div className="h-2 w-4/5 rounded-full" style={{ backgroundColor: "rgba(26, 26, 24, 0.08)" }} />
-                      <div className="h-2 w-3/5 rounded-full" style={{ backgroundColor: "rgba(26, 26, 24, 0.08)" }} />
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 pt-1">
-                      <div className="h-8 rounded-lg" style={{ backgroundColor: "rgba(26, 26, 24, 0.05)" }} />
-                      <div className="h-8 rounded-lg" style={{ backgroundColor: "rgba(26, 26, 24, 0.05)" }} />
-                      <div className="h-8 rounded-lg" style={{ backgroundColor: "rgba(26, 26, 24, 0.05)" }} />
-                    </div>
-                  </div>
+                    <Maximize2 size={14} />
+                  </motion.div>
                 </div>
+                
+                <motion.h3 
+                  layoutId={`project-title-${project.title}`}
+                  className="font-sans text-xl font-bold mb-3" 
+                  style={{ color: "var(--fg)" }}
+                >
+                  {project.title.split(" — ")[0]}
+                  <span className="block text-sm font-medium mt-1 opacity-70">
+                    {project.title.split(" — ")[1]}
+                  </span>
+                </motion.h3>
+
+                <motion.p 
+                  layoutId={`project-summary-${project.title}`}
+                  className="text-sm leading-relaxed mb-6 flex-grow" 
+                  style={{ color: "var(--fg-muted)" }}
+                >
+                  {project.summary}
+                </motion.p>
+
+                <motion.div 
+                  layoutId={`project-stack-${project.title}`}
+                  className="flex flex-wrap gap-2 mt-auto pt-4 border-t"
+                  style={{ borderColor: "var(--glass-border)" }}
+                >
+                  {project.stack.slice(0, 3).map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-1 rounded-md text-[11px] font-medium"
+                      style={{
+                        backgroundColor: "rgba(26, 26, 24, 0.04)",
+                        border: "1px solid var(--glass-border)",
+                        color: "var(--fg-muted)",
+                      }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {project.stack.length > 3 && (
+                    <span
+                      className="px-2.5 py-1 rounded-md text-[11px] font-medium"
+                      style={{
+                        backgroundColor: "rgba(26, 26, 24, 0.04)",
+                        border: "1px solid var(--glass-border)",
+                        color: "var(--fg-muted)",
+                      }}
+                    >
+                      +{project.stack.length - 3}
+                    </span>
+                  )}
+                </motion.div>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Expanded Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedProject(null)}
+              className="fixed inset-0 z-40 backdrop-blur-md bg-black/20 dark:bg-black/40"
+            />
+
+            {/* Modal */}
+            <div className="fixed inset-0 z-40 flex items-start justify-center pt-[88px] md:pt-[104px] p-4 md:p-6 pb-6 pointer-events-none">
+              <motion.div
+                layoutId={`project-card-${selectedProject.title}`}
+                className="w-full max-w-6xl max-h-[calc(100vh-120px)] md:max-h-[calc(100vh-140px)] overflow-y-auto overscroll-contain glass rounded-3xl pointer-events-auto border flex flex-col scrollbar-none"
+                style={{ backgroundColor: "var(--bg)", borderColor: "var(--glass-border)" }}
+              >
+                {/* Modal Header */}
+                <div className="sticky top-0 z-10 flex items-center justify-between p-5 md:p-6 border-b backdrop-blur-xl" style={{ borderColor: "var(--glass-border)", backgroundColor: "var(--bg)" }}>
+                  <div className="flex items-center gap-4">
+                    <motion.div
+                      layoutId={`project-icon-${selectedProject.title}`}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center bg-black/5 dark:bg-white/5"
+                      style={{ color: "var(--accent)" }}
+                    >
+                      {selectedProject.icon}
+                    </motion.div>
+                    <motion.h3 
+                      layoutId={`project-title-${selectedProject.title}`}
+                      className="font-sans text-xl md:text-2xl font-bold" 
+                      style={{ color: "var(--fg)" }}
+                    >
+                      {selectedProject.title.split(" — ")[0]}
+                      <span className="block text-sm font-medium mt-1 opacity-70">
+                        {selectedProject.title.split(" — ")[1]}
+                      </span>
+                    </motion.h3>
+                  </div>
+                  <motion.button
+                    layoutId={`project-expand-${selectedProject.title}`}
+                    onClick={() => setSelectedProject(null)}
+                    className="w-10 h-10 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                  >
+                    <X size={18} style={{ color: "var(--fg)" }} />
+                  </motion.button>
+                </div>
+
+                {/* Modal Body */}
+                <div className="p-5 md:p-6 grid lg:grid-cols-12 gap-6 lg:gap-10">
+                  <div className="lg:col-span-8 space-y-5">
+                    <div>
+                      <motion.p 
+                        layoutId={`project-summary-${selectedProject.title}`}
+                        className="text-[15px] md:text-base leading-relaxed" 
+                        style={{ color: "var(--fg)", opacity: 0.9 }}
+                      >
+                        {selectedProject.summary}
+                      </motion.p>
+                    </div>
+
+                    <div>
+                      <span
+                        className="text-[11px] font-mono font-semibold uppercase tracking-wider block mb-1.5"
+                        style={{ color: "var(--accent)" }}
+                      >
+                        {TEXT_PROBLEM_CONTEXT}
+                      </span>
+                      <p className="text-sm leading-relaxed" style={{ color: "var(--fg)", opacity: 0.85 }}>
+                        {selectedProject.problem}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span
+                        className="text-[11px] font-mono font-semibold uppercase tracking-wider block mb-2"
+                        style={{ color: "var(--accent)" }}
+                      >
+                        {TEXT_TECHNICAL_CONTRIBUTIONS}
+                      </span>
+                      <ul className="space-y-1.5">
+                        {selectedProject.contributions.map((c, j) => (
+                          <li
+                            key={j}
+                            className="flex items-start gap-2.5 text-sm leading-relaxed"
+                            style={{ color: "var(--fg)", opacity: 0.85 }}
+                          >
+                            <span
+                              className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
+                              style={{ backgroundColor: "var(--accent)", opacity: 0.8 }}
+                            />
+                            {c}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                  </div>
+
+                  {/* Sidebar */}
+                  <div className="lg:col-span-4 space-y-4">
+                    <div
+                      className={`rounded-xl bg-gradient-to-br ${selectedProject.color} border p-4`}
+                      style={{ borderColor: "var(--glass-border)" }}
+                    >
+                      <span
+                        className="text-[11px] font-mono font-semibold uppercase tracking-wider block mb-2"
+                        style={{ color: "var(--fg)", opacity: 0.7 }}
+                      >
+                        {TEXT_TECH_STACK}
+                      </span>
+                      <motion.div 
+                        layoutId={`project-stack-${selectedProject.title}`}
+                        className="flex flex-wrap gap-1.5"
+                      >
+                        {selectedProject.stack.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2 py-0.5 rounded-md text-[11px] font-medium"
+                            style={{
+                              backgroundColor: "rgba(26, 26, 24, 0.05)",
+                              border: "1px solid var(--glass-border)",
+                              color: "var(--fg)",
+                              opacity: 0.85,
+                            }}
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </motion.div>
+                    </div>
+
+                    <div className="space-y-2.5">
+                      {selectedProject.links?.map((link) => (
+                        <a
+                          key={link.label}
+                          href={link.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center justify-between p-3 rounded-xl border group hover:border-[var(--accent)] transition-colors"
+                          style={{ borderColor: "var(--glass-border)", backgroundColor: "rgba(26, 26, 24, 0.02)" }}
+                        >
+                          <span className="text-sm font-semibold" style={{ color: "var(--fg)" }}>
+                            {link.label}
+                          </span>
+                          <ArrowUpRight size={18} style={{ color: "var(--fg-subtle)" }} className="group-hover:text-[var(--accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                        </a>
+                      ))}
+                    </div>
+
+                    <div className="p-3.5 rounded-xl border" style={{ backgroundColor: "var(--accent)/5", borderColor: "var(--glass-border)" }}>
+                      <span className="text-[11px] font-mono font-semibold uppercase tracking-wider block mb-1" style={{ color: "var(--accent)" }}>
+                        {TEXT_MEASURABLE_IMPACT}
+                      </span>
+                      <p className="text-sm font-medium leading-relaxed" style={{ color: "var(--fg)" }}>
+                        {selectedProject.impact}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
