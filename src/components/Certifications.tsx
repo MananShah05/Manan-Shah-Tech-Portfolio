@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Award, Brain, Code, GraduationCap, Landmark, Shield } from "lucide-react";
+import { Brain, Code, Cpu, GraduationCap, Landmark, Shield } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 
 const certs = [
@@ -26,11 +26,12 @@ const certs = [
     href: "https://www.coursera.org/account/accomplishments/verify/7YHB76EGGY1H",
   },
   {
-    title: "Financial Markets & Investment Analysis",
-    org: "NSE Academy / Industry Program",
-    icon: <Award size={20} />,
-    color: "text-[var(--secondary)]",
-    bg: "bg-[var(--secondary)]/8",
+    title: "Getting Started with AI on Jetson Nano",
+    org: "NVIDIA",
+    icon: <Cpu size={20} />,
+    color: "text-[var(--accent)]",
+    bg: "bg-[var(--accent)]/8",
+    href: "https://drive.google.com/file/d/1DVMUv10HjIHPlLc9H60tszgNsG9fx2Nt/view?usp=drive_link",
   },
   {
     title: "C & C++ Certification",

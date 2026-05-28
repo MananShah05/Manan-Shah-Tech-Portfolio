@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import ShapeGrid from "./ShapeGrid";
-import { ArrowUpRight, Brain, FileText, Search, X, Maximize2, LineChart, TrendingUp } from "lucide-react";
+import { ArrowUpRight, Brain, FileText, Search, X, Maximize2, LineChart, TrendingUp, GitBranch, Heart, Calendar, UtensilsCrossed } from "lucide-react";
 
 // project interface
 type Project = {
@@ -51,7 +51,7 @@ const projects: Project[] = [
     icon: <LineChart size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
     links: [
-      { label: "Live App", url: "https://quant-vault-1.vercel.app/" }
+      { label: "Live Link", url: "https://quant-vault-1.vercel.app/" }
     ],
   },
   {
@@ -81,7 +81,7 @@ const projects: Project[] = [
     icon: <TrendingUp size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
     links: [
-      { label: "Live App", url: "https://financial-lens.vercel.app/" }
+      { label: "Live Link", url: "https://financial-lens.vercel.app/" }
     ],
   },
   {
@@ -103,7 +103,7 @@ const projects: Project[] = [
     icon: <FileText size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
     links: [
-      { label: "Live App", url: "https://stock-intell.vercel.app/" }
+      { label: "Live Link", url: "https://stock-intell.vercel.app/" }
     ],
   },
   {
@@ -166,7 +166,91 @@ const projects: Project[] = [
     icon: <Search size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
     links: [
-      { label: "Under Development", url: "#" }
+      { label: "Live Link", url: "https://fin-searchh.vercel.app/" }
+    ],
+  },
+  {
+    title: "RepoLens AI — AI-Powered Repository Understanding Platform",
+    summary:
+      "An AI-powered GitHub repository understanding platform that automates the process of explaining complex codebases, summarizing architectures, generating interactive dependency diagrams, and helping developers onboard in minutes instead of days.",
+    problem:
+      "Onboarding onto large, unfamiliar codebases is slow and manual. Developers spend days reading code, tracing dependencies, and asking teammates for context — a bottleneck that scales poorly across teams and open-source contributions.",
+    contributions: [
+      "Built an AI-driven codebase analysis engine that parses repository structures and generates architectural summaries automatically.",
+      "Designed interactive dependency diagram generation to visually map module relationships and call flows.",
+      "Implemented natural language querying over codebases, allowing developers to ask questions and receive contextual explanations.",
+      "Optimized the ingestion pipeline to handle large monorepos with thousands of files efficiently.",
+    ],
+    impact:
+      "Reduced developer onboarding time from days to minutes. Enables instant architectural understanding of any public GitHub repository.",
+    stack: ["Next.js", "TypeScript", "Python", "FastAPI", "OpenAI", "LangChain", "TailwindCSS"],
+    icon: <GitBranch size={22} />,
+    color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
+    links: [
+      { label: "Live Link", url: "https://repo-lens-aii.vercel.app/" }
+    ],
+  },
+  {
+    title: "Health Tracker AI — Intelligent Personal Health Companion",
+    summary:
+      "An elegant personal health companion that intelligently connects food logs, sleep patterns, and physical activity to surface actionable, personalized behavioral insights.",
+    problem:
+      "Most health tracking apps collect data in silos — food, sleep, and exercise are logged independently without cross-domain analysis. Users accumulate data but gain no actionable behavioral insights connecting these dimensions.",
+    contributions: [
+      "Built an AI-powered health analytics engine that correlates food intake, sleep quality, and exercise patterns to generate personalized insights.",
+      "Designed an intuitive logging interface with natural language input for frictionless daily health tracking.",
+      "Implemented trend analysis and behavioral pattern detection across multiple health dimensions.",
+      "Created a responsive dashboard with interactive visualizations for long-term health metric monitoring.",
+    ],
+    impact:
+      "Transforms passive health data collection into active behavioral coaching. Users receive cross-domain insights connecting diet, sleep, and activity patterns.",
+    stack: ["Next.js", "TypeScript", "Python", "FastAPI", "OpenAI", "TailwindCSS", "Recharts"],
+    icon: <Heart size={22} />,
+    color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
+    links: [
+      { label: "GitHub", url: "https://github.com/MananShah05/Health-Tracker-AI" }
+    ],
+  },
+  {
+    title: "WallCal — Calendar Wallpaper Generator",
+    summary:
+      "A sleek frontend application that generates beautiful, customizable calendar wallpapers for desktops and mobile devices with modern design aesthetics.",
+    problem:
+      "Users who want a calendar integrated into their device wallpaper have limited options — most tools produce generic, visually unappealing outputs that don't match modern design standards or personal preferences.",
+    contributions: [
+      "Built a dynamic calendar rendering engine with multiple layout templates and customization options.",
+      "Implemented real-time preview with responsive design for both desktop and mobile wallpaper dimensions.",
+      "Designed a clean, modern UI with theme support and export functionality for high-resolution wallpapers.",
+      "Optimized rendering performance for smooth real-time customization interactions.",
+    ],
+    impact:
+      "Enables users to create personalized, aesthetically premium calendar wallpapers in seconds with full design control.",
+    stack: ["React", "TypeScript", "TailwindCSS", "Canvas API", "Vite"],
+    icon: <Calendar size={22} />,
+    color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
+    links: [
+      { label: "Live Link", url: "https://wall-cal.vercel.app/" }
+    ],
+  },
+  {
+    title: "HungryNow — Premium Food Delivery Platform",
+    summary:
+      "A premium, high-fidelity, and state-of-the-art food delivery web application featuring immersive UI/UX design, real-time ordering flows, and restaurant discovery.",
+    problem:
+      "Existing food delivery interfaces often feel generic and utilitarian. There's a gap for a visually premium, highly polished food ordering experience that prioritizes design excellence alongside functional delivery workflows.",
+    contributions: [
+      "Designed and built a high-fidelity food delivery UI with premium glassmorphism aesthetics and micro-animations.",
+      "Implemented restaurant discovery with category filtering, search, and detailed menu browsing.",
+      "Built a complete cart and checkout flow with real-time order state management.",
+      "Created responsive layouts optimized for both desktop and mobile food ordering experiences.",
+    ],
+    impact:
+      "Demonstrates production-grade frontend engineering with a focus on visual excellence and premium user experience in the food-tech domain.",
+    stack: ["React", "TypeScript", "TailwindCSS", "Framer Motion", "Vite"],
+    icon: <UtensilsCrossed size={22} />,
+    color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
+    links: [
+      { label: "Live Link", url: "https://hungry-now-wow.vercel.app/" }
     ],
   },
 ];
@@ -214,7 +298,7 @@ export default function Projects() {
           hoverTrailAmount={2}
         />
       </div>
-      
+
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
         <SectionHeading
           label="Projects"
@@ -242,10 +326,10 @@ export default function Projects() {
               whileHover={{ y: -4, scale: 1.01 }}
             >
               {/* Background gradient hint */}
-              <div 
+              <div
                 className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-30 group-hover:opacity-50 transition-opacity duration-500`}
               />
-              
+
               <div className="relative z-10 flex flex-col h-full">
                 <div className="flex items-center justify-between mb-5">
                   <motion.div
@@ -255,17 +339,17 @@ export default function Projects() {
                   >
                     {project.icon}
                   </motion.div>
-                  <motion.div 
+                  <motion.div
                     layoutId={`project-expand-${project.title}`}
                     className="w-8 h-8 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/5 text-zinc-500 group-hover:text-[var(--accent)] group-hover:bg-[var(--accent)]/10 transition-colors"
                   >
                     <Maximize2 size={14} />
                   </motion.div>
                 </div>
-                
-                <motion.h3 
+
+                <motion.h3
                   layoutId={`project-title-${project.title}`}
-                  className="font-sans text-xl font-bold mb-3" 
+                  className="font-sans text-xl font-bold mb-3"
                   style={{ color: "var(--fg)" }}
                 >
                   {project.title.split(" — ")[0]}
@@ -274,15 +358,15 @@ export default function Projects() {
                   </span>
                 </motion.h3>
 
-                <motion.p 
+                <motion.p
                   layoutId={`project-summary-${project.title}`}
-                  className="text-sm leading-relaxed mb-6 flex-grow" 
+                  className="text-sm leading-relaxed mb-6 flex-grow"
                   style={{ color: "var(--fg-muted)" }}
                 >
                   {project.summary}
                 </motion.p>
 
-                <motion.div 
+                <motion.div
                   layoutId={`project-stack-${project.title}`}
                   className="flex flex-wrap gap-2 mt-auto pt-4 border-t"
                   style={{ borderColor: "var(--glass-border)" }}
@@ -349,9 +433,9 @@ export default function Projects() {
                     >
                       {selectedProject.icon}
                     </motion.div>
-                    <motion.h3 
+                    <motion.h3
                       layoutId={`project-title-${selectedProject.title}`}
-                      className="font-sans text-xl md:text-2xl font-bold" 
+                      className="font-sans text-xl md:text-2xl font-bold"
                       style={{ color: "var(--fg)" }}
                     >
                       {selectedProject.title.split(" — ")[0]}
@@ -373,9 +457,9 @@ export default function Projects() {
                 <div className="p-5 md:p-6 grid lg:grid-cols-12 gap-6 lg:gap-10">
                   <div className="lg:col-span-8 space-y-5">
                     <div>
-                      <motion.p 
+                      <motion.p
                         layoutId={`project-summary-${selectedProject.title}`}
-                        className="text-[15px] md:text-base leading-relaxed" 
+                        className="text-[15px] md:text-base leading-relaxed"
                         style={{ color: "var(--fg)", opacity: 0.9 }}
                       >
                         {selectedProject.summary}
@@ -432,7 +516,7 @@ export default function Projects() {
                       >
                         {TEXT_TECH_STACK}
                       </span>
-                      <motion.div 
+                      <motion.div
                         layoutId={`project-stack-${selectedProject.title}`}
                         className="flex flex-wrap gap-1.5"
                       >
