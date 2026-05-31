@@ -25,7 +25,7 @@ export const PortfolioShell: React.FC<PortfolioShellProps> = ({
         className="w-full"
         style={{
           // GPU optimization to prevent layout thrash during active transition
-          willChange: "transform, opacity",
+          willChange: transitionPhase !== "idle" ? "transform, opacity" : undefined,
           // Fade/hide active content only during initial Tear phase when RGB screenshot is active
           opacity: transitionPhase === "rgb" || transitionPhase === "flood" ? 0 : 1,
         }}

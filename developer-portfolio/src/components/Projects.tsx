@@ -419,7 +419,7 @@ export default function Projects() {
         <div className="fixed inset-0 z-40 flex items-start justify-center pt-[88px] md:pt-[104px] p-4 md:p-6 pb-6 pointer-events-none">
           <motion.div
             layoutId={`project-card-${selectedProject.title}`}
-            className="w-full max-w-6xl max-h-[calc(100vh-120px)] md:max-h-[calc(100vh-140px)] overflow-y-auto overscroll-contain glass rounded-3xl pointer-events-auto border flex flex-col scrollbar-none"
+            className="w-full max-w-6xl max-h-[calc(100vh-120px)] md:max-h-[calc(100vh-140px)] overflow-y-auto overscroll-contain glass-light rounded-3xl pointer-events-auto border flex flex-col scrollbar-none"
             style={{ backgroundColor: "var(--bg)", borderColor: "var(--glass-border)" }}
           >
             <motion.div
