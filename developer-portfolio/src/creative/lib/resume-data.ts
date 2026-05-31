@@ -194,23 +194,15 @@ export const resumeData = {
       credentialId: "C4D-9382",
       verifyUrl: null,
     },
-    {
-      name: "NISM Series V-A",
-      issuer: "National Institute of Securities Markets",
-      type: "Finance",
-      description: "Mutual Fund Distributor Certification",
-      status: "Active",
-      credentialId: "NISM-V-A-102",
-    },
   ] as Certification[],
 
   hackathons: [
     {
-      event: "Creative Jam 2024",
-      organizer: "Figma Community",
-      date: "2024-04-12",
-      outcome: "Winner — Best Visual Experience",
-      built: "Designed an interactive prototype for a premium e-commerce fashion app",
+      event: "Pixel Paranoia 2025",
+      organizer: "6-Hour Hackathon",
+      date: "2025-02-15",
+      outcome: "Winner",
+      built: "Designed and prototyped a high-fidelity visual solution under intense time pressure",
       solo: false,
     },
   ],
