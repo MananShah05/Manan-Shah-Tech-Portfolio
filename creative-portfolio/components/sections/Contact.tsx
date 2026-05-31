@@ -59,11 +59,6 @@ export function Contact() {
             className="lg:col-span-7 flex flex-col justify-between"
           >
             <div className="space-y-8">
-              <div className="inline-flex items-center gap-3">
-                <span className="font-mono text-xs tracking-widest text-accent uppercase">
-                  09. Direct Connection
-                </span>
-              </div>
               <h2 className="font-display text-[clamp(2.5rem,5.5vw,5rem)] font-bold uppercase tracking-tighter leading-[0.85] text-ink -ml-1 text-balance">
                 Let&apos;s craft
                 <br />

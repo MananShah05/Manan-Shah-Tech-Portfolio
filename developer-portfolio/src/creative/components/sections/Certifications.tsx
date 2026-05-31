@@ -28,11 +28,6 @@ export function Certifications() {
           transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           className="mb-16 space-y-6"
         >
-          <div className="inline-flex items-center gap-3">
-            <span className="font-mono text-xs tracking-widest text-accent uppercase">
-              05. Credentials
-            </span>
-          </div>
           <h2 className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.85] text-bg -ml-1">
             Professional
             <br />

@@ -23,13 +23,6 @@ export function Research() {
             className="lg:col-span-7 flex flex-col space-y-12"
           >
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-3">
-                <div className="h-[2px] w-8 bg-accent-ink/30" />
-                <span className="font-mono text-xs text-accent-ink/60 tracking-widest uppercase">
-                  08 — Research
-                </span>
-              </div>
-
               <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter leading-[0.9] text-accent-ink">
                 {research.title.split(":")[0]}
                 <br />

@@ -349,12 +349,6 @@ export function Projects() {
           transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           className="mb-24 space-y-6"
         >
-          <div className="inline-flex items-center gap-3">
-            <div className="h-[1px] w-8 bg-accent" />
-            <span className="font-mono text-xs tracking-widest text-accent uppercase">
-              03. Showcased Services
-            </span>
-          </div>
           <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter leading-[0.85] text-ink -ml-1">
             Projects.
           </h2>

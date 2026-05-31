@@ -100,12 +100,6 @@ export function Skills() {
           transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           className="mb-16 space-y-6"
         >
-          {/* Section Badge (Em-dash replaced) */}
-          <div className="inline-flex items-center gap-3">
-            <span className="font-mono text-xs tracking-widest text-accent uppercase">
-              04. Capabilities
-            </span>
-          </div>
           <h2 className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.85] text-ink -ml-1">
             Creative
             <br />

@@ -17,11 +17,6 @@ export function Hackathons() {
           transition={{ duration: 0.6 }}
           className="mb-20 space-y-6"
         >
-          <div className="inline-flex items-center gap-3">
-            <span className="font-mono text-xs tracking-widest text-accent uppercase">
-              07 — Hackathons
-            </span>
-          </div>
           <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter leading-[0.9] text-ink">
             48-hour sprints.
             <br />

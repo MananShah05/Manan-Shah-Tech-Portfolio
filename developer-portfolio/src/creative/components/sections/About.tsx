@@ -30,12 +30,6 @@ export function About() {
           className="flex flex-col space-y-12"
         >
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-3">
-              <div className="h-[2px] w-8 bg-accent" />
-              <span className="font-mono text-xs tracking-widest text-accent uppercase">
-                02 — Design Philosophy
-              </span>
-            </div>
             <h2 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tighter leading-[0.9] text-ink">
               Defying the
               <br />
