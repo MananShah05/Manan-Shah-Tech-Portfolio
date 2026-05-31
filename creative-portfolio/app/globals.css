@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Custom Easing (Emil Kowalski alignment) */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Light mode — inverted kinetic palette */
+  --color-bg: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-ink: #09090B;
+  --color-ink-muted: #52525B;
+  --color-accent: #DFE104;
+  --color-accent-ink: #000000;
+  --color-border: #D4D4D8;
+  --color-muted: #E4E4E7;
+  --color-orange: #F97316;
+}
+
+.dark {
+  /* Dark mode — core Kinetic Typography palette */
+  --color-bg: #09090B;
+  --color-surface: #18181B;
+  --color-ink: #FAFAFA;
+  --color-ink-muted: #A1A1AA;
+  --color-accent: #DFE104;
+  --color-accent-ink: #000000;
+  --color-border: #3F3F46;
+  --color-muted: #27272A;
+  --color-orange: #F97316;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .transition-strong {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: var(--ease-out-strong);
+    transition-duration: 200ms;
+  }
+}
+
+/* Base headings */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display);
+}
+
+/* Noise texture overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+}
+
+/* Marquee — no gradients */
+.marquee-container .rfm-overlay::before,
+.marquee-container .rfm-overlay::after {
+  display: none !important;
+}
