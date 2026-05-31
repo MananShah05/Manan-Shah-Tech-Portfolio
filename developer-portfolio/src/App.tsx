@@ -48,6 +48,7 @@ import { Hackathons as CreativeHackathons } from "./creative/components/sections
 import { Experience as CreativeExperience } from "./creative/components/sections/Experience";
 import { Contact as CreativeContact } from "./creative/components/sections/Contact";
 import { Footer as CreativeFooter } from "./creative/components/layout/Footer";
+import { FloatingModeToggle } from "./components/FloatingModeToggle";
 
 
 const dockItems = [
@@ -197,10 +198,13 @@ function AppContent() {
       <InkFlood phase={transitionPhase} origin={portalOrigin} />
 
       {!showOpener && (
-        <PortfolioShell
-          developerPortfolio={devPortfolioLayout}
-          creativePortfolio={creativePortfolioLayout}
-        />
+        <>
+          <PortfolioShell
+            developerPortfolio={devPortfolioLayout}
+            creativePortfolio={creativePortfolioLayout}
+          />
+          <FloatingModeToggle />
+        </>
       )}
     </div>
   );
