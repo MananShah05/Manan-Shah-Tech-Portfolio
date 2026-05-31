@@ -182,23 +182,89 @@ function FolderSection({
 
 /** Figma design link card */
 function DesignCard({ design }: { design: ProjectDesign }) {
+  const isAdidas = design.title.toLowerCase().includes("adidas");
+  const isRog = design.title.toLowerCase().includes("rog");
+
   return (
     <a
       href={design.src}
       target="_blank"
       rel="noreferrer"
-      className="group/design flex items-center gap-3 p-3 border-2 border-border hover:border-accent transition-colors duration-300"
+      className="group/design flex flex-col border-2 border-border bg-surface hover:border-accent hover:-translate-y-1 transition-all duration-300 hover:shadow-[4px_4px_0px_0px_var(--color-accent)] overflow-hidden h-full min-h-[200px]"
     >
-      <div className="w-10 h-10 border-2 border-accent/30 flex items-center justify-center shrink-0">
-        <ExternalLink size={16} className="text-accent" />
+      {/* Mini Mockup Header Bar */}
+      <div className="flex items-center justify-between px-3 py-2 border-b border-border bg-muted/20 group-hover/design:bg-accent/5 transition-colors duration-300">
+        <div className="flex gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-400/60" />
+          <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
+          <span className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
+        </div>
+        <span className="font-mono text-[9px] text-ink-muted uppercase tracking-wider">
+          figma.com
+        </span>
       </div>
-      <div className="flex-1 min-w-0">
-        <p className="font-mono text-xs uppercase tracking-widest text-ink truncate">
-          {design.title}
-        </p>
-        <p className="text-[10px] text-ink-muted font-mono mt-0.5">Figma Prototype</p>
+
+      {/* Abstract Design Grid Preview (Visual weight) */}
+      <div className="flex-1 bg-bg p-4 flex items-center justify-center relative overflow-hidden group-hover/design:bg-surface transition-colors duration-300">
+        {/* Subtle grid lines background */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] [background-size:12px_12px]" />
+
+        {/* Abstract UI wireframe shapes */}
+        <div className="w-full h-full flex flex-col gap-2 opacity-60 group-hover/design:opacity-100 transition-opacity duration-300 relative z-10 justify-center">
+          {isAdidas ? (
+            <div className="space-y-2">
+              <div className="w-2/3 h-3 bg-ink/10 rounded" />
+              <div className="flex gap-2">
+                <div className="w-12 h-12 bg-accent/20 border border-accent/20 flex items-center justify-center text-[10px] font-bold text-accent">AD</div>
+                <div className="flex-1 space-y-1.5">
+                  <div className="w-full h-2 bg-ink/10 rounded" />
+                  <div className="w-5/6 h-2 bg-ink/10 rounded" />
+                  <div className="w-4/6 h-2 bg-ink/10 rounded" />
+                </div>
+              </div>
+            </div>
+          ) : isRog ? (
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <div className="w-8 h-2 bg-ink/10 rounded" />
+                <div className="w-12 h-3 bg-red-500/10 border border-red-500/20 rounded" />
+              </div>
+              <div className="grid grid-cols-3 gap-1">
+                <div className="h-8 bg-ink/5 border border-border/30 rounded" />
+                <div className="h-8 bg-ink/5 border border-border/30 rounded" />
+                <div className="h-8 bg-ink/5 border border-border/30 rounded" />
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <div className="w-full h-6 bg-ink/5 border border-border/20 rounded flex items-center px-2 justify-between">
+                <div className="w-10 h-2 bg-ink/10 rounded" />
+                <div className="w-3 h-3 bg-accent/30 rounded-full" />
+              </div>
+              <div className="flex gap-2">
+                <div className="w-1/2 h-2 bg-ink/10 rounded" />
+                <div className="w-1/3 h-2 bg-ink/10 rounded" />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-      <ArrowUpRight size={14} className="text-ink-muted group-hover/design:text-accent transition-colors duration-300 shrink-0" />
+
+      {/* Card Info Footer */}
+      <div className="p-4 border-t border-border bg-surface flex items-center justify-between gap-3 group-hover/design:bg-accent/5 transition-colors duration-300">
+        <div className="min-w-0">
+          <p className="font-display text-sm font-bold uppercase tracking-tight text-ink truncate">
+            {design.title}
+          </p>
+          <p className="text-[10px] text-ink-muted font-mono mt-0.5 uppercase tracking-wider flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+            Figma Prototype
+          </p>
+        </div>
+        <div className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-ink-muted group-hover/design:text-accent group-hover/design:border-accent transition-all duration-300 bg-bg shrink-0">
+          <ArrowUpRight size={14} />
+        </div>
+      </div>
     </a>
   );
 }
