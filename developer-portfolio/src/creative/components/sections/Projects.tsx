@@ -5,8 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Play, X, ChevronDown, ChevronUp, ExternalLink, FolderOpen } from "lucide-react";
 import { resumeData } from "@/creative/lib/resume-data";
 import type { ProjectVideo, ProjectFolder, ProjectDesign } from "@/creative/lib/resume-data";
+import { ProjectCard3D } from "./ProjectCard3D";
+import { useGPUTier } from "@/hooks/useGPUTier";
 
 /* ── helpers ─────────────────────────────────────────────────────── */
+
 
 /** Extract YouTube video ID from various URL formats */
 function extractYouTubeId(url: string): string | null {
@@ -391,6 +394,8 @@ function ProjectMediaGallery({
 export function Projects() {
   const projects = resumeData.projects;
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const gpuTier = useGPUTier(); // RULE 2: Performance gates
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   const handleVideoClick = useCallback((src: string) => {
     setActiveVideo(src);
@@ -428,6 +433,7 @@ export function Projects() {
             return (
               <div key={project.slug}>
                 {/* Main project card */}
+                {/* RULE 5: Hover enter 200ms, exit 150ms */}
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -437,35 +443,21 @@ export function Projects() {
                     delay: i * 0.1,
                     ease: [0.16, 1, 0.3, 1],
                   }}
+                  onMouseEnter={() => setHoveredCard(project.slug)}
+                  onMouseLeave={() => setHoveredCard(null)}
                   className={`group relative flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} bg-bg hover:bg-accent hover:text-accent-ink transition-all duration-300 border-2 border-border`}
+                  style={{ transitionDuration: "200ms" }}
                 >
                   {/* Project Visual */}
+                  {/* RULE 3: Framer motion owns layout, R3F owns the Canvas inside */}
                   <div
-                    className={`w-full ${isFeatured ? "lg:w-7/12" : "lg:w-1/2"} aspect-[4/3] relative border-b-2 lg:border-b-0 ${isEven ? "lg:border-r-2 lg:border-l-0" : "lg:border-l-2 lg:border-r-0"} border-border group-hover:border-accent transition-colors duration-300`}
+                    className={`w-full ${isFeatured ? "lg:w-7/12" : "lg:w-1/2"} aspect-[4/3] relative border-b-2 lg:border-b-0 ${isEven ? "lg:border-r-2 lg:border-l-0" : "lg:border-l-2 lg:border-r-0"} border-border group-hover:border-accent overflow-hidden transition-colors duration-300`}
                   >
-                    <div className="absolute inset-0 flex items-center justify-center p-8">
-                      <div className="w-full h-full border-2 border-border group-hover:border-accent-ink/20 flex flex-col p-6 transition-colors duration-300">
-                        {/* Mockup Header */}
-                        <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-border group-hover:border-accent-ink/20 transition-colors duration-300">
-                          <div className="w-24 h-2 bg-muted group-hover:bg-accent-ink/20 transition-colors duration-300" />
-                          <div className="flex gap-2">
-                            <div className="w-2 h-2 bg-muted group-hover:bg-accent-ink/20 transition-colors duration-300" />
-                            <div className="w-2 h-2 bg-muted group-hover:bg-accent-ink/20 transition-colors duration-300" />
-                          </div>
-                        </div>
-                        {/* Mockup Body */}
-                        <div className="flex-1 grid grid-cols-2 gap-4">
-                          <div className="flex flex-col gap-3">
-                            <div className="w-full h-1/2 border-2 border-accent/20 group-hover:border-accent-ink/20 transition-colors duration-300" />
-                            <div className="w-full h-1/2 border-2 border-orange/20 group-hover:border-orange/40 transition-colors duration-300" />
-                          </div>
-                          <div className="w-full h-full border-2 border-border group-hover:border-accent-ink/20 p-3 flex flex-col justify-end transition-colors duration-300">
-                            <div className="h-1 w-3/4 bg-muted group-hover:bg-accent-ink/20 mb-2 transition-colors duration-300" />
-                            <div className="h-1 w-1/2 bg-muted group-hover:bg-accent-ink/20 transition-colors duration-300" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <ProjectCard3D
+                      projectSlug={project.slug}
+                      isHovered={hoveredCard === project.slug}
+                      gpuTier={gpuTier}
+                    />
                   </div>
 
                   {/* Project Info */}
@@ -478,6 +470,7 @@ export function Projects() {
                         {project.title}
                       </h3>
                     </div>
+
 
                     <p className="text-ink-muted group-hover:text-accent-ink/70 text-lg leading-tight transition-colors duration-300">
                       {project.shortDesc}

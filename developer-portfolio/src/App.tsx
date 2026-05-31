@@ -43,6 +43,8 @@ import { Hero as CreativeHero } from "./creative/components/sections/Hero";
 import { About as CreativeAbout } from "./creative/components/sections/About";
 import { Projects as CreativeProjects } from "./creative/components/sections/Projects";
 import { Skills as CreativeSkills } from "./creative/components/sections/Skills";
+import { ShowreelSection } from "./creative/components/sections/ShowreelSection";
+
 import { Certifications as CreativeCertifications } from "./creative/components/sections/Certifications";
 import { Hackathons as CreativeHackathons } from "./creative/components/sections/Hackathons";
 import { Experience as CreativeExperience } from "./creative/components/sections/Experience";
@@ -165,6 +167,7 @@ function AppContent() {
         <CreativeAbout />
         <CreativeProjects />
         <CreativeSkills />
+        <ShowreelSection />
         <CreativeCertifications />
         <CreativeHackathons />
         <CreativeExperience />

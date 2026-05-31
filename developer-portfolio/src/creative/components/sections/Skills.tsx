@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { resumeData } from "@/creative/lib/resume-data";
 import { Layers, Film, Sparkles, Wand2 } from "lucide-react";
+import LottieSkillGrid from "./LottieSkillGrid";
+
 
 interface SkillCardProps {
   title: string;
@@ -111,6 +113,9 @@ export function Skills() {
         <div className="absolute right-[4%] top-[15%] font-display text-[clamp(6rem,12vw,14rem)] font-bold text-muted leading-none select-none pointer-events-none z-0 opacity-10">
           CAP.04
         </div>
+
+        {/* Lottie Skill Icon Grid */}
+        <LottieSkillGrid />
 
         {/* Asymmetrical Grid layout breaking symmetry */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border relative z-10">

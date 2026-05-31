@@ -4,8 +4,12 @@ import { motion } from "framer-motion";
 import { resumeData } from "@/creative/lib/resume-data";
 import { ArrowUpRight, Film, Sparkles, Layers } from "lucide-react";
 import Marquee from "react-fast-marquee";
+import { About3DScene } from "./About3DScene";
+import { useGPUTier } from "@/hooks/useGPUTier";
+
 
 export function About() {
+  const gpuTier = useGPUTier(); // RULE 2: Performance gates
   const skills = [
     { name: "3D Design", category: "Modeling" },
     { name: "Motion Graphics", category: "Animation" },
@@ -111,36 +115,13 @@ export function About() {
           </div>
         </motion.div>
 
-        {/* Right Column: Skills Grid */}
-        <div className="relative">
+        {/* Right Column: Signature 3D Scene */}
+        <div className="relative w-full flex items-center justify-center z-10">
           {/* Massive background number */}
-          <div className="absolute -left-[5%] top-1/2 -translate-y-1/2 font-display text-[clamp(8rem,18vw,20rem)] font-bold text-muted leading-none select-none pointer-events-none z-0">
+          <div className="absolute -left-[5%] top-1/2 -translate-y-1/2 font-display text-[clamp(8rem,18vw,20rem)] font-bold text-muted leading-none select-none pointer-events-none z-0 opacity-10">
             02
           </div>
-
-          <div className="grid grid-cols-3 gap-px bg-border border-2 border-border relative z-10">
-            {skills.map((skill, i) => (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{
-                  duration: 0.5,
-                  delay: i * 0.05,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="group relative bg-bg p-4 md:p-6 flex flex-col items-center justify-center gap-2 hover:bg-accent hover:text-accent-ink transition-all duration-300 cursor-pointer min-h-[100px] md:min-h-[140px]"
-              >
-                <span className="font-mono text-xs md:text-sm font-bold uppercase tracking-tighter text-center group-hover:text-accent-ink transition-colors duration-300">
-                  {skill.name}
-                </span>
-                <span className="text-[8px] md:text-[10px] font-mono uppercase tracking-widest text-ink-muted group-hover:text-accent-ink/60 transition-colors duration-300">
-                  {skill.category}
-                </span>
-              </motion.div>
-            ))}
-          </div>
+          <About3DScene gpuTier={gpuTier} />
         </div>
       </div>
 
