@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { resumeData } from "@/creative/lib/resume-data";
+import { supabase } from "@/lib/supabase";
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,24 +19,29 @@ export function Contact() {
 
     const formData = new FormData(e.currentTarget);
     const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message"),
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      message: formData.get("message") as string,
     };
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([
+          {
+            name: data.name,
+            email: data.email,
+            subject: "Creative Portfolio Contact",
+            message: data.message,
+          }
+        ]);
 
-      if (response.ok) {
-        setSubmitStatus("success");
-        (e.target as HTMLFormElement).reset();
-      } else {
-        setSubmitStatus("error");
+      if (error) {
+        throw error;
       }
+
+      setSubmitStatus("success");
+      (e.target as HTMLFormElement).reset();
     } catch {
       setSubmitStatus("error");
     } finally {

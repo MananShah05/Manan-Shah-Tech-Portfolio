@@ -1,12 +1,33 @@
 import { Resend } from 'resend';
 import { resumeData } from '@/lib/resume-data';
+import { supabase } from '@/lib/supabase';
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_123');
 
 export async function POST(req: Request) {
   try {
     const { name, email, message } = await req.json();
+
+    // 1. Log submission to Supabase database
+    try {
+      const { error: dbError } = await supabase
+        .from('contact_submissions')
+        .insert([
+          {
+            name,
+            email,
+            subject: 'Creative Portfolio Contact',
+            message,
+          }
+        ]);
+      if (dbError) {
+        console.error('Database logging failed:', dbError);
+      }
+    } catch (dbErr) {
+      console.error('Database logging exception:', dbErr);
+    }
     
+    // 2. Send email via Resend
     // Fallback if no API key is provided during dev
     if (!process.env.RESEND_API_KEY) {
       console.log('No RESEND_API_KEY provided. Simulated email send:');
