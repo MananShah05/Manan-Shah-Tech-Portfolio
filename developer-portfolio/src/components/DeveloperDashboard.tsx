@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, ReactNode } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Zap, Target, TrendingUp, Clock, GitCommit, Rocket, Shield, Brain, Award, FileText, Globe } from "lucide-react";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { usePortfolioMode } from "../hooks/usePortfolioMode";
+import { ModePill } from "./ModePill";
 
 interface FloatingCardProps {
   children: ReactNode;
@@ -131,10 +133,10 @@ const statusLines = [
 ];
 
 const personalityTags = [
-  { label: "Developer mode: ON", icon: <Zap size={10} /> },
-  { label: "Systems thinker", icon: <Target size={10} /> },
-  { label: "Finance-aware engineer", icon: <Shield size={10} /> },
-  { label: "Build → Measure → Improve", icon: <Rocket size={10} /> },
+  { label: "Developer mode: ON", icon: <Zap size={12} /> },
+  { label: "Systems thinker", icon: <Target size={12} /> },
+  { label: "Finance-aware engineer", icon: <Shield size={12} /> },
+  { label: "Build → Measure → Improve", icon: <Rocket size={12} /> },
 ];
 
 export default function DeveloperDashboard() {
@@ -142,6 +144,11 @@ export default function DeveloperDashboard() {
   const [activeLine, setActiveLine] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
+
+  const { mode } = usePortfolioMode();
+  const isDev = mode === "developer";
+
+
 
   const containerRef = useRef<HTMLDivElement>(null);
   const pointerX = useMotionValue(0);
@@ -344,24 +351,26 @@ export default function DeveloperDashboard() {
 
           {/* Personality tags */}
           <div className="grid grid-cols-2 gap-2 md:gap-3 w-full justify-items-center justify-center mt-2">
-            {personalityTags.map((tag, i) => (
+            {personalityTags.map((tag, i) => i === 0 ? (
+              <ModePill key="mode-toggle-pill" className="w-full justify-center" />
+            ) : (
               <motion.div
                 key={tag.label}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 1.5 + i * 0.1 }}
-                whileHover={{ y: -2, scale: 1.04 }}
-                className="flex items-center justify-start gap-1.5 px-2.5 py-1 sm:px-3 sm:py-2 rounded-full font-mono cursor-default w-full"
+                whileHover={{ scale: 1.04 }}
+                className="flex items-center justify-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full font-mono text-[7.5px] sm:text-[8.5px] md:text-[10px] font-bold tracking-wider uppercase border w-full cursor-default"
                 style={{
                   backgroundColor: "rgba(45, 106, 79, 0.06)",
                   border: "1px solid rgba(45, 106, 79, 0.12)",
                   color: "var(--accent)",
                 }}
               >
-                <div className="flex-shrink-0 flex items-center justify-start">
+                <div className="flex-shrink-0 flex items-center justify-center shrink-0">
                   {tag.icon}
                 </div>
-                <span className={`whitespace-nowrap text-left leading-tight tracking-tight ${i === 3 ? 'text-[5.5px] sm:text-[6px] md:text-[7px]' : 'text-[6px] sm:text-[7px] md:text-[8px]'}`}>{tag.label}</span>
+                <span className="whitespace-nowrap">{tag.label}</span>
               </motion.div>
             ))}
           </div>

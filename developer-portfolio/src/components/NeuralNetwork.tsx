@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { useTheme } from "../contexts/ThemeContext";
 
 interface Particle {
   x: number;
@@ -16,6 +17,7 @@ interface Particle {
 
 export default function NeuralNetwork() {
   const isMobile = useIsMobile();
+  const { isDark } = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
@@ -68,7 +70,7 @@ export default function NeuralNetwork() {
     particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      color: 0x8a8478,
+      color: isDark ? 0x62c295 : 0x8a8478,
       size: 0.12,
       transparent: true,
       opacity: 0.5,
@@ -82,9 +84,9 @@ export default function NeuralNetwork() {
     const linePositions = new Float32Array(PARTICLE_COUNT * PARTICLE_COUNT * 6);
     lineGeo.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
     const lineMat = new THREE.LineBasicMaterial({
-      color: 0x1b4332,
+      color: isDark ? 0x4ba37b : 0x1b4332,
       transparent: true,
-      opacity: 0.08,
+      opacity: isDark ? 0.22 : 0.08,
     });
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     scene.add(lines);
@@ -164,7 +166,9 @@ export default function NeuralNetwork() {
         linePositions[k] = 0;
       }
       lineGeo.attributes.position.needsUpdate = true;
-      lineMat.opacity = 0.06 + Math.sin(time * 2) * 0.02;
+      lineMat.opacity = isDark 
+        ? 0.18 + Math.sin(time * 2) * 0.04 
+        : 0.06 + Math.sin(time * 2) * 0.02;
 
       renderer.render(scene, camera);
       raf = requestAnimationFrame(animate);
@@ -192,7 +196,7 @@ export default function NeuralNetwork() {
         container.removeChild(renderer.domElement);
       }
     };
-  }, [isMobile]);
+  }, [isMobile, isDark]);
 
   if (isMobile) {
     return null;
