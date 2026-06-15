@@ -52,6 +52,7 @@ import { Footer as CreativeFooter } from "./creative/components/layout/Footer";
 import { ModeGateway } from "./components/ModeGateway";
 import { PersistentModeSwitcher } from "./components/PersistentModeSwitcher";
 import { QuantLayout } from "./components/quant/QuantLayout";
+import ModeGuidance from "./components/ModeGuidance";
 
 
 const dockItems = [
@@ -94,7 +95,7 @@ const dockItems = [
 
 function AppContent() {
   const { isDark } = useTheme();
-  const { mode, hasEntered } = usePortfolioMode();
+  const { hasEntered } = usePortfolioMode();
   const [showOpener, setShowOpener] = useState(true);
 
   const particleColors = isDark
@@ -205,6 +206,7 @@ function AppContent() {
             creativePortfolio={creativeLayout}
           />
           <PersistentModeSwitcher />
+          <ModeGuidance />
         </>
       )}
     </div>

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
-import { TrendingUp, Users, Palette, Video } from "lucide-react";
+import { TrendingUp, Users, Code } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 
 const experiences = [
@@ -26,23 +26,13 @@ const experiences = [
     ],
   },
   {
-    role: "Creative Director @ Design & Visual Intern",
+    role: "Web developer",
     org: "Hatimi Retreats",
     period: "Sep 2025 – Dec 2025",
-    icon: <Palette size={18} />,
+    icon: <Code size={18} />,
     bullets: [
-      "Improved UI/UX consistency and usability, enhancing customer engagement and brand recall.",
-      "Iterated designs based on stakeholder feedback, usability considerations, and business goals.",
-    ],
-  },
-  {
-    role: "Creative Media Associate (Intern)",
-    org: "Grofo Foundation",
-    period: "Jun 2025 – Aug 2025",
-    icon: <Video size={18} />,
-    bullets: [
-      "Designed and produced training content for Streax India's CSR initiative.",
-      "Executed video shoots and post-production using Adobe Premiere Pro and After Effects.",
+      "Engineered a scalable, production-grade NLP architecture and integrated it seamlessly with the main full-stack web application.",
+      "Designed and developed highly responsive UI/UX features, collaborating directly with the CTO to improve code quality, visual consistency, and user engagement.",
     ],
   },
 ];
