@@ -121,7 +121,7 @@ export default function Contact() {
                   </span>
                   <div className="status-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass-light border border-[var(--glass-border)] text-xs font-mono cursor-pointer transition-all duration-300" tabIndex={0} style={{ color: "var(--fg-muted)" }}>
                     <span className="w-2 h-2 flex-shrink-0 rounded-full bg-[var(--accent)] animate-pulse" />
-                    <span>Based in Mumbai<span className="status-expansion"> • Open to SWE & AI/ML Roles</span></span>
+                    <span>Based in Mumbai<span className="status-expansion"> • Open to Quant & SWE & AI/ML Roles</span></span>
                   </div>
                 </div>
 

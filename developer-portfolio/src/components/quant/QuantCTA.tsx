@@ -6,6 +6,7 @@ import {
   EASE_OUT_EXPO,
   REVEAL_ITEM_RM,
 } from "./QuantPrimitives";
+import ContactForm from "../ContactForm";
 
 /* ─────────────────────────────────────────────────────────────────────────
  * QMSignal (Task 9) — reworks the former QuantCTA closer in place.
@@ -67,54 +68,110 @@ export const QMSignal: React.FC<QMSignalProps> = ({
 
   return (
     <QMSection id="contact" eyebrow="SIGNAL">
-      {/* Closing philosophy strip. Plain --fg text (no gradient text). */}
-      {reduce ? (
-        // Reduced motion: a single opacity fade for the whole statement.
-        <motion.p
-          variants={REVEAL_ITEM_RM}
-          className="font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.15] tracking-tight text-(--fg) max-w-4xl"
-        >
-          {philosophy}
-        </motion.p>
-      ) : (
-        // Word-by-word staggered reveal (inherits "show" from QMSection).
-        <motion.p
-          variants={WORD_CONTAINER}
-          className="font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.15] tracking-tight text-(--fg) max-w-4xl"
-        >
-          {words.map((word, i) => (
-            <motion.span key={`${word}-${i}`} variants={WORD_ITEM} className="inline-block mr-[0.28em]">
-              {word}
-            </motion.span>
-          ))}
-        </motion.p>
-      )}
+      {/* Top: Full-width philosophy strip */}
+      <div className="mb-16">
+        {reduce ? (
+          // Reduced motion: a single opacity fade for the whole statement.
+          <motion.p
+            variants={REVEAL_ITEM_RM}
+            className="font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.15] tracking-tight text-(--fg) max-w-4xl"
+          >
+            {philosophy}
+          </motion.p>
+        ) : (
+          // Word-by-word staggered reveal (inherits "show" from QMSection).
+          <motion.p
+            variants={WORD_CONTAINER}
+            className="font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.15] tracking-tight text-(--fg) max-w-4xl"
+          >
+            {words.map((word, i) => (
+              <motion.span key={`${word}-${i}`} variants={WORD_ITEM} className="inline-block mr-[0.28em]">
+                {word}
+              </motion.span>
+            ))}
+          </motion.p>
+        )}
+      </div>
 
-      {/* Contact affordances: email + external links. */}
-      <div className="mt-12 flex flex-col sm:flex-row flex-wrap gap-3">
-        <a
-          href={`mailto:${email}`}
-          className="qm-card rounded-2xl px-4 py-3 inline-flex items-center gap-2.5 font-mono text-sm text-(--fg)"
-        >
-          <Mail size={15} style={{ color: "var(--accent)" }} />
-          {email}
-        </a>
+      {/* Bottom: Grid Layout */}
+      <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+        {/* Left Column: Direct Connection Panel */}
+        <div className="lg:col-span-5 flex flex-col gap-6">
+          <div className="qm-card p-8 rounded-2xl flex flex-col justify-between h-full relative overflow-hidden">
+            <div>
+              <h3 className="font-serif text-2xl md:text-3xl mb-4 text-(--fg)">
+                Direct Connection
+              </h3>
+              <p className="text-sm text-(--fg-muted) mb-8 leading-relaxed">
+                Have an interesting project, quantitative strategy collaboration, or opportunity? Let's connect. I'm always open to discussing research and applied intelligence.
+              </p>
 
-        {links.map((link) => {
-          const Icon = linkIcon(link.label);
-          return (
-            <a
-              key={link.href}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              className="qm-card rounded-2xl px-4 py-3 inline-flex items-center gap-2.5 font-mono text-sm text-(--fg)"
-            >
-              <Icon size={15} style={{ color: "var(--accent)" }} />
-              {link.label}
-            </a>
-          );
-        })}
+              {/* Direct Email Block */}
+              <div className="mb-8">
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] block mb-2 text-(--fg-subtle)">
+                  Direct Email
+                </span>
+                <a
+                  href={`mailto:${email}`}
+                  className="group inline-flex items-center gap-2 text-base md:text-lg font-mono tracking-tight font-semibold text-(--fg) hover:text-[var(--accent)] transition-colors duration-300"
+                >
+                  <span className="relative whitespace-nowrap">
+                    {email}
+                    <span className="absolute left-0 bottom-0 w-full h-[1.5px] bg-[var(--accent)] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </span>
+                </a>
+              </div>
+
+              {/* Status Block */}
+              <div className="mb-8">
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] block mb-2 text-(--fg-subtle)">
+                  Current Status
+                </span>
+                <div className="status-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-[var(--glass-border)] text-xs font-mono text-(--fg-muted)">
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
+                  <span>Based in Mumbai • Open to Quant & SWE & AI/ML Roles</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links Block */}
+            <div className="mt-8 pt-6 border-t border-[var(--glass-border)]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] block mb-3 text-(--fg-subtle)">
+                Connect Channels
+              </span>
+              <div className="flex flex-wrap gap-2.5">
+                <a
+                  href={`mailto:${email}`}
+                  className="qm-card rounded-2xl px-4 py-3 inline-flex items-center gap-2.5 font-mono text-sm text-(--fg)"
+                >
+                  <Mail size={15} style={{ color: "var(--accent)" }} />
+                  Email
+                </a>
+
+                {links.map((link) => {
+                  const Icon = linkIcon(link.label);
+                  return (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="qm-card rounded-2xl px-4 py-3 inline-flex items-center gap-2.5 font-mono text-sm text-(--fg)"
+                    >
+                      <Icon size={15} style={{ color: "var(--accent)" }} />
+                      {link.label}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Contact Form */}
+        <div className="lg:col-span-7 w-full">
+          <ContactForm />
+        </div>
       </div>
     </QMSection>
   );

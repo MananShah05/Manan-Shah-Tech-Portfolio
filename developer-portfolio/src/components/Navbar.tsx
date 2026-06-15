@@ -136,7 +136,7 @@ export default function Navbar() {
                   className="w-1.5 h-1.5 rounded-full animate-pulse"
                   style={{ backgroundColor: "var(--accent)" }}
                 />
-                Open to AI/ML & SWE Roles
+                Open to Quant & SWE & AI/ML Roles
               </span>
               <motion.button
                 onClick={() => handleNavClick("#contact")}
