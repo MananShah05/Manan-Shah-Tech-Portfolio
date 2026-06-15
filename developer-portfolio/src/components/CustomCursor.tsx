@@ -9,8 +9,11 @@ export default function CustomCursor() {
   const target = useRef({ x: 0, y: 0 });
   const vel = useRef({ x: 0, y: 0 });
   const isHovering = useRef(false);
+  const isClicked = useRef(false);
 
   useEffect(() => {
+    if (isMobile) return;
+
     const onMove = (e: MouseEvent) => {
       target.current = { x: e.clientX, y: e.clientY };
     };
@@ -32,13 +35,23 @@ export default function CustomCursor() {
       isHovering.current = false;
     };
 
+    const onMouseDown = () => {
+      isClicked.current = true;
+    };
+
+    const onMouseUp = () => {
+      isClicked.current = false;
+    };
+
     window.addEventListener("mousemove", onMove);
     document.addEventListener("mouseover", onOver);
     document.addEventListener("mouseout", onOut);
+    window.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mouseup", onMouseUp);
 
     let raf: number;
     const animate = () => {
-      const ease = 0.18;
+      const ease = 0.16;
 
       vel.current.x = target.current.x - pos.current.x;
       vel.current.y = target.current.y - pos.current.y;
@@ -47,18 +60,30 @@ export default function CustomCursor() {
       pos.current.y += vel.current.y * ease;
 
       const stretch = Math.min(
-        Math.sqrt(vel.current.x ** 2 + vel.current.y ** 2) * 0.03,
-        0.5
+        Math.sqrt(vel.current.x ** 2 + vel.current.y ** 2) * 0.025,
+        0.4
       );
       const angle = Math.atan2(vel.current.y, vel.current.x) * (180 / Math.PI);
 
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${target.current.x - 3}px, ${target.current.y - 3}px)`;
+        let dotScale = 1;
+        if (isClicked.current) {
+          dotScale = 1.4;
+        } else if (isHovering.current) {
+          dotScale = 0.4;
+        }
+        dotRef.current.style.transform = `translate(${target.current.x - 4}px, ${target.current.y - 4}px) scale(${dotScale})`;
       }
 
       if (ringRef.current) {
-        const scale = isHovering.current ? 2.2 : 1 + stretch * 0.3;
-        ringRef.current.style.transform = `translate(${pos.current.x - 16}px, ${pos.current.y - 16}px) rotate(${angle}deg) scale(${scale})`;
+        let ringScale = 1 + stretch * 0.25;
+        if (isClicked.current) {
+          ringScale = 0.7;
+        } else if (isHovering.current) {
+          ringScale = 1.8;
+        }
+        ringRef.current.style.transform = `translate(${pos.current.x - 18}px, ${pos.current.y - 18}px) rotate(${angle}deg) scale(${ringScale})`;
+        ringRef.current.style.backgroundColor = isHovering.current ? "rgba(255, 255, 255, 0.15)" : "transparent";
       }
 
       raf = requestAnimationFrame(animate);
@@ -70,6 +95,8 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mouseup", onMouseUp);
     };
   }, [isMobile]);
 
@@ -81,13 +108,17 @@ export default function CustomCursor() {
     <>
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[#1b4332] pointer-events-none z-[9999] mix-blend-difference"
-        style={{ willChange: "transform" }}
+        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999] bg-white mix-blend-difference"
+        style={{
+          willChange: "transform",
+        }}
       />
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#1b4332]/30 pointer-events-none z-[9998] mix-blend-difference transition-[border-color] duration-300"
-        style={{ willChange: "transform" }}
+        className="fixed top-0 left-0 w-9 h-9 rounded-full pointer-events-none z-[9998] border border-white mix-blend-difference transition-colors duration-300"
+        style={{
+          willChange: "transform",
+        }}
       />
     </>
   );

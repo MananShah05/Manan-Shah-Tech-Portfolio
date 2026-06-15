@@ -125,6 +125,183 @@
   --dock-label-text: var(--color-ink);
 }
 
+/* Scoped variables for the Finance / Quant lens — Bloomberg-terminal palette.
+   Quant is inherently a dark, data-dense aesthetic, so it forces a near-black
+   warm background regardless of the light/dark theme toggle. */
+.mode-quant {
+  --bg: #0a0b08;
+  --bg-warm: #0e0f0b;
+  --bg-deep: #070806;
+  --fg: #f5f5f0;
+  --fg-muted: #b8b6a8;
+  --fg-subtle: #76746a;
+  --accent: #f59e0b;        /* amber gold */
+  --accent-light: #fbbf24;
+  --accent-glow: rgba(245, 158, 11, 0.18);
+  --secondary: #16a34a;     /* financial green */
+  --secondary-soft: #22c55e;
+  --selection-bg: rgba(245, 158, 11, 0.25);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(245, 158, 11, 0.14);
+  --glass-hover: rgba(255, 255, 255, 0.06);
+  --scrollbar-track: #0a0b08;
+  --scrollbar-thumb: #2a2a22;
+  --scrollbar-thumb-hover: #44443a;
+  --dock-bg: rgba(10, 11, 8, 0.7);
+  --dock-border: rgba(245, 158, 11, 0.14);
+  --dock-item-bg: rgba(255, 255, 255, 0.04);
+  --dock-item-border: rgba(245, 158, 11, 0.12);
+  --dock-label-bg: #0e0f0b;
+  --dock-label-border: rgba(245, 158, 11, 0.14);
+  --dock-label-text: #f5f5f0;
+}
+
+/* ─── Quant view wrapper: independent dark/light theme ──────────────────────
+   Quant Redesign: burnished-amber / obsidian palette (DARK = default).
+   OKLCH-derived burnished amber adapted to the existing variable names.
+   Scoped to .quant-root so nothing leaks globally. */
+.quant-root {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.4s ease, color 0.4s ease;
+
+  /* obsidian surfaces */
+  --bg: #0b0a08;            /* warm near-black obsidian */
+  --bg-warm: #110f0b;
+  --bg-deep: #070605;
+  --fg: #f3efe7;
+  --fg-muted: #b4ad9d;
+  --fg-subtle: #746f62;
+  /* burnished amber accent (≤8–10% surface usage) */
+  --accent: #e0922f;        /* burnished amber */
+  --accent-light: #f0a847;
+  --accent-glow: rgba(224, 146, 47, 0.16);
+  /* data semantics: sage-green positive, coral negative */
+  --data-positive: #7fae6b; /* sage */
+  --data-negative: #d97559; /* coral */
+  --secondary: var(--data-positive);
+  --glass-bg: rgba(255, 255, 255, 0.025);
+  --glass-border: rgba(224, 146, 47, 0.14);
+  --glass-hover: rgba(255, 255, 255, 0.05);
+  /* island fade + bento tokens */
+  --qm-fade: 80px;
+  --qm-radius: 1rem;        /* rounded-2xl */
+}
+
+.mode-quant[data-quant-theme="light"],
+.quant-root[data-quant-theme="light"] {
+  --bg: #f5f5f2;
+  --bg-warm: #eeeeea;
+  --bg-deep: #e7e7e2;
+  --fg: #1a1a1a;
+  --fg-muted: #4a4a44;
+  --fg-subtle: #8a8a80;
+  --accent: #c97a0e;
+  --accent-light: #e08a14;
+  --accent-glow: rgba(201, 122, 14, 0.12);
+  --secondary: #15803d;
+  --secondary-soft: #16a34a;
+  --selection-bg: rgba(201, 122, 14, 0.18);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(201, 122, 14, 0.22);
+  --glass-hover: rgba(255, 255, 255, 0.85);
+  --scrollbar-track: #f5f5f2;
+  --scrollbar-thumb: #d4cfc5;
+  --scrollbar-thumb-hover: #b5b0a4;
+  --dock-bg: rgba(245, 242, 236, 0.7);
+  --dock-border: rgba(201, 122, 14, 0.14);
+  --dock-item-bg: rgba(255, 255, 255, 0.5);
+  --dock-item-border: rgba(201, 122, 14, 0.1);
+  --dock-label-bg: #eeeeea;
+  --dock-label-border: rgba(201, 122, 14, 0.14);
+  --dock-label-text: #1a1a1a;
+}
+
+/* Quant Redesign — derived LIGHT variant (AA-contrast amber).
+   Declared after the shared rule so it overrides redesign tokens for
+   .quant-root only; the .mode-quant light terminal palette is untouched. */
+.quant-root[data-quant-theme="light"] {
+  --bg: #f6f3ec;
+  --bg-warm: #efeae0;
+  --bg-deep: #e6e0d4;
+  --fg: #1c1813;
+  --fg-muted: #565047;
+  --fg-subtle: #8a8276;
+  --accent: #b06f1d;        /* darker amber for AA contrast on light */
+  --accent-light: #c9831f;
+  --accent-glow: rgba(176, 111, 29, 0.12);
+  --data-positive: #4f7a3d;
+  --data-negative: #b3492f;
+  --secondary: var(--data-positive);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(176, 111, 29, 0.2);
+  --glass-hover: rgba(255, 255, 255, 0.85);
+}
+
+/* Terminal card: sharp-ish edges, amber hover. Glow in dark, border-only in light. */
+.quant-card {
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.quant-card:hover {
+  border-color: var(--accent);
+}
+.quant-root:not([data-quant-theme="light"]) .quant-card:hover {
+  box-shadow: 0 0 0 1px var(--accent), 0 0 26px var(--accent-glow);
+}
+
+/* Amber link hover: glow in dark, underline in light. */
+.quant-link {
+  color: var(--accent);
+  transition: opacity 0.2s ease;
+}
+.quant-root[data-quant-theme="light"] .quant-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.quant-root:not([data-quant-theme="light"]) .quant-link:hover {
+  text-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* Ticker-tape strip */
+.quant-ticker-up { color: var(--secondary); }
+.quant-ticker-down { color: #ef4444; }
+
+/* ─── Quant Redesign helper classes (namespaced .qm-*) ──────────────────── */
+
+/* Section island: obsidian bg + top/bottom 80px gradient fades */
+.qm-section { position: relative; background: var(--bg); overflow: hidden; }
+.qm-section::before,
+.qm-section::after {
+  content: ""; position: absolute; left: 0; right: 0; height: var(--qm-fade);
+  pointer-events: none; z-index: 2;
+}
+.qm-section::before { top: 0;    background: linear-gradient(to bottom, var(--bg), transparent); }
+.qm-section::after  { bottom: 0; background: linear-gradient(to top,    var(--bg), transparent); }
+
+/* Card: rounded-2xl, amber hover border. Glow only in dark. */
+.qm-card {
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  border-radius: var(--qm-radius);
+}
+.quant-root:not([data-quant-theme="light"]) .qm-card:hover {
+  box-shadow: 0 0 0 1px var(--accent), 0 0 26px var(--accent-glow);
+}
+
+/* Data color utilities — applied ONLY to numeric values */
+.qm-pos { color: var(--data-positive); }
+.qm-neg { color: var(--data-negative); }
+
+/* Live dot pulse — paused under reduced motion */
+@keyframes qm-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.qm-live-dot { background: var(--data-positive); animation: qm-pulse 1.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .qm-live-dot { animation: none; }
+}
+
 /* Chromatic Aberration overlay effect */
 .chromatic-aberration-overlay {
   background: transparent;

@@ -147,7 +147,7 @@ export function Contact() {
                     id="name"
                     name="name"
                     required
-                    placeholder="JOHN DOE"
+                    placeholder="MANAN SHAH"
                     className="w-full bg-transparent border-b-2 border-border px-0 py-4 text-2xl text-ink font-bold uppercase tracking-tighter placeholder-muted focus:outline-none focus:border-accent transition-colors duration-300"
                   />
                 </div>
@@ -164,7 +164,7 @@ export function Contact() {
                     id="email"
                     name="email"
                     required
-                    placeholder="JOHN@EXAMPLE.COM"
+                    placeholder="MANAN@GMAIL.COM"
                     className="w-full bg-transparent border-b-2 border-border px-0 py-4 text-2xl text-ink font-bold uppercase tracking-tighter placeholder-muted focus:outline-none focus:border-accent transition-colors duration-300"
                   />
                 </div>

@@ -4,15 +4,24 @@ import { usePortfolioMode } from "../hooks/usePortfolioMode";
 import { staggerContainerVariants, fadeUpVariants } from "../transitions";
 
 interface PortfolioShellProps {
-  developerPortfolio: React.ReactNode;
+  swePortfolio: React.ReactNode;
+  quantPortfolio: React.ReactNode;
   creativePortfolio: React.ReactNode;
 }
 
 export const PortfolioShell: React.FC<PortfolioShellProps> = ({
-  developerPortfolio,
+  swePortfolio,
+  quantPortfolio,
   creativePortfolio,
 }) => {
   const { mode, transitionPhase } = usePortfolioMode();
+
+  const active =
+    mode === "creative"
+      ? creativePortfolio
+      : mode === "quant"
+      ? quantPortfolio
+      : swePortfolio;
 
   return (
     <AnimatePresence mode="wait">
@@ -26,11 +35,11 @@ export const PortfolioShell: React.FC<PortfolioShellProps> = ({
         style={{
           // GPU optimization to prevent layout thrash during active transition
           willChange: transitionPhase !== "idle" ? "transform, opacity" : undefined,
-          // Fade/hide active content only during initial Tear phase when RGB screenshot is active
-          opacity: transitionPhase === "rgb" || transitionPhase === "flood" ? 0 : 1,
+          // Hide live content only while the dip overlay fully covers the screen.
+          opacity: transitionPhase === "cover" ? 0 : 1,
         }}
       >
-        {mode === "developer" ? developerPortfolio : creativePortfolio}
+        {active}
       </motion.div>
     </AnimatePresence>
   );

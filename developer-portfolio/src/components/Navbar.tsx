@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
+import { usePortfolioMode } from "../hooks/usePortfolioMode";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -15,7 +16,12 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { isDark, toggle } = useTheme();
+  const { mode, quantTheme, toggleQuantTheme } = usePortfolioMode();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const isQuantMode = mode === "quant";
+  const currentIsDark = isQuantMode ? quantTheme === "dark" : isDark;
+  const handleToggle = isQuantMode ? toggleQuantTheme : toggle;
 
   // Cross-component table of contents visibility sync state
   const [isTOCVisible, setIsTOCVisible] = useState(() => {
@@ -115,7 +121,7 @@ export default function Navbar() {
                   border: "1px solid var(--glass-border)",
                 }}
               >
-                <AnimatedThemeToggler isDark={isDark} onToggle={toggle} />
+                <AnimatedThemeToggler isDark={currentIsDark} onToggle={handleToggle} />
               </div>
 
               <span
@@ -177,7 +183,7 @@ export default function Navbar() {
                   border: "1px solid var(--glass-border)",
                 }}
               >
-                <AnimatedThemeToggler isDark={isDark} onToggle={toggle} />
+                <AnimatedThemeToggler isDark={currentIsDark} onToggle={handleToggle} />
               </div>
 
               {/* Mobile Table of Contents Restore Button */}

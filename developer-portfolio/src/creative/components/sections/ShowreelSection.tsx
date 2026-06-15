@@ -2,7 +2,6 @@
 
 import React, { useRef, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { SceneFallback } from "../ui/SceneFallback";
 import { Volume2, VolumeX, Play, Pause } from "lucide-react";
 import * as THREE from "three";
 
@@ -34,7 +33,7 @@ export function ShowreelSection() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
-  const dataArrayRef = useRef<Uint8Array | null>(null);
+  const dataArrayRef = useRef<Uint8Array<ArrayBuffer> | null>(null);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -90,6 +89,31 @@ export function ShowreelSection() {
       }
     };
   }, []);
+
+  // Dynamic IntersectionObserver to pause/play video based on viewport visibility
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (isPlaying) {
+            video.play().catch(() => {});
+          }
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.unobserve(video);
+    };
+  }, [isPlaying]);
 
   return (
     <section id="showreel" className="w-full relative h-[70vh] min-h-[500px] border-y-2 border-border overflow-hidden bg-black flex items-center justify-center">
@@ -189,7 +213,7 @@ export function ShowreelSection() {
 
 interface FloatingObjectsProps {
   analyserRef: React.MutableRefObject<AnalyserNode | null>;
-  dataArrayRef: React.MutableRefObject<Uint8Array | null>;
+  dataArrayRef: React.MutableRefObject<Uint8Array<ArrayBuffer> | null>;
   isMuted: boolean;
 }
 
@@ -217,8 +241,7 @@ function FloatingObjects({ analyserRef, dataArrayRef, isMuted }: FloatingObjects
   }, []);
 
   // RULE 4: Scroll-driven and smooth spring physics interpolations
-  useFrame((state, delta) => {
-    let volumeValue = 0;
+  useFrame((_, delta) => {
     const analyser = analyserRef.current;
     const dataArray = dataArrayRef.current;
 

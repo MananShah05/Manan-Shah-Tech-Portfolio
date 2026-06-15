@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Play, X, ChevronDown, ChevronUp, ExternalLink, FolderOpen } from "lucide-react";
+import { ArrowUpRight, ArrowDown, Play, X, ChevronDown, ChevronUp, FolderOpen } from "lucide-react";
 import { resumeData } from "@/creative/lib/resume-data";
 import type { ProjectVideo, ProjectFolder, ProjectDesign } from "@/creative/lib/resume-data";
 import { ProjectCard3D } from "./ProjectCard3D";
@@ -276,16 +276,19 @@ function DesignCard({ design }: { design: ProjectDesign }) {
 function ProjectMediaGallery({
   project,
   onVideoClick,
+  isExpanded,
+  onToggle,
 }: {
   project: (typeof resumeData.projects)[number];
   onVideoClick: (src: string) => void;
+  isExpanded: boolean;
+  onToggle: () => void;
 }) {
   const videos = (project as Record<string, unknown>).videos as ProjectVideo[] | undefined;
   const folders = (project as Record<string, unknown>).folders as ProjectFolder[] | undefined;
   const designs = (project as Record<string, unknown>).designs as ProjectDesign[] | undefined;
 
   const hasMedia = (videos && videos.length > 0) || (folders && folders.length > 0) || (designs && designs.length > 0);
-  const [isExpanded, setIsExpanded] = useState(false);
 
   if (!hasMedia) return null;
 
@@ -296,6 +299,7 @@ function ProjectMediaGallery({
 
   return (
     <motion.div
+      id={`gallery-${project.slug}`}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -303,7 +307,7 @@ function ProjectMediaGallery({
     >
       {/* Expandable header */}
       <button
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={onToggle}
         className="w-full flex items-center justify-between px-6 py-4 hover:bg-muted/30 transition-colors duration-200"
       >
         <div className="flex items-center gap-3">
@@ -396,6 +400,24 @@ export function Projects() {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const gpuTier = useGPUTier(); // RULE 2: Performance gates
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  
+  const [expandedGalleries, setExpandedGalleries] = useState<Record<string, boolean>>({});
+
+  const handleToggleGallery = useCallback((slug: string) => {
+    setExpandedGalleries((prev) => ({ ...prev, [slug]: !prev[slug] }));
+  }, []);
+
+  const handleViewGallery = useCallback((slug: string) => {
+    // Expand the gallery
+    setExpandedGalleries((prev) => ({ ...prev, [slug]: true }));
+    // Scroll to it
+    setTimeout(() => {
+      const el = document.getElementById(`gallery-${slug}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 150);
+  }, []);
 
   const handleVideoClick = useCallback((src: string) => {
     setActiveVideo(src);
@@ -498,16 +520,16 @@ export function Projects() {
                     </div>
 
                     <div className="flex items-center gap-6 pt-4">
-                      <a
-                        href={`/projects/${project.slug}`}
-                        className="group/btn flex items-center gap-2 px-6 py-3 bg-ink group-hover:bg-accent-ink text-bg group-hover:text-accent text-sm font-bold uppercase tracking-tighter transition-all duration-300"
+                      <button
+                        onClick={() => handleViewGallery(project.slug)}
+                        className="group/btn flex items-center gap-2 px-6 py-3 bg-ink group-hover:bg-accent-ink text-bg group-hover:text-accent text-sm font-bold uppercase tracking-tighter transition-all duration-300 cursor-pointer"
                       >
-                        View Case Study
-                        <ArrowUpRight
+                        View Gallery
+                        <ArrowDown
                           size={16}
-                          className="group-hover/btn:rotate-45 transition-transform duration-300"
+                          className="group-hover/btn:translate-y-1 transition-transform duration-300"
                         />
-                      </a>
+                      </button>
 
                       <div className="flex items-center gap-4">
                         {project.github && (
@@ -520,16 +542,6 @@ export function Projects() {
                             Code
                           </a>
                         )}
-                        {project.live && (
-                          <a
-                            href={project.live}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-xs font-mono uppercase tracking-widest text-ink-muted group-hover:text-accent-ink hover:text-accent transition-colors duration-300"
-                          >
-                            Live Site
-                          </a>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -539,6 +551,8 @@ export function Projects() {
                 <ProjectMediaGallery
                   project={project}
                   onVideoClick={handleVideoClick}
+                  isExpanded={!!expandedGalleries[project.slug]}
+                  onToggle={() => handleToggleGallery(project.slug)}
                 />
               </div>
             );

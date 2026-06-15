@@ -34,8 +34,7 @@ import {
 // Portfolio Merge & Cinematic Transition Imports
 import { PortfolioProvider, usePortfolioMode } from "./hooks/usePortfolioMode";
 import { PortfolioShell } from "./components/PortfolioShell";
-import { InkFlood } from "./components/InkFlood";
-import { RGBSplit } from "./components/RGBSplit";
+import { ModeTransition } from "./components/ModeTransition";
 
 // Creative Portfolio Component Imports
 import { Navbar as CreativeNavbar } from "./creative/components/layout/Navbar";
@@ -50,7 +49,9 @@ import { Hackathons as CreativeHackathons } from "./creative/components/sections
 import { Experience as CreativeExperience } from "./creative/components/sections/Experience";
 import { Contact as CreativeContact } from "./creative/components/sections/Contact";
 import { Footer as CreativeFooter } from "./creative/components/layout/Footer";
-import { FloatingModeToggle } from "./components/FloatingModeToggle";
+import { ModeGateway } from "./components/ModeGateway";
+import { PersistentModeSwitcher } from "./components/PersistentModeSwitcher";
+import { QuantLayout } from "./components/quant/QuantLayout";
 
 
 const dockItems = [
@@ -93,14 +94,14 @@ const dockItems = [
 
 function AppContent() {
   const { isDark } = useTheme();
-  const { mode } = usePortfolioMode();
+  const { mode, hasEntered } = usePortfolioMode();
   const [showOpener, setShowOpener] = useState(true);
 
   const particleColors = isDark
     ? ["#52b788", "#74c69d", "#f4a261", "#e9c46a"] // bright on dark
     : ["#1b4332", "#2d6a4f", "#c45c26", "#6b6860"]; // deep on light
 
-  const devPortfolioLayout = (
+  const sweLayout = (
     <>
       <Navbar />
       {!showOpener && <DynamicIslandTOC />}
@@ -134,7 +135,7 @@ function AppContent() {
             <SectionDivider />
             <Experience />
             <SectionDivider />
-            <Projects />
+            <Projects domain="swe" />
             <SectionDivider />
             <Certifications />
             <SectionDivider />
@@ -159,7 +160,7 @@ function AppContent() {
     </>
   );
 
-  const creativePortfolioLayout = (
+  const creativeLayout = (
     <>
       <CreativeNavbar />
       <main className="min-h-screen bg-bg">
@@ -177,9 +178,6 @@ function AppContent() {
     </>
   );
 
-  const { transitionPhase, screenshotSrc, portalOrigin } = usePortfolioMode();
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-
   return (
     <div
       className="relative min-h-screen selection:bg-(--selection-bg)"
@@ -193,20 +191,20 @@ function AppContent() {
       <CustomCursor />
       <AmbientBackground />
       <ScrollProgress />
-      
-      {/* Cinematic Transition Overlays */}
-      {!isMobile && (
-        <RGBSplit phase={transitionPhase} screenshotSrc={screenshotSrc} />
-      )}
-      <InkFlood phase={transitionPhase} origin={portalOrigin} />
 
-      {!showOpener && (
+      {/* Clean mode-switch dip overlay */}
+      <ModeTransition />
+
+      {!showOpener && !hasEntered && <ModeGateway />}
+
+      {!showOpener && hasEntered && (
         <>
           <PortfolioShell
-            developerPortfolio={devPortfolioLayout}
-            creativePortfolio={creativePortfolioLayout}
+            swePortfolio={sweLayout}
+            quantPortfolio={<QuantLayout />}
+            creativePortfolio={creativeLayout}
           />
-          <FloatingModeToggle />
+          <PersistentModeSwitcher />
         </>
       )}
     </div>

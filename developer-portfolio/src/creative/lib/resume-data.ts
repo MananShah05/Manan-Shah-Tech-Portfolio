@@ -187,12 +187,12 @@ export const resumeData = {
 
   certifications: [
     {
-      name: "3D Modeling Specialist",
-      issuer: "Cinema 4D / Blender Academy",
+      name: "Color Correction & Grading with Adobe Premiere Pro",
+      issuer: "Udemy",
       type: "Creative",
-      status: "Active",
-      credentialId: "C4D-9382",
-      verifyUrl: null,
+      status: "Completed",
+      credentialId: "UC-863aa74d-50c8-43ea-bbc5-3731d2b52271",
+      verifyUrl: "https://ude.my/UC-863aa74d-50c8-43ea-bbc5-3731d2b52271",
     },
   ] as Certification[],
 
@@ -201,7 +201,7 @@ export const resumeData = {
       event: "Pixel Paranoia 2025",
       organizer: "6-Hour Hackathon",
       date: "2025-02-15",
-      outcome: "Winner",
+      outcome: "Finalist",
       built: "Designed and prototyped a high-fidelity visual solution under intense time pressure",
       solo: false,
     },
@@ -219,12 +219,31 @@ export const resumeData = {
       ],
     },
     {
+      company: "Hatimi Retreats",
+      role: "Creative Director – Design & Visual Intern",
+      duration: "Sep 2025 – Present",
+      points: [
+        "Lead the development of the brand's visual identity across digital and print channels",
+        "Create and execute campaigns, design branding assets and marketing materials",
+        "Direct photo/video shoots, and enhance UI/UX to deliver cohesive, engaging experiences",
+      ],
+    },
+    {
       company: "GlassMate Media",
       role: "Lead Visual Editor & Designer",
       duration: "Freelance",
       points: [
         "Collaborated closely with founders to define visual guidelines and execute high-conversion video ads",
         "Designed digital campaigns and custom posters that amplified social media reach and click-through rates (CTR)",
+      ],
+    },
+    {
+      company: "Grofo Foundation",
+      role: "Creative Media Associate (Intern)",
+      duration: "Jun 2025 – Aug 2025",
+      points: [
+        "Designed and produced training content for Streax India's CSR initiative.",
+        "Executed video shoots and post-production using Adobe Premiere Pro and After Effects.",
       ],
     },
   ],

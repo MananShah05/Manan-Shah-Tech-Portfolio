@@ -15,10 +15,7 @@ export function Footer() {
           <span>
             © {new Date().getFullYear()} {resumeData.personal.name}
           </span>
-          <span className="hidden md:inline">·</span>
-          <span>Built with Next.js 14</span>
-          <span className="hidden md:inline">·</span>
-          <span>Deployed on Vercel</span>
+
         </div>
 
         <button

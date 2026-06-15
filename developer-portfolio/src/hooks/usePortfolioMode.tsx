@@ -1,164 +1,197 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { TIMING_ENTER, TIMING_EXIT } from "../transitions";
-import html2canvas from "html2canvas";
+import React, { createContext, useContext, useRef, useState, useEffect } from "react";
 
-export type PortfolioMode = "developer" | "creative";
-export type TransitionPhase = "idle" | "charge" | "rgb" | "flood" | "reveal";
+export type PortfolioMode = "swe" | "quant" | "creative";
+// Clean dip transition: cover (fade to bg) -> swap underneath -> reveal (fade out).
+export type TransitionPhase = "idle" | "cover" | "reveal";
+export type TransitionSignature = "terminal" | "candlestick" | "ink";
+
+export const SIGNATURE_BY_MODE: Record<PortfolioMode, TransitionSignature> = {
+  swe: "terminal",
+  quant: "candlestick",
+  creative: "ink",
+};
+
+export const MODE_ORDER: PortfolioMode[] = ["swe", "quant", "creative"];
+
+// Transition timing (ms) — kept short and subtle.
+const COVER_MS = 220; // fade-to-bg
+const SWAP_AT = 220; // swap mode while fully covered
+const REVEAL_AT = 240; // begin fade-out
+const REVEAL_MS = 250; // fade-out duration
+const TOTAL_MS = REVEAL_AT + REVEAL_MS; // ~490ms
+
+const STORAGE_KEY = "portfolio-mode";
+
+// Migrate the legacy binary value ("developer") to the new ternary scheme.
+function readStoredMode(): PortfolioMode | null {
+  const raw = typeof localStorage !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
+  if (!raw) return null;
+  if (raw === "developer") return "swe";
+  if (raw === "swe" || raw === "quant" || raw === "creative") return raw;
+  return null;
+}
 
 interface PortfolioModeContextType {
   mode: PortfolioMode;
+  /** False until the visitor has chosen a lens at the Mode Gateway. */
+  hasEntered: boolean;
+  /** Select a mode from the gateway (no transition — gateway handles its own reveal). */
+  enterMode: (target: PortfolioMode) => void;
+  /** Re-open the gateway. */
+  resetEntry: () => void;
   transitionPhase: TransitionPhase;
-  portalOrigin: { x: number; y: number } | null;
-  screenshotSrc: string | null;
-  triggerTransition: (origin: { x: number; y: number }) => void;
+  /** Signature of the mode being transitioned TO (or the active mode when idle). */
+  transitionSignature: TransitionSignature;
+  /** Duration (ms) of the cover fade — exposed so the overlay can match. */
+  coverMs: number;
+  revealMs: number;
+  /**
+   * Trigger an in-app mode switch with the clean dip transition.
+   * If `target` is omitted, cycles to the next mode.
+   */
+  triggerTransition: (origin: { x: number; y: number }, target?: PortfolioMode) => void;
   isTransitioning: boolean;
+  quantTheme: "dark" | "light";
+  toggleQuantTheme: () => void;
 }
 
 const PortfolioModeContext = createContext<PortfolioModeContextType | undefined>(undefined);
 
 export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [mode, setModeState] = useState<PortfolioMode>(() => {
-    const saved = localStorage.getItem("portfolio-mode");
-    return (saved as PortfolioMode) || "developer";
-  });
+  const stored = readStoredMode();
+  const [mode, setModeState] = useState<PortfolioMode>(stored ?? "swe");
+  const [hasEntered, setHasEntered] = useState<boolean>(stored !== null);
   const [transitionPhase, setTransitionPhase] = useState<TransitionPhase>("idle");
-  const [portalOrigin, setPortalOrigin] = useState<{ x: number; y: number } | null>(null);
-  const [screenshotSrc, setScreenshotSrc] = useState<string | null>(null);
-  
-  // Track scroll states per mode to restore scroll position
-  const [scrollPositions, setScrollPositions] = useState<Record<PortfolioMode, number>>({
-    developer: 0,
+  const [pendingMode, setPendingMode] = useState<PortfolioMode>(mode);
+
+  const [quantTheme, setQuantThemeState] = useState<"dark" | "light">(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("quant-theme");
+      if (stored === "light") return "light";
+    }
+    return "dark";
+  });
+
+  const toggleQuantTheme = () => {
+    setQuantThemeState((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      try {
+        localStorage.setItem("quant-theme", next);
+      } catch {
+        /* storage may be unavailable */
+      }
+      return next;
+    });
+  };
+
+  const scrollPositions = useRef<Record<PortfolioMode, number>>({
+    swe: 0,
+    quant: 0,
     creative: 0,
   });
 
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const isTransitioning = transitionPhase !== "idle";
+  const transitionSignature = SIGNATURE_BY_MODE[isTransitioning ? pendingMode : mode];
 
-  const setMode = (newMode: PortfolioMode) => {
-    setModeState(newMode);
-    localStorage.setItem("portfolio-mode", newMode);
+  const persistMode = (m: PortfolioMode) => {
+    setModeState(m);
+    try {
+      localStorage.setItem(STORAGE_KEY, m);
+    } catch {
+      /* storage may be unavailable — non-fatal */
+    }
   };
 
-  const triggerTransition = async (origin: { x: number; y: number }) => {
+  const enterMode = (target: PortfolioMode) => {
+    setPendingMode(target);
+    persistMode(target);
+    setHasEntered(true);
+    requestAnimationFrame(() => window.scrollTo(0, scrollPositions.current[target] ?? 0));
+  };
+
+  const resetEntry = () => setHasEntered(false);
+
+  const clearTimers = () => {
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+  };
+
+  const triggerTransition = (_origin: { x: number; y: number }, target?: PortfolioMode) => {
     if (isTransitioning) return;
-    setPortalOrigin(origin);
 
-    const isEnter = mode === "developer";
-    const timing = isEnter ? TIMING_ENTER : TIMING_EXIT;
+    const resolved =
+      target && target !== mode
+        ? target
+        : MODE_ORDER[(MODE_ORDER.indexOf(mode) + 1) % MODE_ORDER.length];
+    if (resolved === mode) return;
 
-    // Check prefers-reduced-motion
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setPendingMode(resolved);
+    scrollPositions.current[mode] = window.scrollY;
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    clearTimers();
+
     if (prefersReducedMotion) {
-      setTransitionPhase("reveal"); // Instant crossfade mode
-      
-      setScrollPositions((prev) => ({ ...prev, [mode]: window.scrollY }));
-      const targetMode = isEnter ? "creative" : "developer";
-      
-      // Scale out/in instantly
-      setTimeout(() => {
-        setMode(targetMode);
-        window.scrollTo(0, scrollPositions[targetMode]);
-        setTransitionPhase("idle");
-        setPortalOrigin(null);
-      }, 200); // 200ms opacity transition
+      persistMode(resolved);
+      window.scrollTo(0, scrollPositions.current[resolved] ?? 0);
       return;
     }
 
-    // Save current scroll position
-    const currentScrollY = window.scrollY;
-    setScrollPositions((prev) => ({
-      ...prev,
-      [mode]: currentScrollY,
-    }));
+    // PHASE — cover (fade overlay in)
+    setTransitionPhase("cover");
 
-    // PHASE 1 — Charge (0ms)
-    setTransitionPhase("charge");
-
-    // Capture viewport screenshot asynchronously during the charge phase
-    try {
-      const rootEl = document.getElementById("portfolio-root") || document.body;
-      const canvas = await html2canvas(rootEl, {
-        useCORS: true,
-        allowTaint: true,
-        scale: 1, // Capture at 1x resolution to keep JS light
-        backgroundColor: null,
-        logging: false,
-      });
-      const dataUrl = canvas.toDataURL("image/webp", 0.85);
-      setScreenshotSrc(dataUrl);
-    } catch (e) {
-      console.error("Snapshot failed: ", e);
-    }
-
-    // PHASE 2 — RGB Split (120ms / 90ms)
-    const rgbTime = isEnter ? timing.charge : timing.charge;
-    const rgbTimer = setTimeout(() => {
-      setTransitionPhase("rgb");
-    }, rgbTime);
-
-    // PHASE 3 — Ink Flood (300ms / 230ms)
-    const floodTime = isEnter ? 300 : 230;
-    const floodTimer = setTimeout(() => {
-      setTransitionPhase("flood");
-    }, floodTime);
-
-    // Swap mode mid-way through the Ink Flood when fully covered
-    const swapTime = isEnter ? 560 : 400; // Midway points of flood timings
+    // Swap underlying mode while fully covered.
     const swapTimer = setTimeout(() => {
-      const targetMode = isEnter ? "creative" : "developer";
-      setMode(targetMode);
-      
-      // Restore next mode scroll state inside the cover
-      window.scrollTo(0, scrollPositions[targetMode]);
-    }, swapTime);
+      persistMode(resolved);
+      window.scrollTo(0, scrollPositions.current[resolved] ?? 0);
+    }, SWAP_AT);
 
-    // PHASE 4 — Reveal (720ms / 560ms)
-    const revealTime = isEnter ? (timing.charge + timing.rgbSplit + timing.inkFlood) : (timing.charge + timing.rgbSplit + timing.inkFlood);
-    // Wait, let's verify math:
-    // Enter timing: charge=120ms, rgb=300ms (ends 420ms), flood=420ms (starts 300ms, ends 720ms).
-    // So flood ends at 720ms. Reveal starts at 720ms. Reveal duration: 180ms. Total = 900ms.
-    // Exit timing: charge=90ms, rgb=240ms (ends 330ms), flood=330ms (starts 230ms, ends 560ms).
-    // So flood ends at 560ms. Reveal starts at 560ms. Reveal duration: 140ms. Total = 700ms.
-    const revealTimer = setTimeout(() => {
-      setTransitionPhase("reveal");
-      setScreenshotSrc(null); // Cleanup snapshot image
-    }, revealTime);
+    // PHASE — reveal (fade overlay out)
+    const revealTimer = setTimeout(() => setTransitionPhase("reveal"), REVEAL_AT);
 
-    // Complete transition and return to idle (900ms / 700ms)
-    const idleTimer = setTimeout(() => {
-      setTransitionPhase("idle");
-      setPortalOrigin(null);
-    }, timing.total);
+    // Back to idle.
+    const idleTimer = setTimeout(() => setTransitionPhase("idle"), TOTAL_MS);
 
-    return () => {
-      clearTimeout(rgbTimer);
-      clearTimeout(floodTimer);
-      clearTimeout(swapTimer);
-      clearTimeout(revealTimer);
-      clearTimeout(idleTimer);
-    };
+    timers.current = [swapTimer, revealTimer, idleTimer];
   };
 
-  // Synchronize CSS class for theme boundaries
+  useEffect(() => () => clearTimers(), []);
+
+  // Sync DOM hooks: data-mode attribute (token scoping) + legacy mode classes.
   useEffect(() => {
     const root = document.documentElement;
-    if (mode === "creative") {
-      root.classList.add("mode-creative");
-      root.classList.remove("mode-developer");
+    root.setAttribute("data-mode", mode);
+    root.classList.toggle("mode-creative", mode === "creative");
+    root.classList.toggle("mode-swe", mode === "swe");
+    root.classList.toggle("mode-quant", mode === "quant");
+    root.classList.toggle("mode-developer", mode === "swe");
+
+    if (mode === "quant") {
+      root.setAttribute("data-quant-theme", quantTheme);
     } else {
-      root.classList.add("mode-developer");
-      root.classList.remove("mode-creative");
+      root.removeAttribute("data-quant-theme");
     }
-  }, [mode]);
+  }, [mode, quantTheme]);
 
   return (
     <PortfolioModeContext.Provider
       value={{
         mode,
+        hasEntered,
+        enterMode,
+        resetEntry,
         transitionPhase,
-        portalOrigin,
-        screenshotSrc,
+        transitionSignature,
+        coverMs: COVER_MS,
+        revealMs: REVEAL_MS,
         triggerTransition,
         isTransitioning,
+        quantTheme,
+        toggleQuantTheme,
       }}
     >
       {children}

@@ -110,12 +110,7 @@ export function AnimatedThemeToggler({
 
   return (
     <>
-      <style>{`
-        .att-btn{--at-ink:rgba(0,0,0,0.82)}
-        .dark .att-btn,[data-theme="dark"] .att-btn{--at-ink:rgba(255,255,255,0.82)}
-      `}</style>
       <motion.button
-        className="att-btn"
         onClick={toggle}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.86 }}
@@ -128,7 +123,7 @@ export function AnimatedThemeToggler({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "var(--at-ink)",
+          color: isDark ? "rgba(255, 255, 255, 0.82)" : "rgba(0, 0, 0, 0.82)",
           borderRadius: 8,
           outline: "none",
           WebkitTapHighlightColor: "transparent",
