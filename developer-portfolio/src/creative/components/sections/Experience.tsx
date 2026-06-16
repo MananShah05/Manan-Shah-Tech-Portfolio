@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Calendar, MapPin, Briefcase } from "lucide-react";
+import { Calendar, Briefcase } from "lucide-react";
 import { resumeData } from "@/creative/lib/resume-data";
 
 export function Experience() {
@@ -127,14 +127,7 @@ export function Experience() {
                   </ul>
                 </div>
 
-                {/* Bottom decorative anchor */}
-                <div className="border-t-2 border-border pt-6 mt-8 flex items-center justify-between font-mono text-xs uppercase tracking-wider text-ink-muted">
-                  <span>DJSCE Tech / Applied AI</span>
-                  <div className="flex items-center gap-1 text-accent font-bold">
-                    <span>Collaborator</span>
-                    <ArrowRight size={12} />
-                  </div>
-                </div>
+
               </motion.div>
             </AnimatePresence>
           </div>

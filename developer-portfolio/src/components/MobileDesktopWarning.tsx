@@ -82,7 +82,7 @@ export default function MobileDesktopWarning() {
                 className="font-sans text-[13px] leading-snug"
                 style={{ color: isDark ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.65)" }}
               >
-                For the best view, view on the desktop
+                For the best experience, View on the Desktop.
               </p>
             </div>
 

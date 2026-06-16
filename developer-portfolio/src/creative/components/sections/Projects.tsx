@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ArrowDown, Play, X, ChevronDown, ChevronUp, FolderOpen } from "lucide-react";
+import { ArrowUpRight, ArrowDown, Play, X, ChevronDown, ChevronUp, FolderOpen, Lock, Eye, EyeOff } from "lucide-react";
 import { resumeData } from "@/creative/lib/resume-data";
 import type { ProjectVideo, ProjectFolder, ProjectDesign } from "@/creative/lib/resume-data";
 import { ProjectCard3D } from "./ProjectCard3D";
@@ -129,6 +129,213 @@ function VideoThumbnail({
   );
 }
 
+function base64ToBytes(base64: string): Uint8Array {
+  const binaryString = window.atob(base64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+}
+
+async function decryptCampaignData(
+  encryptedData: { salt: string; iv: string; ciphertext: string },
+  password: string
+): Promise<ProjectVideo[]> {
+  const textEncoder = new TextEncoder();
+  const textDecoder = new TextDecoder();
+
+  const salt = base64ToBytes(encryptedData.salt);
+  const iv = base64ToBytes(encryptedData.iv);
+  const ciphertext = base64ToBytes(encryptedData.ciphertext);
+
+  const passwordBytes = textEncoder.encode(password);
+  
+  const rawKey = await window.crypto.subtle.importKey(
+    "raw",
+    passwordBytes,
+    { name: "PBKDF2" },
+    false,
+    ["deriveKey"]
+  );
+
+  const key = await window.crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt: salt as any,
+      iterations: 100000,
+      hash: "SHA-256"
+    },
+    rawKey,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["decrypt"]
+  );
+
+  const decryptedBuffer = await window.crypto.subtle.decrypt(
+    {
+      name: "AES-GCM",
+      iv: iv as any,
+      tagLength: 128
+    },
+    key,
+    ciphertext as any
+  );
+
+  const decryptedText = textDecoder.decode(decryptedBuffer);
+  return JSON.parse(decryptedText);
+}
+
+function PasswordModal({
+  title,
+  onUnlock,
+  onClose,
+}: {
+  title: string;
+  onUnlock: (password: string) => Promise<boolean>;
+  onClose: () => void;
+}) {
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isDecrypting, setIsDecrypting] = useState(false);
+  const [shouldShake, setShouldShake] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!password) return;
+    setIsDecrypting(true);
+    setError(null);
+    try {
+      const success = await onUnlock(password);
+      if (!success) {
+        throw new Error("Incorrect Password");
+      }
+    } catch (err) {
+      setError("Incorrect Password");
+      setShouldShake(true);
+      setTimeout(() => setShouldShake(false), 500);
+    } finally {
+      setIsDecrypting(false);
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.95, y: 10, opacity: 0 }}
+          animate={{
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            x: shouldShake ? [0, -10, 10, -10, 10, -5, 5, 0] : 0,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 350,
+            damping: 25,
+            x: { duration: 0.5 },
+          }}
+          exit={{ scale: 0.95, y: 10, opacity: 0 }}
+          className="relative w-full max-w-md bg-surface border-2 border-border p-6 md:p-8 flex flex-col gap-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.15)] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,0.15)]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-ink-muted hover:text-accent transition-colors cursor-pointer"
+          >
+            <X size={20} />
+          </button>
+
+          {/* Icon + Title */}
+          <div className="flex flex-col items-center text-center gap-3 mt-2">
+            <div className="w-12 h-12 rounded-full border-2 border-accent bg-accent/10 flex items-center justify-center text-accent">
+              <Lock size={22} className="animate-pulse" />
+            </div>
+            <div>
+              <h4 className="font-display text-xl md:text-2xl font-bold uppercase tracking-tight text-ink">
+                Securely Encrypted
+              </h4>
+              <p className="text-xs text-ink-muted font-mono uppercase tracking-wider mt-1">
+                Folder: {title}
+              </p>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <label className="block text-[10px] font-mono uppercase tracking-wider text-ink-muted">
+                Enter Password
+              </label>
+              <div className="relative border-2 border-border focus-within:border-accent transition-colors duration-200 bg-bg flex items-center pr-3">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (error) setError(null);
+                  }}
+                  placeholder="••••••••••••"
+                  className="w-full bg-transparent px-4 py-3 text-sm font-mono text-ink outline-none border-none"
+                  disabled={isDecrypting}
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="text-ink-muted hover:text-ink transition-colors focus:outline-none"
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+            </div>
+
+            {error && (
+              <motion.p
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-xs text-red-500 font-mono uppercase tracking-wide text-center"
+              >
+                {error}
+              </motion.p>
+            )}
+
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 py-3 border-2 border-border hover:bg-muted font-mono text-xs uppercase tracking-wider text-ink font-bold transition-all duration-200 cursor-pointer"
+                disabled={isDecrypting}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="flex-1 py-3 bg-accent hover:bg-accent/90 text-accent-ink font-mono text-xs uppercase tracking-wider font-bold transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+                disabled={isDecrypting || !password}
+              >
+                {isDecrypting ? (
+                  <span className="w-4 h-4 border-2 border-accent-ink border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  "Unlock"
+                )}
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 /** Folder accordion for grouped videos (e.g. Streax India, Expertrons) */
 function FolderSection({
   folder,
@@ -138,26 +345,73 @@ function FolderSection({
   onVideoClick: (src: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [decryptedVideos, setDecryptedVideos] = useState<ProjectVideo[] | null>(null);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [showUnlockModal, setShowUnlockModal] = useState(false);
+
+  const handleUnlock = async (password: string): Promise<boolean> => {
+    if (!folder.encryptedData) return false;
+    try {
+      const data = await decryptCampaignData(folder.encryptedData, password);
+      if (Array.isArray(data)) {
+        setDecryptedVideos(data);
+        setIsUnlocked(true);
+        setShowUnlockModal(false);
+        setIsOpen(true);
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error("Decryption failed:", err);
+      return false;
+    }
+  };
+
+  const handleFolderClick = () => {
+    if (folder.isLocked && !isUnlocked) {
+      setShowUnlockModal(true);
+    } else {
+      setIsOpen(!isOpen);
+    }
+  };
+
+  const videosToRender = folder.isLocked && isUnlocked && decryptedVideos ? decryptedVideos : folder.videos;
+  const FolderIcon = folder.isLocked && !isUnlocked ? Lock : FolderOpen;
 
   return (
     <div className="border-2 border-border">
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors duration-200"
+        onClick={handleFolderClick}
+        className="w-full flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors duration-200 cursor-pointer"
       >
-        <FolderOpen size={16} className="text-accent shrink-0" />
+        <FolderIcon size={16} className={`shrink-0 ${folder.isLocked && !isUnlocked ? "text-orange-500 animate-pulse" : "text-accent"}`} />
         <span className="font-mono text-xs uppercase tracking-widest text-ink flex-1 text-left">
           {folder.title}
         </span>
-        <span className="font-mono text-[10px] text-ink-muted mr-2">
-          {folder.videos.length} videos
-        </span>
+        {folder.isLocked && !isUnlocked ? (
+          <span className="font-mono text-[10px] text-orange-500 border border-orange-500/30 px-1.5 py-0.5 bg-orange-500/5 uppercase tracking-wider flex items-center gap-1 shrink-0">
+            <Lock size={10} /> Locked
+          </span>
+        ) : (
+          <span className="font-mono text-[10px] text-ink-muted mr-2">
+            {videosToRender.length} videos
+          </span>
+        )}
         {isOpen ? (
           <ChevronUp size={14} className="text-ink-muted" />
         ) : (
           <ChevronDown size={14} className="text-ink-muted" />
         )}
       </button>
+
+      {showUnlockModal && (
+        <PasswordModal
+          title={folder.title}
+          onUnlock={handleUnlock}
+          onClose={() => setShowUnlockModal(false)}
+        />
+      )}
+
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -168,7 +422,7 @@ function FolderSection({
             className="overflow-hidden"
           >
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 p-3 pt-0">
-              {folder.videos.map((video, vi) => (
+              {videosToRender.map((video, vi) => (
                 <VideoThumbnail
                   key={vi}
                   video={video}
@@ -294,7 +548,7 @@ function ProjectMediaGallery({
 
   const totalCount =
     (videos?.length || 0) +
-    (folders?.reduce((acc, f) => acc + f.videos.length, 0) || 0) +
+    (folders?.reduce((acc, f) => acc + (f.isLocked && !f.videos.length ? f.videoCount || 0 : f.videos.length), 0) || 0) +
     (designs?.length || 0);
 
   return (

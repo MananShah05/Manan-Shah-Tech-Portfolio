@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
-import { TrendingUp, Users, Code } from "lucide-react";
+import { TrendingUp, Users } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 
 const experiences = [
@@ -25,16 +25,7 @@ const experiences = [
       "Built lead scoring models using quantitative segmentation; created Excel dashboards with charts and summary tables to present cost-benefit findings to senior management.",
     ],
   },
-  {
-    role: "Web developer",
-    org: "Hatimi Retreats",
-    period: "Sep 2025 – Dec 2025",
-    icon: <Code size={18} />,
-    bullets: [
-      "Engineered a scalable, production-grade NLP architecture and integrated it seamlessly with the main full-stack web application.",
-      "Designed and developed highly responsive UI/UX features, collaborating directly with the CTO to improve code quality, visual consistency, and user engagement.",
-    ],
-  },
+
 ];
 
 export default function Experience() {

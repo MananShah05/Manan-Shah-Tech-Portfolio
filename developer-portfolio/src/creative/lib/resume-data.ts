@@ -14,6 +14,13 @@ export type ProjectFolder = {
   title: string;
   thumbnail: string;
   videos: ProjectVideo[];
+  isLocked?: boolean;
+  videoCount?: number;
+  encryptedData?: {
+    salt: string;
+    iv: string;
+    ciphertext: string;
+  };
 };
 
 export type Certification = {
@@ -165,17 +172,16 @@ export const resumeData = {
           ],
         },
         {
-          title: "BJP Campaign",
+          title: "Campaigns",
           thumbnail: "https://img.youtube.com/vi/8_WdNsRLG7g/hqdefault.jpg",
-          videos: [
-            { title: "Video 1", src: "https://youtu.be/8_WdNsRLG7g", thumbnail: "https://img.youtube.com/vi/8_WdNsRLG7g/hqdefault.jpg", type: "youtube" as const },
-            { title: "Video 2", src: "https://youtube.com/shorts/FB8fgi-anwE", thumbnail: "https://img.youtube.com/vi/FB8fgi-anwE/hqdefault.jpg", type: "youtube" as const },
-            { title: "Video 3", src: "https://youtube.com/shorts/FfRVy0Y3brw", thumbnail: "https://img.youtube.com/vi/FfRVy0Y3brw/hqdefault.jpg", type: "youtube" as const },
-            { title: "Video 4", src: "https://youtube.com/shorts/oAcnxQ6Heo8", thumbnail: "https://img.youtube.com/vi/oAcnxQ6Heo8/hqdefault.jpg", type: "youtube" as const },
-            { title: "Video 5", src: "https://youtube.com/shorts/KDuPKyPoUBg", thumbnail: "https://img.youtube.com/vi/KDuPKyPoUBg/hqdefault.jpg", type: "youtube" as const },
-            { title: "Video 6", src: "https://youtube.com/shorts/Bz8ru3cQJNY", thumbnail: "https://img.youtube.com/vi/Bz8ru3cQJNY/hqdefault.jpg", type: "youtube" as const },
-            { title: "Video 7", src: "https://youtube.com/shorts/YsOPQkOONlE", thumbnail: "https://img.youtube.com/vi/YsOPQkOONlE/hqdefault.jpg", type: "youtube" as const },
-          ],
+          isLocked: true,
+          videoCount: 7,
+          encryptedData: {
+            salt: "FBxflyeZ7vvsdoAy1SJqWw==",
+            iv: "huNDd38ZvAvt9m/c",
+            ciphertext: "bMAIDdkJoJSaeP3nzqKZV7BIr6K6v5e0BqvwLCbWvv6KeIC7G4X5ny7qhy2MsoJ4fEn/i9P7MnbTRqag8WHU9C2qNy+2Hls/ImPQ/lGA7PyWq7FQ9WM/MP3euw39t8xyoy9lBh4dZeoPSw3JoP/CSoyEYxRasaRUi43UviWKren+UZaPcqaZqu2TNP0AKB6gibELIdDv46IOdsNXUGw2ZlLo+6xLQ60ubLEoZkiQzQ4KjCQPGVYK98RJYwO6NMz1Ogq4KpoFqrsWeHQhnvaSrNa77i9jvGnmuSe++Ion+iXMk27iGrB6bz2bAKPuH5Fpd4+EYdJ8o5Ha1skcNuyQ5q/eXaRYADedroeS61YPAngX0VpuPAfu9W9Q5LdMA8nUdlNV3ezJfj09KsAag+nitZhWpTtakc2uv7vWAY18yJbg0zYPWWhq/e0tKL87lAt2XvNloPqr9lce0V4y7s9bLG+31cpxtpy/eV7JOt4iI8mIXDjwZ4gHJHKVnQz2eaAIoVprZo/at43ITEr+7NL3pkk5JjDcorO/lb+LE+ts7kk5DzWh7gXQTep+6kFT2S1p+4zIsEWKrZZhz+neepZvrzYtUN54gbNkaA0md+xlrjqfqQLQyGib33tlSFv9kKg8hmzPAFsewGYrat4H1yC9HcxViUzzXxbH3QwueMEFyUy2zEMnQqU0HByqbfGeweUvHWVafVbXnlchFFziG0Jr4otyH1yU9r7+bfT4MfuG4ZA6Ac8AjoFOaf1X2r5+rVHSMVe5rgmFju7qDdE2cCrtKF50cTBoL4OeG1bfbkD6Y66vXMyt/b/xhokhusPyE43olwM4S9hrW+VgB5Edl6torFqWaVdB8akP2hawMrQ32As5OE3s1g4sZd1umzyY7NOGK80JgG2hll9l0MdL0ptipNpMOuuv3Wsa2zVM01SfMO22QmtYXz0wYWQvY3wwZlli+F+pDP6O9HjvawhpuoyEGh9gGAubHXpMO+kQ1nJn5joF1j/CWYPjR18KJe88zBOgRp/lCp58lP5h2cuSnCiEp72OcYr3klrAK3waIkLz+YNlN4MwRhkJ6J+h80/9hjS6nR5GiIRDw19rmg4DvI4C2ldaEjxDFXmGcXGesfRyP9EewyrM5gfhInF+Dm9E1Ls9mRgwbqeP8s6oKRs+FXGDzkcmNzQ2OIAh7x7oKxF1QI7R9JylQALt+iJ3gnGxeWT+h0d+MRx3vuDt65UyHIl7xlKkKX6ICqtDU3mtL0oKAqqOsFEzoAU6I9R9N7uovDkTGhHxOC9xWTsYaxiHLS75jTsImWmrk8Bm8A4h6Rjqw60GwVcZd2LkXzciRNen6xjMwLGRsXMvzuTn1xjA4GdebGOfbJzsTeAPP824pbpSt4tjkr/MVMnitlwMVsvQhFRoMma3r1vgLjI="
+          },
+          videos: [],
         },
       ],
       videos: [
@@ -221,13 +227,14 @@ export const resumeData = {
     {
       company: "Hatimi Retreats",
       role: "Creative Director – Design & Visual Intern",
-      duration: "Sep 2025 – Present",
+      duration: "Sep 2025 – Dec 2025",
       points: [
         "Lead the development of the brand's visual identity across digital and print channels",
         "Create and execute campaigns, design branding assets and marketing materials",
         "Direct photo/video shoots, and enhance UI/UX to deliver cohesive, engaging experiences",
       ],
     },
+
     {
       company: "GlassMate Media",
       role: "Lead Visual Editor & Designer",
