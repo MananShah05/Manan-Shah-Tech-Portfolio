@@ -314,8 +314,8 @@ export function Hero() {
             {skills.map((skill, i) => (
               <motion.div
                 key={skill.name}
-                initial={{ opacity: 0, scale: 0.85, y: 30 }}
-                animate={!showIntro ? { opacity: 1, scale: 1, y: 0 } : {}}
+                initial={{ opacity: 0, scale: 0.85, y: 30, z: 0 }}
+                animate={!showIntro ? { opacity: 1, scale: 1, y: 0, z: 0 } : {}}
                 transition={{
                   duration: 0.5,
                   delay: 0.5 + i * 0.05, // staggered entry (Rule 4)
@@ -324,9 +324,11 @@ export function Hero() {
                 whileHover={{
                   scale: 1.06,
                   y: -6,
+                  z: 30,
                   rotateX: 8,
                   rotateY: -8,
                   boxShadow: "0 20px 40px rgba(223, 225, 4, 0.18)",
+                  zIndex: 20,
                 }}
                 whileTap={{ scale: 0.98 }}
                 className="group relative bg-bg/90 backdrop-blur-xs p-5 md:p-8 flex flex-col items-center justify-center gap-3 hover:bg-accent hover:text-accent-ink border border-transparent hover:border-accent/30 transition-all duration-300 cursor-pointer min-h-[110px] md:min-h-[150px] lg:min-h-[170px] select-none rounded-sm"
