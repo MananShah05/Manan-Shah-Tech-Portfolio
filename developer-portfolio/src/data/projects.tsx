@@ -9,6 +9,12 @@ import {
   Heart,
   Calendar,
   UtensilsCrossed,
+  Stethoscope,
+  Recycle,
+  Film,
+  Cpu,
+  Shirt,
+  BarChart3,
 } from "lucide-react";
 
 export type ProjectDomain = "swe" | "quant";
@@ -127,6 +133,27 @@ export const projects: Project[] = [
     icon: <Search size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
     links: [{ label: "Live Link", url: "https://fin-searchh.vercel.app/" }],
+  },
+  {
+    title: "Vantage — Institutional Market Intelligence Platform",
+    domain: "quant",
+    summary:
+      "An institutional-grade market intelligence platform that computes multi-period returns, volatility analytics, momentum triggers, technical indicators, and correlation matrices on demand.",
+    problem:
+      "Investors lack a single, fast surface to review cross-asset performance, risk, and technical signals. Pulling returns, volatility, momentum, and correlations together usually means stitching multiple disconnected tools.",
+    contributions: [
+      "Built a server-side analytics engine that computes multi-period returns, volatility, and momentum triggers on demand.",
+      "Implemented a live correlation matrix and relative-strength analysis across equities, bonds, REITs, gold, and FX.",
+      "Integrated Yahoo Finance market data with on-demand, server-executed calculations for an always-fresh report.",
+      "Designed a cinematic, scroll-driven 'intelligence review' report UI with market movers and asset-allocation views.",
+    ],
+    impact:
+      "Delivers an on-demand institutional market report — returns, risk, momentum, and correlations — in a single coherent surface.",
+    stack: ["Next.js", "TypeScript", "Python", "Yahoo Finance", "pandas", "numpy", "TailwindCSS"],
+    methods: ["Multi-Period Returns", "Volatility", "Momentum", "Correlation Matrix"],
+    icon: <BarChart3 size={22} />,
+    color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
+    links: [{ label: "Live Link", url: "https://vantage-vg.vercel.app" }],
   },
   {
     title: "DeepGuard — Deepfake Detection in Indian Media",
@@ -253,6 +280,111 @@ export const projects: Project[] = [
     icon: <UtensilsCrossed size={22} />,
     color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
     links: [{ label: "Live Link", url: "https://hungry-now-wow.vercel.app/" }],
+  },
+  {
+    title: "MediFlow — Cloud Hospital Management System",
+    domain: "swe",
+    summary:
+      "A cloud-based Hospital Management System that connects patients, doctors, nurses, and administrators through a single secure, role-aware platform.",
+    problem:
+      "Hospitals juggle disconnected tools for appointments, patient records, and staff coordination. The result is data silos, scheduling conflicts, and slow access to critical information across roles.",
+    contributions: [
+      "Built role-based dashboards for patients, doctors, nurses, and administrators with scoped permissions and views.",
+      "Implemented appointment scheduling, patient record management, and staff coordination workflows in a unified interface.",
+      "Designed secure authentication and access control to protect sensitive medical data across user roles.",
+      "Engineered a responsive, accessible UI that keeps clinical workflows fast on both desktop and mobile.",
+    ],
+    impact:
+      "Unified fragmented hospital workflows into one secure platform, streamlining coordination between patients and care teams.",
+    stack: ["Next.js", "TypeScript", "PostgreSQL", "TailwindCSS", "Node.js"],
+    methods: ["RBAC", "Scheduling", "Records Mgmt"],
+    icon: <Stethoscope size={22} />,
+    color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
+    links: [{ label: "Live Link", url: "https://medi-floww.vercel.app/" }],
+  },
+  {
+    title: "Rekindle — Local Repair-Economy Marketplace",
+    domain: "swe",
+    summary:
+      "A local marketplace that connects owners of broken household appliances with verified nearby repair technicians — encouraging repair over disposal to cut e-waste.",
+    problem:
+      "Working appliances are often discarded because finding a trustworthy local technician is hard. This drives avoidable electronic waste and unnecessary replacement costs for households.",
+    contributions: [
+      "Built a location-based matching system that pairs appliance owners with verified nearby technicians.",
+      "Implemented technician verification, service listings, and a booking flow for repair requests.",
+      "Designed a clean marketplace UI with discovery, filtering, and request-tracking for both sides of the market.",
+      "Focused the product on sustainability — framing repair as the default over replacement.",
+    ],
+    impact:
+      "Promotes repair over disposal, helping reduce e-waste and saving households the cost of replacing repairable appliances.",
+    stack: ["Next.js", "TypeScript", "TailwindCSS", "PostgreSQL"],
+    methods: ["Geo Matching", "Marketplace", "Verification"],
+    icon: <Recycle size={22} />,
+    color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
+    links: [{ label: "Live Link", url: "https://rekindlee.vercel.app" }],
+  },
+  {
+    title: "RigForge — PC Build Configurator & Thermal Analysis",
+    domain: "swe",
+    summary:
+      "A next-gen PC building platform with real-time thermal analysis and certified component compatibility, engineered for performance enthusiasts.",
+    problem:
+      "Configuring a high-performance PC is error-prone — compatibility, thermals, and power efficiency are difficult to validate before committing to a parts list.",
+    contributions: [
+      "Built a component configurator that validates cross-part compatibility as the build is assembled.",
+      "Designed a real-time telemetry dashboard surfacing CPU temperature, GPU clock, system load, and power efficiency.",
+      "Implemented community build browsing so users can fork and adapt proven configurations.",
+      "Crafted an immersive, high-contrast UI with live metrics and a guided build flow.",
+    ],
+    impact:
+      "Lets enthusiasts forge compatible, thermally-validated builds with confidence before purchasing hardware.",
+    stack: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
+    methods: ["Compatibility Engine", "Telemetry UI", "Config Builder"],
+    icon: <Cpu size={22} />,
+    color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
+    links: [{ label: "Live Link", url: "https://rig-forge-xi.vercel.app" }],
+  },
+  {
+    title: "Netflix Clone — High-Fidelity Streaming UI",
+    domain: "swe",
+    summary:
+      "A pixel-accurate Netflix UI clone with responsive layouts, content carousels, and polished streaming-platform interaction patterns.",
+    problem:
+      "Recreating a production-grade streaming interface means faithfully reproducing complex layouts, scrollable rows, responsive breakpoints, and the micro-interactions users expect.",
+    contributions: [
+      "Reproduced the Netflix layout with pixel-accurate spacing, typography, and responsive row carousels.",
+      "Integrated a movie database API to render dynamic content rows, hero banners, and detail views.",
+      "Implemented hover previews, modal detail panels, and smooth horizontal scrolling.",
+      "Tuned the experience across desktop and mobile breakpoints for a faithful streaming feel.",
+    ],
+    impact:
+      "Demonstrates frontend engineering rigor through a faithful recreation of a complex, content-dense streaming interface.",
+    stack: ["React", "TypeScript", "TailwindCSS", "TMDB API"],
+    methods: ["Responsive UI", "Carousels", "API Integration"],
+    icon: <Film size={22} />,
+    color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/Netflix-clone" }],
+  },
+  {
+    title: "MONOLITH — Architectural Streetwear E-Commerce",
+    domain: "swe",
+    summary:
+      "A luxury, minimalist streetwear storefront built around architectural silhouettes — premium product storytelling, a lookbook, and a full cart experience.",
+    problem:
+      "Premium fashion brands need a storefront that conveys quality and intent. Generic e-commerce templates flatten the brand and fail to communicate the craftsmanship behind a high-end product.",
+    contributions: [
+      "Built an editorial product experience with heavyweight visual storytelling, construction details, and a lookbook gallery.",
+      "Implemented product browsing by category, featured collections, and a slide-out shopping bag with live cart state.",
+      "Designed a refined light/dark theme and cinematic scroll-driven sections for an elevated brand feel.",
+      "Engineered responsive, high-fidelity layouts with polished micro-interactions throughout the funnel.",
+    ],
+    impact:
+      "Translates a premium fashion brand into a storefront that sells on craftsmanship and intent rather than generic templates.",
+    stack: ["JavaScript", "React", "TailwindCSS", "Framer Motion", "Vite"],
+    methods: ["E-Commerce UX", "Cart State", "Editorial UI"],
+    icon: <Shirt size={22} />,
+    color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
+    links: [{ label: "Live Link", url: "https://monolith-cloth.vercel.app/" }],
   },
 ];
 

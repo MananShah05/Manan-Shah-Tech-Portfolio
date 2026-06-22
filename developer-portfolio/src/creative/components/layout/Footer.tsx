@@ -2,6 +2,7 @@
 
 import { resumeData } from "@/creative/lib/resume-data";
 import { ArrowUp } from "lucide-react";
+import FooterMark from "@/components/FooterMark";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -28,6 +29,11 @@ export function Footer() {
             className="transform group-hover:-translate-y-1 transition-transform duration-300"
           />
         </button>
+      </div>
+
+      {/* Oversized cinematic signature anchoring the page floor */}
+      <div className="mt-6 md:mt-8">
+        <FooterMark variant="creative" />
       </div>
     </footer>
   );

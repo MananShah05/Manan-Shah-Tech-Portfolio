@@ -303,39 +303,39 @@ export function Hero() {
             ease: [0.23, 1, 0.32, 1], // Emil Kowalski ease-out
           }}
           className="lg:col-span-6 xl:col-span-6 relative z-10 w-full"
-          style={{ perspective: 1000 }} // Setup 3D space perspective
         >
           {/* Subtle background identifier */}
           <div className="absolute -left-[5%] top-1/2 -translate-y-1/2 font-display text-[clamp(6rem,12vw,14rem)] font-bold text-muted leading-none select-none pointer-events-none z-0 opacity-10">
             01
           </div>
 
-          <div className="grid grid-cols-3 gap-px bg-border border-2 border-border relative z-10" style={{ transformStyle: "preserve-3d" }}>
+          <div className="grid grid-cols-3 gap-px bg-border border-2 border-border relative z-10">
             {skills.map((skill, i) => (
               <motion.div
                 key={skill.name}
-                initial={{ opacity: 0, scale: 0.85, y: 30, z: 0 }}
-                animate={!showIntro ? { opacity: 1, scale: 1, y: 0, z: 0 } : {}}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.5 + i * 0.05, // staggered entry (Rule 4)
-                  ease: [0.23, 1, 0.32, 1],
-                }}
-                whileHover={{
-                  scale: 1.06,
-                  y: -6,
-                  z: 30,
-                  rotateX: 8,
-                  rotateY: -8,
-                  boxShadow: "0 20px 40px rgba(223, 225, 4, 0.18)",
-                  zIndex: 20,
-                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={
+                  !showIntro
+                    ? {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                          duration: 0.45,
+                          delay: 0.4 + i * 0.04, // light staggered entry
+                          ease: [0.23, 1, 0.32, 1],
+                        },
+                      }
+                    : {}
+                }
+                whileHover={{ scale: 1.04, y: -4 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative bg-bg/90 backdrop-blur-xs p-5 md:p-8 flex flex-col items-center justify-center gap-3 hover:bg-accent hover:text-accent-ink border border-transparent hover:border-accent/30 transition-all duration-300 cursor-pointer min-h-[110px] md:min-h-[150px] lg:min-h-[170px] select-none rounded-sm"
-                style={{ transformStyle: "preserve-3d", transitionDuration: "200ms" }} // Hover entry/exit (Rule 5)
+                // Single fast tween for a clean, snappy in/out — no engine conflict
+                transition={{ duration: 0.18, ease: "easeOut" }}
+                className="group relative bg-bg p-5 md:p-8 flex flex-col items-center justify-center gap-3 hover:bg-accent hover:text-accent-ink border border-transparent hover:border-accent/30 hover:shadow-[0_12px_28px_rgba(223,225,4,0.15)] transition-colors duration-200 cursor-pointer min-h-[110px] md:min-h-[150px] lg:min-h-[170px] select-none rounded-sm"
+                style={{ willChange: "transform" }}
               >
-                {/* Embedded 3D translate effect on inner text (floating effect) */}
-                <div className="flex flex-col items-center gap-1.5 text-center" style={{ transform: "translateZ(10px)" }}>
+                {/* Inner content */}
+                <div className="flex flex-col items-center gap-1.5 text-center">
                   <span className="font-mono text-xs md:text-sm lg:text-base font-bold uppercase tracking-tighter text-ink group-hover:text-accent-ink transition-colors duration-300">
                     {skill.name}
                   </span>

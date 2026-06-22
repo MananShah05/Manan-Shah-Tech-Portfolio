@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
+import FooterMark from "./FooterMark";
+import { usePortfolioMode } from "../hooks/usePortfolioMode";
 
 export default function Footer() {
+  const { mode } = usePortfolioMode();
+  // This footer is shared by the SWE and Quant lenses; render the matching mark.
+  const markVariant = mode === "quant" ? "quant" : "swe";
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -40,6 +46,11 @@ export default function Footer() {
           </div>
 
         </div>
+      </div>
+
+      {/* Oversized cinematic signature anchoring the page floor */}
+      <div className="mt-6 md:mt-8">
+        <FooterMark variant={markVariant} />
       </div>
     </footer>
   );

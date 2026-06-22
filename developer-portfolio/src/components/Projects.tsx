@@ -2,13 +2,18 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import ShapeGrid from "./ShapeGrid";
-import { ArrowUpRight, X, Maximize2 } from "lucide-react";
+import { ArrowUpRight, X, Maximize2, ChevronDown, LayoutGrid, ChevronUp } from "lucide-react";
 import { projects, projectsByDomain, type Project, type ProjectDomain } from "../data/projects";
 
 const TEXT_PROBLEM_CONTEXT = "Problem Context";
 const TEXT_TECHNICAL_CONTRIBUTIONS = "Technical Contributions";
 const TEXT_TECH_STACK = "Tech Stack";
 const TEXT_MEASURABLE_IMPACT = "Measurable Impact";
+
+/** How many cards are visible before the viewer opts to see more. */
+const INITIAL_VISIBLE = 9;
+/** How many additional cards each "Show more" click reveals. */
+const SHOW_MORE_STEP = 3;
 
 interface ProjectsProps {
   /** Filter to a single domain. Omitted → show all projects. */
@@ -19,6 +24,12 @@ interface ProjectsProps {
 export default function Projects({ domain, subtitle }: ProjectsProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const list = domain ? projectsByDomain(domain) : projects;
+
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const visibleList = list.slice(0, visibleCount);
+  const hasMore = visibleCount < list.length;
+  const isExpanded = visibleCount >= list.length && list.length > INITIAL_VISIBLE;
+  const remaining = list.length - visibleCount;
 
   // Close modal on escape key
   useEffect(() => {
@@ -67,7 +78,7 @@ export default function Projects({ domain, subtitle }: ProjectsProps) {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {list.map((project, i) => (
+          {visibleList.map((project, i) => (
             <motion.div
               layoutId={`project-card-${project.title}`}
               key={project.title}
@@ -75,8 +86,8 @@ export default function Projects({ domain, subtitle }: ProjectsProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{
-                opacity: { duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] },
-                y: { duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] },
+                opacity: { duration: 0.7, delay: (i % 3) * 0.12, ease: [0.22, 1, 0.36, 1] },
+                y: { duration: 0.7, delay: (i % 3) * 0.12, ease: [0.22, 1, 0.36, 1] },
                 layout: { duration: 0.45, ease: [0.25, 1, 0.5, 1] },
               }}
               onClick={() => setSelectedProject(project)}
@@ -157,6 +168,54 @@ export default function Projects({ domain, subtitle }: ProjectsProps) {
             </motion.div>
           ))}
         </div>
+
+        {/* Show more / Show all controls — only when there are extra projects.
+            Skipping these and scrolling on simply continues to the next section. */}
+        {list.length > INITIAL_VISIBLE && (
+          <div className="mt-10 flex flex-col items-center gap-3">
+            <span className="text-xs font-mono tracking-wider" style={{ color: "var(--fg-subtle)" }}>
+              Showing {visibleList.length} of {list.length} projects
+            </span>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {hasMore && (
+                <>
+                  <motion.button
+                    onClick={() => setVisibleCount((c) => Math.min(c + SHOW_MORE_STEP, list.length))}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.96 }}
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl glass-light border text-sm font-semibold cursor-pointer transition-all duration-300 hover:border-[var(--accent)]"
+                    style={{ borderColor: "var(--glass-border)", color: "var(--fg)" }}
+                  >
+                    Show more
+                    <ChevronDown size={16} />
+                  </motion.button>
+                  <motion.button
+                    onClick={() => setVisibleCount(list.length)}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.96 }}
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 hover:opacity-90"
+                    style={{ backgroundColor: "var(--accent)", color: "#fff" }}
+                  >
+                    <LayoutGrid size={16} />
+                    Show all ({remaining} more)
+                  </motion.button>
+                </>
+              )}
+              {isExpanded && (
+                <motion.button
+                  onClick={() => setVisibleCount(INITIAL_VISIBLE)}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl glass-light border text-sm font-semibold cursor-pointer transition-all duration-300 hover:border-[var(--accent)]"
+                  style={{ borderColor: "var(--glass-border)", color: "var(--fg)" }}
+                >
+                  Show less
+                  <ChevronUp size={16} />
+                </motion.button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Expanded Modal Backdrop */}
