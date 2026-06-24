@@ -3,7 +3,7 @@ import { useEffect, useRef, useCallback } from "react";
 /* ─── Config ─── */
 const GREETINGS = ["Build.", "Ship.", "Analyze.", "Model.", "Manan Shah."];
 const HOLD = 375; // ms each greeting holds
-const ARC_DURATION = 800; // ms for the wipe arc (speed up from 2000ms)
+const ARC_DURATION = 1100; // ms for the wipe arc (speed up from 2000ms)
 
 interface CinematicOpenerProps {
   onComplete: () => void;
