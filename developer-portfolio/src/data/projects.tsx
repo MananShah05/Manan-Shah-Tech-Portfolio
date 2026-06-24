@@ -15,6 +15,15 @@ import {
   Cpu,
   Shirt,
   BarChart3,
+  Waves,
+  Building,
+  Compass,
+  Terminal,
+  Users,
+  Layers,
+  Percent,
+  Radar,
+  Activity,
 } from "lucide-react";
 
 export type ProjectDomain = "swe" | "quant";
@@ -385,6 +394,258 @@ export const projects: Project[] = [
     icon: <Shirt size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
     links: [{ label: "Live Link", url: "https://monolith-cloth.vercel.app/" }],
+  },
+  {
+    title: "FloodSight — 3D Flood Risk Visualizer",
+    domain: "swe",
+    summary:
+      "A client-side 3D simulation platform that runs real-time flood spreading models on dynamic terrain data fetched directly from topographical APIs.",
+    problem:
+      "Urban planners and researchers lack accessible, non-GIS tools to simulate and visualize localized flood risk under varying rainfall scenarios in real time.",
+    contributions: [
+      "Built a dynamic 3D terrain rendering pipeline using React Three Fiber, Three.js, and custom GLSL wave displacement shaders.",
+      "Implemented a client-side Breadth-First Search (BFS) flood fill simulation engine tracking flood propagation based on physical elevation maps.",
+      "Integrated OpenTopoData (SRTM 90m) and OpenStreetMap Nominatim APIs to support on-demand terrain construction for any location.",
+      "Designed an interactive control panel with Recharts elevation profiles, a stats HUD tracking flooded areas, and timeline scrubbing."
+    ],
+    impact:
+      "Empowered civic researchers and planners to instantly visualize flood propagation and classify localized risk levels (Safe, Warn, Danger) without complex GIS software.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "React Three Fiber",
+      "Three.js",
+      "GLSL",
+      "Zustand",
+      "Recharts",
+      "TailwindCSS"
+    ],
+    methods: ["BFS Flood Sim", "3D Terrain Shader", "Geocoding", "Elevation Profiling"],
+    icon: <Waves size={22} />,
+    color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/FloodSight" }],
+  },
+  {
+    title: "Neon City — Generative 3D City Builder",
+    domain: "swe",
+    summary:
+      "A client-side generative 3D city builder and camera fly-through simulator rendering futuristic procedural urban landscapes.",
+    problem:
+      "Visualizing large generative procedural environments in 3D is computationally heavy and often requires complex native graphics pipelines.",
+    contributions: [
+      "Created a procedural city grid generator in React Three Fiber and Three.js that optimizes draw calls through mesh instancing.",
+      "Written custom post-processing shaders for retro-futuristic bloom, chromatic aberration, and vignette effects.",
+      "Designed an orbital camera rig and programmatic fly-through auto-pilot controller for cinematic viewing modes.",
+      "Implemented real-time layout generation controls utilizing Zustand state management for instant city updates."
+    ],
+    impact:
+      "Achieved smooth 60fps rendering of thousands of procedurally textured buildings directly in the browser on standard mobile and desktop devices.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "React Three Fiber",
+      "Three.js",
+      "Postprocessing",
+      "Zustand",
+      "TailwindCSS"
+    ],
+    methods: ["Mesh Instancing", "Procedural Gen", "Post-Process Shaders", "Camera Rigging"],
+    icon: <Building size={22} />,
+    color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/Neon-City" }],
+  },
+  {
+    title: "Maharashtra Forts 3D Explorer",
+    domain: "swe",
+    summary:
+      "An interactive geocoded map and photorealistic 3D terrain viewer showcasing the historic hill and sea forts of Maharashtra.",
+    problem:
+      "Historical fort locations are often documented in flat text, lacking interactive geographical, elevation, or visual context for historical researchers.",
+    contributions: [
+      "Engineered an interactive 2D map dashboard using Leaflet mapped against custom GIS geographical data.",
+      "Built a 3D terrain viewer using React Three Fiber that maps SRTM elevation grids into displaced geometric meshes.",
+      "Integrated narrated audio hotspots and historical information drawers with interactive slide animations.",
+      "Implemented a server-side Gemini API pipeline to automatically generate rich historical summaries and metadata."
+    ],
+    impact:
+      "Unified historical documentation and modern geocoding to make 30+ historic forts explorable in interactive, high-fidelity 3D terrain.",
+    stack: [
+      "Vite",
+      "React",
+      "TypeScript",
+      "React Three Fiber",
+      "Three.js",
+      "Leaflet",
+      "Google Gemini API",
+      "TailwindCSS"
+    ],
+    methods: ["GIS Mapping", "3D Terrain", "LLM Meta Gen", "Hotspot Narration"],
+    icon: <Compass size={22} />,
+    color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/maharashtra-forts-exploration" }],
+  },
+  {
+    title: "Jugaad.dev — Indian Developer Workarounds",
+    domain: "swe",
+    summary:
+      "A curated platform detailing developer hacks, zero-budget workarounds, and clever engineering optimizations inspired by 'Jugaad'.",
+    problem:
+      "Developers in emerging markets often lack a centralized repository of practical, zero-cost architecture solutions and serverless hacks.",
+    contributions: [
+      "Designed and built a fast, minimalist markdown-driven directory using Vite, React, and TypeScript.",
+      "Created a serverless hosting deployment flow to keep the platform run cost at zero indefinitely.",
+      "Curated and structured 50+ developer hacks covering free database tiers, asset storage, and API routing.",
+      "Built a serverless API utility using Bun and TypeScript to fetch and preview developer hacks dynamically."
+    ],
+    impact:
+      "Helped developers discover zero-cost architecture patterns, generating high organic interest in the regional engineering community.",
+    stack: ["Vite", "React", "TypeScript", "Bun", "TailwindCSS", "Markdown"],
+    methods: ["Static Site Gen", "Zero-Budget Hosting", "API Tooling"],
+    icon: <Terminal size={22} />,
+    color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/Jugaad.dev" }],
+  },
+  {
+    title: "PeopleIQ — Governed AI HR Intelligence",
+    domain: "swe",
+    summary:
+      "An enterprise SaaS HR operating system providing citation-grounded policy answers, temporal search, and advanced talent risk analytics.",
+    problem:
+      "HR knowledge is scattered across fragmented systems, causing high support ticket volume, compliance risks, and delayed talent decisions.",
+    contributions: [
+      "Designed a role-aware RAG search engine (PolicyMind) that returns policy answers backed by verifiable document citations.",
+      "Implemented temporal search capabilities to query past policy states and automatically flag policy version conflicts.",
+      "Developed talent risk modeling (TalentLens) to detect flight risk and talent hoarding patterns based on historical reviews and mobility records.",
+      "Enforced strict enterprise governance using isolated tenant vector indexes and field-level permissions for PII."
+    ],
+    impact:
+      "Reduced repetitive HR policy ticket volume and accelerated compliance investigations with full audit-ready query trails.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "FastAPI",
+      "Python",
+      "PostgreSQL",
+      "Weaviate",
+      "LlamaIndex",
+      "TailwindCSS"
+    ],
+    methods: ["Role-Aware RAG", "Temporal Versioning", "Conflict Detection", "Anomaly Detection"],
+    icon: <Users size={22} />,
+    color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/PeopleIQ" }],
+  },
+  {
+    title: "Meridian — Financial Intelligence Cockpit",
+    domain: "quant",
+    summary:
+      "A premium financial cockpit representing money, markets, and risk through an editorial, scroll-driven interactive interface.",
+    problem:
+      "Standard financial dashboards display raw numbers without interactive storytelling or quantitative context around historical volatility events.",
+    contributions: [
+      "Built a cinematic dashboard summarizing multi-asset net worth and liquid asset allocations using Next.js and Prisma.",
+      "Created 'Story Mode', an interactive scroll-driven visualizer analyzing the mechanics of the historical 2018 VIX Volmageddon event.",
+      "Implemented a multi-step credential connection simulator and rolling portfolio risk onboarding wizard.",
+      "Designed smooth data animations, glassmorphism panel transitions, and dark-mode charts using Framer Motion and Recharts."
+    ],
+    impact:
+      "Combined financial metrics with cinematic narrative structures to deliver an institutional-grade, highly engaging wealth visualization cockpit.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Prisma",
+      "SQLite",
+      "TailwindCSS",
+      "Framer Motion",
+      "Recharts"
+    ],
+    methods: ["Volatility Analysis", "Asset Allocation", "Interactive Narrative", "Risk Calibration"],
+    icon: <Layers size={22} />,
+    color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/Meridian" }],
+  },
+  {
+    title: "SIPvsLump — Cinematic Investment Path Visualizer",
+    domain: "quant",
+    summary:
+      "A scroll-driven visualizer that uses historical market cycles to compare Systematic Investment Plans against lump-sum investment strategies.",
+    problem:
+      "Investors struggle to understand the psychological and mathematical differences between dollar-cost averaging and lump-sum investing during market corrections.",
+    contributions: [
+      "Developed a historical simulation engine using D3.js and React to compute rolling investment returns across past market regimes.",
+      "Created a multi-act, scroll-driven cinematic walkthrough showing portfolio balances, cost-basis shifts, and market drawdowns.",
+      "Built dynamic URL state hydration to let users share custom simulated investment portfolios instantly.",
+      "Designed rich, interactive charts and milestones using Framer Motion and GSAP to illustrate compounding effects."
+    ],
+    impact:
+      "Transformed complex dry investment mathematics into a visually stunning, narrative-driven educational tool.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "D3.js",
+      "Recharts",
+      "Framer Motion",
+      "GSAP",
+      "TailwindCSS"
+    ],
+    methods: ["Historical Backtest", "Rolling Returns", "Cost-Basis Tracking", "Regime Classification"],
+    icon: <Percent size={22} />,
+    color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/SIP-VS-LUMP" }],
+  },
+  {
+    title: "SupplyRadar — Supplier Risk Intelligence Platform",
+    domain: "quant",
+    summary:
+      "An enterprise supplier risk intelligence SaaS platform combining multi-tier dependency graphs, geospatial monitoring, and RAG-assisted impact modeling.",
+    problem:
+      "Procurement teams lack real-time visibility into Tier-2/3 supplier disruptions, leading to delayed contingency actions and manufacturing halts.",
+    contributions: [
+      "Built a multi-tier dependency mapping engine (SupplierGraph) to detect shared upstream supplier concentrations.",
+      "Designed real-time event correlation (SignalWatch) matching weather, logistics, and geopolitical feeds to supplier coordinates using PostGIS.",
+      "Implemented a quantitative risk scoring engine (RiskIQ) computing composite risk levels and estimated lead-time delays.",
+      "Developed a RAG retrieval flow to pull historical disruption precedents and recommend actions."
+    ],
+    impact:
+      "Provided early-warning alerts for supplier disruptions (e.g., coastal monsoon flooding), protecting enterprise clients from production downtime.",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "FastAPI",
+      "Python",
+      "PostgreSQL",
+      "PostGIS",
+      "Neo4j",
+      "Pinecone",
+      "TailwindCSS"
+    ],
+    methods: ["Geospatial Proximity", "Graph Traversal", "Composite Risk Scoring", "Historical Case Retrieval"],
+    icon: <Radar size={22} />,
+    color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/SupplyRadar" }],
+  },
+  {
+    title: "AlphaDecay — Quantitative Crowd Trade Detector",
+    domain: "quant",
+    summary:
+      "A quantitative analytical dashboard tracking how long before proprietary trading strategies get arbitrated away by competitors.",
+    problem:
+      "Quantitative searchers and fund managers lack unified tools to estimate capital capacity limits and monitor strategy decay factors.",
+    contributions: [
+      "Built a strategy simulation dashboard calculating alpha half-life, capital capacity boundaries, and competitor saturation rates.",
+      "Written mathematical modeling scripts in TypeScript to simulate daily alpha decay (BPS) across different market sectors.",
+      "Created a 'Strategy Graveyard' highlighting post-mortem mechanics of historical collapses like GBTC Premium and Kimchi Premium.",
+      "Implemented real-time mock scans tracking GitHub commits, forum posts, and validator WebSocket latencies."
+    ],
+    impact:
+      "Provided quantitative traders with a decision cockpit to plan safety guardrails and track strategy decay parameters visually.",
+    stack: ["Vite", "React", "TypeScript", "TailwindCSS", "Framer Motion", "Recharts"],
+    methods: ["Half-Life Decay", "Autopsy Analysis", "Capacity Estimation", "Competitor Tracking"],
+    icon: <Activity size={22} />,
+    color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
+    links: [{ label: "GitHub", url: "https://github.com/MananShah05/Alpha" }],
   },
 ];
 

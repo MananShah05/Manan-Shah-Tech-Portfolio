@@ -691,7 +691,7 @@ object {
 .dark .skill-pill {
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  color: var(--fg-muted);
+  color: var(--fg);
 }
 
 .skill-pill:hover {

@@ -3,6 +3,7 @@ import Navbar from "../Navbar";
 import Footer from "../Footer";
 import { QMEntry } from "./QuantHero";
 import { QMIdentity } from "./QuantAbout";
+import { QuantSkills } from "./QuantSkills";
 import { QMExperience } from "./QuantExperience";
 import { QMMarkets } from "./QMMarkets";
 import { QMProjects } from "./QuantProjects";
@@ -12,7 +13,7 @@ import { usePortfolioMode } from "../../hooks/usePortfolioMode";
 
 /**
  * Investment & Strategy lens — single page, burnished-amber-on-obsidian register.
- * Flow: QMEntry → QMIdentity → QMExperience → QMMarkets → QMProjects → QMCertifications → QMSignal.
+ * Flow: QMEntry → QMIdentity → QuantSkills → QMExperience → QMMarkets → QMProjects → QMCertifications → QMSignal.
  * Independent dark/light theme (session state, default dark) via data-quant-theme.
  */
 export const QuantLayout: React.FC = () => {
@@ -24,6 +25,7 @@ export const QuantLayout: React.FC = () => {
       <main>
         <QMEntry />
         <QMIdentity />
+        <QuantSkills />
         <QMExperience />
         <QMMarkets />
         <QMProjects />

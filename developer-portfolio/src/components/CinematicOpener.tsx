@@ -2,8 +2,8 @@ import { useEffect, useRef, useCallback } from "react";
 
 /* ─── Config ─── */
 const GREETINGS = ["Build.", "Ship.", "Analyze.", "Model.", "Manan Shah."];
-const HOLD = 580; // ms each greeting holds
-const ARC_DURATION = 1500; // ms for the wipe arc
+const HOLD = 375; // ms each greeting holds
+const ARC_DURATION = 800; // ms for the wipe arc (speed up from 2000ms)
 
 interface CinematicOpenerProps {
   onComplete: () => void;
@@ -36,6 +36,10 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
     const arcPath = arcRef.current;
     if (!overlay || !greetEl || !subEl || !arcPath) return;
 
+    // Clear initial content from HTML to avoid double flash
+    greetEl.textContent = "";
+    subEl.style.opacity = "0";
+
     const timers = timersRef.current;
     const pushTimer = (fn: () => void, ms: number) => {
       timers.push(window.setTimeout(fn, ms));
@@ -66,24 +70,42 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
     };
 
     const showGreeting = (text: string, isName: boolean, onShown: () => void) => {
-      greetEl.style.transition = "none";
-      greetEl.style.opacity = "0";
-      greetEl.style.transform = "translateY(8px)";
-      subEl.style.opacity = "0";
-      pushTimer(() => {
+      const fadeOut = (callback: () => void) => {
+        if (greetEl.textContent) {
+          greetEl.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+          greetEl.style.opacity = "0";
+          greetEl.style.transform = "translateY(-12px)";
+          pushTimer(callback, 400);
+        } else {
+          callback();
+        }
+      };
+
+      fadeOut(() => {
+        greetEl.style.transition = "none";
+        greetEl.style.opacity = "0";
+        greetEl.style.transform = "translateY(12px)";
         greetEl.textContent = text;
-        greetEl.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+
+        // Force reflow
+        void greetEl.offsetHeight;
+
+        greetEl.style.transition = "opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)";
         greetEl.style.opacity = "1";
         greetEl.style.transform = "translateY(0)";
-        if (isName) subEl.style.opacity = "1";
+
+        if (isName) {
+          subEl.style.transition = "opacity 0.8s ease 0.3s";
+          subEl.style.opacity = "1";
+        }
         onShown();
-      }, 60);
+      });
     };
 
     const cycleGreetings = (idx: number, onDone: () => void) => {
       const isLast = idx === GREETINGS.length - 1;
       showGreeting(GREETINGS[idx], isLast, () => {
-        const hold = isLast ? HOLD + 600 : HOLD;
+        const hold = isLast ? HOLD + 1000 : HOLD;
         pushTimer(() => {
           if (isLast) {
             onDone();
@@ -98,12 +120,12 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
       setArc(0);
       cycleGreetings(0, () => {
         animateArc(() => {
-          overlay.style.transition = "opacity 0.18s ease";
+          overlay.style.transition = "opacity 0.25s ease";
           overlay.style.opacity = "0";
           pushTimer(() => {
             overlay.style.display = "none";
             finish();
-          }, 220);
+          }, 300);
         });
       });
     };
@@ -123,12 +145,38 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background: "#0a0a0a",
+        background: "#ffffff",
         overflow: "hidden",
         fontFamily:
           'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
       }}
     >
+      <style>{`
+        @keyframes drawLines {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+        @keyframes slowRotate {
+          0% {
+            transform: rotate(0deg) scale(0.95);
+          }
+          50% {
+            transform: rotate(180deg) scale(1.05);
+          }
+          100% {
+            transform: rotate(360deg) scale(0.95);
+          }
+        }
+        @keyframes fastRotate {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(-360deg);
+          }
+        }
+      `}</style>
       <div
         ref={overlayRef}
         onClick={finish}
@@ -144,7 +192,7 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
         style={{
           position: "absolute",
           inset: 0,
-          background: "#f5f5f5",
+          background: "#ffffff",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -168,12 +216,12 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
             style={{
               fontSize: "clamp(56px, 9vw, 96px)",
               fontWeight: 600,
-              color: "#0a0a0a",
+              color: "#000000",
               letterSpacing: "-0.02em",
               userSelect: "none",
               textAlign: "center",
               opacity: 0,
-              transform: "translateY(8px)",
+              transform: "translateY(12px)",
             }}
           >
             Build.
@@ -185,7 +233,7 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
               fontWeight: 500,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#0a0a0a",
+              color: "#000000",
               opacity: 0,
               transition: "opacity 0.4s ease 0.1s",
               userSelect: "none",
@@ -209,7 +257,7 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
         >
           <path
             ref={arcRef}
-            fill="#0a0a0a"
+            fill="#050505"
             d="M 0 -30 Q 50 -55 100 -30 L 100 -30 L 0 -30 Z"
           />
         </svg>
