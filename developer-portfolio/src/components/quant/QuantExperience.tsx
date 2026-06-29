@@ -47,7 +47,7 @@ const EXPERIENCES: ExperienceItem[] = [
     period: "Jun 2026 – Present",
     shortPeriod: "JUN 2026",
     icon: <BarChart3 size={16} />,
-    tag: "Upcoming",
+    tag: "Active",
     metricValue: "Python",
     metricLabel: "Python-based analytics, time-series data structuring, and multi-asset insights",
     bullets: [
