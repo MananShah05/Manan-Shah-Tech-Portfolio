@@ -162,7 +162,7 @@ export const projects: Project[] = [
     methods: ["Multi-Period Returns", "Volatility", "Momentum", "Correlation Matrix"],
     icon: <BarChart3 size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://vantage-vg.vercel.app" }],
+    links: [{ label: "Live Link", url: "https://vantage-vg.vercel.app/" }],
   },
   {
     title: "DeepGuard — Deepfake Detection in Indian Media",
@@ -330,7 +330,7 @@ export const projects: Project[] = [
     methods: ["Geo Matching", "Marketplace", "Verification"],
     icon: <Recycle size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://rekindlee.vercel.app" }],
+    links: [{ label: "Live Link", url: "https://rekindlee.vercel.app/" }],
   },
   {
     title: "RigForge — PC Build Configurator & Thermal Analysis",
@@ -351,7 +351,7 @@ export const projects: Project[] = [
     methods: ["Compatibility Engine", "Telemetry UI", "Config Builder"],
     icon: <Cpu size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://rig-forge-xi.vercel.app" }],
+    links: [{ label: "Live Link", url: "https://rig-forge-xi.vercel.app/" }],
   },
   {
     title: "Netflix Clone — High-Fidelity Streaming UI",
@@ -423,7 +423,7 @@ export const projects: Project[] = [
     methods: ["BFS Flood Sim", "3D Terrain Shader", "Geocoding", "Elevation Profiling"],
     icon: <Waves size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "GitHub", url: "https://github.com/MananShah05/FloodSight" }],
+    links: [{ label: "Live Link", url: "https://flood-sight.vercel.app/" }],
   },
   {
     title: "Neon City — Generative 3D City Builder",
@@ -452,7 +452,7 @@ export const projects: Project[] = [
     methods: ["Mesh Instancing", "Procedural Gen", "Post-Process Shaders", "Camera Rigging"],
     icon: <Building size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "GitHub", url: "https://github.com/MananShah05/Neon-City" }],
+    links: [{ label: "Live Link", url: "https://neon-city-omega.vercel.app/" }],
   },
   {
     title: "Maharashtra Forts 3D Explorer",
@@ -482,7 +482,7 @@ export const projects: Project[] = [
     methods: ["GIS Mapping", "3D Terrain", "LLM Meta Gen", "Hotspot Narration"],
     icon: <Compass size={22} />,
     color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
-    links: [{ label: "GitHub", url: "https://github.com/MananShah05/maharashtra-forts-exploration" }],
+    links: [{ label: "Live Link", url: "https://maharashtra-forts-exploration.vercel.app/" }],
   },
   {
     title: "Jugaad.dev — Indian Developer Workarounds",
@@ -503,7 +503,7 @@ export const projects: Project[] = [
     methods: ["Static Site Gen", "Zero-Budget Hosting", "API Tooling"],
     icon: <Terminal size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
-    links: [{ label: "GitHub", url: "https://github.com/MananShah05/Jugaad.dev" }],
+    links: [{ label: "Live Link", url: "https://jugaad-dev.vercel.app/" }],
   },
   {
     title: "PeopleIQ — Governed AI HR Intelligence",
@@ -533,7 +533,7 @@ export const projects: Project[] = [
     methods: ["Role-Aware RAG", "Temporal Versioning", "Conflict Detection", "Anomaly Detection"],
     icon: <Users size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "GitHub", url: "https://github.com/MananShah05/PeopleIQ" }],
+    links: [{ label: "Live Link", url: "https://people-iq-hr.vercel.app/" }],
   },
   {
     title: "Meridian — Financial Intelligence Cockpit",
@@ -563,7 +563,7 @@ export const projects: Project[] = [
     methods: ["Volatility Analysis", "Asset Allocation", "Interactive Narrative", "Risk Calibration"],
     icon: <Layers size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "GitHub", url: "https://github.com/MananShah05/Meridian" }],
+    links: [{ label: "Live Link", url: "https://meridian-in.vercel.app/" }],
   },
   {
     title: "SIPvsLump — Cinematic Investment Path Visualizer",
@@ -593,7 +593,7 @@ export const projects: Project[] = [
     methods: ["Historical Backtest", "Rolling Returns", "Cost-Basis Tracking", "Regime Classification"],
     icon: <Percent size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "GitHub", url: "https://github.com/MananShah05/SIP-VS-LUMP" }],
+    links: [{ label: "Live Link", url: "https://sip-vs-lump.vercel.app/" }],
   },
   {
     title: "SupplyRadar — Supplier Risk Intelligence Platform",
@@ -624,7 +624,7 @@ export const projects: Project[] = [
     methods: ["Geospatial Proximity", "Graph Traversal", "Composite Risk Scoring", "Historical Case Retrieval"],
     icon: <Radar size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "GitHub", url: "https://github.com/MananShah05/SupplyRadar" }],
+    links: [{ label: "Live Link", url: "https://supply-radars.vercel.app/" }],
   },
   {
     title: "AlphaDecay — Quantitative Crowd Trade Detector",
@@ -645,7 +645,7 @@ export const projects: Project[] = [
     methods: ["Half-Life Decay", "Autopsy Analysis", "Capacity Estimation", "Competitor Tracking"],
     icon: <Activity size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "GitHub", url: "https://github.com/MananShah05/Alpha" }],
+    links: [{ label: "Live Link", url: "https://alpha-peach-rho.vercel.app/" }],
   },
 ];
 
