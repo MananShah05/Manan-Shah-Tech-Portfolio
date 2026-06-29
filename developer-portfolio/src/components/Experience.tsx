@@ -1,13 +1,23 @@
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
-import { TrendingUp, Users } from "lucide-react";
+import { TrendingUp, Users, BarChart3 } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 
 const experiences = [
   {
+    role: "Investments & Strategy Intern",
+    org: "Mercer LLC",
+    period: "Jun 2026 – Present",
+    icon: <BarChart3 size={18} />,
+    bullets: [
+      "Supported Python-based analytics by cleaning and structuring market and portfolio data, building reusable scripts, and assisting with exploratory analysis on time-series datasets.",
+      "Developed prototype insights and reports for multi-asset portfolios, including volatility and drawdown analysis, while collaborating with the team on modular, well-documented code.",
+    ],
+  },
+  {
     role: "Data Analytics Intern",
     org: "Stratezic",
-    period: "Aug 2025 – Present",
+    period: "Aug 2025 – Jan 2026",
     icon: <TrendingUp size={18} />,
     bullets: [
       "Designed and implemented Python-based ETL pipelines to extract, clean, and consolidate performance data from multiple structured sources, reducing manual reporting effort by ~40%.",
@@ -25,7 +35,6 @@ const experiences = [
       "Built lead scoring models using quantitative segmentation; created Excel dashboards with charts and summary tables to present cost-benefit findings to senior management.",
     ],
   },
-
 ];
 
 export default function Experience() {

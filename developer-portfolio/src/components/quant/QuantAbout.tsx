@@ -157,7 +157,7 @@ export const QMIdentity: React.FC<QMIdentityProps> = ({
                             CGPA / Honors Score
                           </span>
                           <span className="font-mono text-[14px] font-bold text-(--fg)">
-                            8.65 <span className="text-[10px] font-normal text-(--fg-subtle)">B.Tech</span>
+                            8.7 <span className="text-[10px] font-normal text-(--fg-subtle)">B.Tech</span>
                             <span className="mx-2 text-(--glass-border)">|</span>
                             9.5 <span className="text-[10px] font-normal text-(--fg-subtle)">DevOps</span>
                           </span>
