@@ -69,25 +69,23 @@ export default function About() {
 
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3 text-[10px] sm:text-[12px] font-mono tracking-tighter sm:tracking-wide select-none whitespace-nowrap" style={{ color: "var(--fg-muted)" }}>
                 {/* College Badge */}
-                <div 
+                <div
                   onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu('college'); }}
                   onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu(null); }}
                   onClick={() => setActiveEdu(activeEdu === 'college' ? null : 'college')}
-                  className={`glass-light px-4 py-1.5 rounded-full cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
-                    activeEdu === 'college' ? 'border-(--accent) bg-(--accent)/4' : 'border-(--glass-border) hover:border-(--accent)/30 hover:bg-(--accent)/1'
-                  }`}
+                  className={`glass-light px-4 py-1.5 rounded-full cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${activeEdu === 'college' ? 'border-(--accent) bg-(--accent)/4' : 'border-(--glass-border) hover:border-(--accent)/30 hover:bg-(--accent)/1'
+                    }`}
                 >
-                  B.Tech CGPA: <span className="font-semibold" style={{ color: "var(--fg)" }}>8.65</span> <span className="mx-1 opacity-50">|</span> Honours in DevOps: <span className="font-semibold" style={{ color: "var(--fg)" }}>9.5</span>
+                  B.Tech CGPA: <span className="font-semibold" style={{ color: "var(--fg)" }}>8.7</span> <span className="mx-1 opacity-50">|</span> Honours in DevOps: <span className="font-semibold" style={{ color: "var(--fg)" }}>9.5</span>
                 </div>
-                
+
                 {/* School Badge */}
-                <div 
+                <div
                   onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu('school'); }}
                   onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setActiveEdu(null); }}
                   onClick={() => setActiveEdu(activeEdu === 'school' ? null : 'school')}
-                  className={`glass-light px-4 py-1.5 rounded-full cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${
-                    activeEdu === 'school' ? 'border-(--accent) bg-(--accent)/4' : 'border-(--glass-border) hover:border-(--accent)/30 hover:bg-(--accent)/1'
-                  }`}
+                  className={`glass-light px-4 py-1.5 rounded-full cursor-pointer transition-all duration-300 border flex-1 sm:flex-none ${activeEdu === 'school' ? 'border-(--accent) bg-(--accent)/4' : 'border-(--glass-border) hover:border-(--accent)/30 hover:bg-(--accent)/1'
+                    }`}
                 >
                   10th Grade: <span className="font-semibold" style={{ color: "var(--fg)" }}>92.14%</span>
                 </div>
@@ -103,32 +101,32 @@ export default function About() {
                     transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                     className="overflow-hidden mb-3"
                   >
-                    <div 
-                      className="glass-light rounded-xl p-4 border relative overflow-hidden" 
+                    <div
+                      className="glass-light rounded-xl p-4 border relative overflow-hidden"
                       style={{ borderColor: "var(--glass-border)" }}
                     >
-                      <div 
+                      <div
                         className="absolute top-0 right-0 w-24 h-24 rounded-full blur-3xl pointer-events-none"
-                        style={{ 
-                          backgroundColor: activeEdu === 'college' ? "var(--accent)" : "var(--secondary)", 
-                          opacity: 0.12 
+                        style={{
+                          backgroundColor: activeEdu === 'college' ? "var(--accent)" : "var(--secondary)",
+                          opacity: 0.12
                         }}
                       />
-                      
+
                       {/* Creative Glassmorphic Timeframe Badge */}
-                      <div 
+                      <div
                         className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-[10px] font-semibold font-mono tracking-wider border select-none transition-all duration-300 pointer-events-none"
                         style={{
-                          backgroundColor: activeEdu === 'college' 
+                          backgroundColor: activeEdu === 'college'
                             ? (isDark ? "rgba(82, 183, 136, 0.15)" : "rgba(45, 106, 79, 0.08)")
                             : (isDark ? "rgba(251, 146, 60, 0.15)" : "rgba(196, 92, 38, 0.08)"),
-                          borderColor: activeEdu === 'college' 
+                          borderColor: activeEdu === 'college'
                             ? (isDark ? "rgba(82, 183, 136, 0.45)" : "rgba(45, 106, 79, 0.35)")
                             : (isDark ? "rgba(251, 146, 60, 0.45)" : "rgba(196, 92, 38, 0.35)"),
-                          color: activeEdu === 'college' 
+                          color: activeEdu === 'college'
                             ? (isDark ? "#52b788" : "#2d6a4f")
                             : (isDark ? "#fb923c" : "#c45c26"),
-                          boxShadow: activeEdu === 'college' 
+                          boxShadow: activeEdu === 'college'
                             ? (isDark ? "0 0 16px rgba(82, 183, 136, 0.25)" : "0 0 10px rgba(45, 106, 79, 0.08)")
                             : (isDark ? "0 0 16px rgba(251, 146, 60, 0.25)" : "0 0 10px rgba(196, 92, 38, 0.08)")
                         }}
@@ -149,18 +147,18 @@ export default function About() {
                           </p>
                           <div className="flex flex-wrap gap-1">
                             {[
-                              "Operating Systems", "Data Structures", "Analysis of Algorithms", 
-                              "Artificial Intelligence", "Machine Learning", "Computer Networks", 
-                              "Advanced Java", "Formal Languages & Automata", "Big Data Infrastructure", 
+                              "Operating Systems", "Data Structures", "Analysis of Algorithms",
+                              "Artificial Intelligence", "Machine Learning", "Computer Networks",
+                              "Advanced Java", "Formal Languages & Automata", "Big Data Infrastructure",
                               "Digital Signal Processing", "Corporate & Personal Finance", "Infrastructure Security"
                             ].map(course => (
-                              <span 
-                                key={course} 
-                                className="px-1.5 py-0.5 rounded text-[10px] font-medium" 
-                                style={{ 
-                                  backgroundColor: "rgba(26, 26, 24, 0.025)", 
-                                  border: "1px solid var(--glass-border)", 
-                                  color: "var(--fg-muted)" 
+                              <span
+                                key={course}
+                                className="px-1.5 py-0.5 rounded text-[10px] font-medium"
+                                style={{
+                                  backgroundColor: "rgba(26, 26, 24, 0.025)",
+                                  border: "1px solid var(--glass-border)",
+                                  color: "var(--fg-muted)"
                                 }}
                               >
                                 {course}
@@ -187,13 +185,13 @@ export default function About() {
                           </p>
                           <div className="flex flex-wrap gap-1">
                             {["Physics", "Chemistry", "Biology", "Computers"].map(subject => (
-                              <span 
-                                key={subject} 
-                                className="px-1.5 py-0.5 rounded text-[10px] font-medium" 
-                                style={{ 
-                                  backgroundColor: "rgba(26, 26, 24, 0.025)", 
-                                  border: "1px solid var(--glass-border)", 
-                                  color: "var(--fg-muted)" 
+                              <span
+                                key={subject}
+                                className="px-1.5 py-0.5 rounded text-[10px] font-medium"
+                                style={{
+                                  backgroundColor: "rgba(26, 26, 24, 0.025)",
+                                  border: "1px solid var(--glass-border)",
+                                  color: "var(--fg-muted)"
                                 }}
                               >
                                 {subject}
