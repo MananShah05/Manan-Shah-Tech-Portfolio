@@ -10,6 +10,7 @@ import { QMProjects } from "./QuantProjects";
 import { QMCertifications } from "./QuantCertifications";
 import { QMSignal } from "./QuantCTA";
 import { usePortfolioMode } from "../../hooks/usePortfolioMode";
+import { useMarketData } from "../../hooks/useMarketData";
 
 /**
  * Investment & Strategy lens — single page, burnished-amber-on-obsidian register.
@@ -18,12 +19,13 @@ import { usePortfolioMode } from "../../hooks/usePortfolioMode";
  */
 export const QuantLayout: React.FC = () => {
   const { quantTheme } = usePortfolioMode();
+  const { quotes, chartPrices, isLive } = useMarketData();
 
   return (
     <div className="quant-root" data-quant-theme={quantTheme}>
       <Navbar />
       <main>
-        <QMEntry />
+        <QMEntry liveQuotes={quotes} liveChartPrices={chartPrices} isLive={isLive} />
         <QMIdentity />
         <QuantSkills />
         <QMExperience />
@@ -36,5 +38,6 @@ export const QuantLayout: React.FC = () => {
     </div>
   );
 };
+
 
 export default QuantLayout;

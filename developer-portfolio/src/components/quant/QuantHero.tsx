@@ -9,7 +9,7 @@ import {
   QMDataValue,
   QMCard,
 } from "./QuantPrimitives";
-import { SIMULATED_TICKER, type TickerItem } from "./quantData";
+import { SIMULATED_TICKER, type TickerItem, type MarketQuote } from "./quantData";
 import { Activity, RefreshCw, ShoppingCart, Plus, Minus, X } from "lucide-react";
 
 /**
@@ -29,6 +29,9 @@ import { Activity, RefreshCw, ShoppingCart, Plus, Minus, X } from "lucide-react"
 export interface QMEntryProps {
   ticker?: TickerItem[];
   tickerSpeedSec?: number;
+  liveQuotes?: Map<string, MarketQuote>;
+  liveChartPrices?: number[];
+  isLive?: boolean;
 }
 
 const NOMINAL_TICKER_WIDTH = 1600;
@@ -45,6 +48,9 @@ interface TradingPosition {
 export const QMEntry: React.FC<QMEntryProps> = ({
   ticker = SIMULATED_TICKER,
   tickerSpeedSec = 35,
+  liveQuotes,
+  liveChartPrices,
+  isLive = false,
 }) => {
   const reduce = useReducedMotion();
   const itemVariants = reduce ? REVEAL_ITEM_RM : REVEAL_ITEM;
@@ -53,6 +59,23 @@ export const QMEntry: React.FC<QMEntryProps> = ({
   const inView = useInView(sectionRef, { once: true, margin: "-10%" });
   const playMarquee = reduce ? false : inView;
   const speed = Math.max(1, Math.round(NOMINAL_TICKER_WIDTH / tickerSpeedSec));
+
+  const displayedTicker = isLive && liveQuotes && liveQuotes.size > 0
+    ? Array.from(liveQuotes.entries()).map(([symbol, quote]) => {
+        let formattedPrice = quote.price.toLocaleString(undefined, {
+          minimumFractionDigits: symbol === "MCL" || symbol === "MGC" ? 2 : 0,
+          maximumFractionDigits: symbol === "MCL" || symbol === "MGC" ? 2 : 0,
+        });
+        if (symbol === "ZN") {
+          formattedPrice = quote.price.toFixed(2);
+        }
+        return {
+          symbol,
+          price: formattedPrice,
+          changePct: parseFloat(quote.changePct.toFixed(2)),
+        };
+      })
+    : ticker;
 
   // ─── Real-Time Chart Simulation State ─────────────────────────────────────
   const [chartData, setChartData] = useState<number[]>([
@@ -71,10 +94,25 @@ export const QMEntry: React.FC<QMEntryProps> = ({
   const [activePosition, setActivePosition] = useState<TradingPosition | null>(null);
   const [realizedBalance, setRealizedBalance] = useState<number>(0);
 
+  // Sync live quotes and chart data when live feed is active
+  useEffect(() => {
+    if (!isLive || !liveQuotes || !liveChartPrices || liveChartPrices.length === 0) return;
+
+    const liveMnqPrice = liveQuotes.get("MNQ")?.price;
+    if (liveMnqPrice !== undefined) {
+      const roundedPrice = Math.round(liveMnqPrice);
+      if (roundedPrice !== currentPrice) {
+        setPriceDirection(roundedPrice > currentPrice ? "up" : roundedPrice < currentPrice ? "down" : "flat");
+        setCurrentPrice(roundedPrice);
+      }
+    }
+
+    setChartData(liveChartPrices);
+  }, [isLive, liveQuotes, liveChartPrices, currentPrice]);
 
   // Update chart data in a random walk simulation
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || isLive) return;
 
     const interval = setInterval(() => {
       setChartData((prev) => {
@@ -91,7 +129,7 @@ export const QMEntry: React.FC<QMEntryProps> = ({
     }, 1500);
 
     return () => clearInterval(interval);
-  }, [reduce]);
+  }, [reduce, isLive]);
 
   // Convert raw price points to SVG path coordinates
   const chartWidth = 380;
@@ -213,12 +251,12 @@ export const QMEntry: React.FC<QMEntryProps> = ({
             >
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-(--data-positive) animate-pulse" />
-                <span>Active Session</span>
+                <span>{isLive ? "Live Connection" : "Active Session"}</span>
               </div>
               <span className="text-(--glass-border)">|</span>
               <div className="flex items-center gap-1.5">
                 <Activity size={12} className="text-(--accent)" />
-                <span>Simulated Latency: 4ms</span>
+                <span>{isLive ? "Finnhub API Feed" : "Simulated Latency: 4ms"}</span>
               </div>
               <span className="text-(--glass-border)">|</span>
               <div className="flex items-center gap-1.5">
@@ -238,7 +276,7 @@ export const QMEntry: React.FC<QMEntryProps> = ({
                     MNQ (Nasdaq-100 Futures)
                   </h3>
                   <span className="text-[9px] font-mono uppercase tracking-wider text-(--fg-subtle)">
-                    Real-time Simulation
+                    {isLive ? "Live · QQQ Proxy" : "Real-time Simulation"}
                   </span>
                 </div>
 
@@ -525,7 +563,7 @@ export const QMEntry: React.FC<QMEntryProps> = ({
       <motion.div variants={itemVariants} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}>
         <div className="mt-10 border-y py-2.5" style={{ borderColor: "var(--glass-border)" }}>
           <Marquee speed={speed} gradient={false} play={playMarquee} pauseOnHover>
-            {ticker.map((item, i) => {
+            {displayedTicker.map((item, i) => {
               const direction =
                 item.changePct > 0 ? "up" : item.changePct < 0 ? "down" : "flat";
               const sign = item.changePct > 0 ? "+" : "";
@@ -547,7 +585,9 @@ export const QMEntry: React.FC<QMEntryProps> = ({
         {/* Mandatory simulated-data disclaimer, adjacent to the ticker */}
         <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
           <p className="font-mono text-[10px] uppercase tracking-wider text-(--fg-subtle) mt-3">
-            Simulated · Not financial advice
+            {isLive
+              ? "Live data via Finnhub (proxied via ETFs: MES→SPY, MNQ→QQQ, MCL→USO, MGC→GLD, MBT→BTC, ZN→TLT) · Not financial advice"
+              : "Simulated · Not financial advice"}
           </p>
         </div>
       </motion.div>

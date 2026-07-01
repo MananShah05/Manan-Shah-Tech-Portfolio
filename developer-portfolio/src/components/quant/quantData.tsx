@@ -14,6 +14,23 @@ import { Shield, Award, GraduationCap } from "lucide-react";
 
 // ─── Types (source of truth: design.md → "Data Models") ──────────────────
 
+export interface MarketQuote {
+  price: number;
+  changePct: number;
+  prevClose: number;
+  lastUpdated: number;
+}
+
+export const SYMBOL_MAP: Record<string, string> = {
+  MES: "SPY",
+  MNQ: "QQQ",
+  MCL: "USO",
+  MGC: "GLD",
+  MBT: "BINANCE:BTCUSDT",
+  ZN: "TLT",
+};
+
+
 export interface TickerItem {
   symbol: string; // e.g. "MES"
   price: string; // e.g. "5,412.25"
