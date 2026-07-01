@@ -1,0 +1,9 @@
+{
+  "name": "manan-new-tech-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix developer-portfolio",
+    "build": "npm run build --prefix developer-portfolio",
+    "preview": "npm run preview --prefix developer-portfolio"
+  }
+}

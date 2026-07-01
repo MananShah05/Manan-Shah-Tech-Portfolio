@@ -10,7 +10,7 @@
  * embeds lucide-react icons as JSX elements, which require TSX compilation.
  */
 import type { ReactNode } from "react";
-import { Shield, Landmark, Award, GraduationCap } from "lucide-react";
+import { Shield, Award, GraduationCap } from "lucide-react";
 
 // ─── Types (source of truth: design.md → "Data Models") ──────────────────
 
@@ -71,10 +71,10 @@ export const DEFAULT_CREDENTIALS: Credential[] = [
     icon: <Shield strokeWidth={1.5} size={18} />,
   },
   {
-    title: "AMFI ARN",
-    org: "Association of Mutual Funds in India",
+    title: "NISM PMS",
+    org: "National Institute of Securities Markets",
     status: "verified",
-    icon: <Landmark strokeWidth={1.5} size={18} />,
+    icon: <Shield strokeWidth={1.5} size={18} />,
   },
   {
     title: "NISM Series XIII",

@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
-import { Brain, Code, Cpu, GraduationCap, Landmark, Shield } from "lucide-react";
+import { Brain, Code, Cpu, GraduationCap, Shield } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 
 const certs = [
   {
-    title: "AMFI Certification",
-    org: "Association of Mutual Funds in India",
-    icon: <Landmark size={20} />,
+    title: "NISM PMS Certification",
+    org: "National Institute of Securities Markets",
+    icon: <Shield size={20} />,
     color: "text-[var(--secondary)]",
     bg: "bg-[var(--secondary)]/8",
   },

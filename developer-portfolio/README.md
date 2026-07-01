@@ -163,7 +163,7 @@ The portfolio enforces a curated, high-contrast typography system designed for s
 
 ## 🎖️ Professional Domain Certifications
 Beyond core programming competencies, the portfolio showcases verified competencies in quantitative finance and advanced theoretical ML:
-- 🏛️ **AMFI Certification** — Association of Mutual Funds in India (Mutual Funds & Wealth Advisory)
+- 🛡️ **NISM PMS Certification** — National Institute of Securities Markets (Portfolio Management Services)
 - 🛡️ **NISM Series V-A** — National Institute of Securities Markets (Mutual Fund Distributors)
 - 🧠 **Machine Learning Specialization** — Stanford Online & DeepLearning.AI
 - 🤖 **Getting Started with AI on Jetson Nano** — NVIDIA

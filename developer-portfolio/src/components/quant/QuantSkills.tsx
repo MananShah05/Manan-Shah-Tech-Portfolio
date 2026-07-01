@@ -25,7 +25,7 @@ const quantSkillCategories = [
   },
   {
     title: "Regulatory & Domains",
-    skills: ["NISM Series V-A", "NISM Series XIII", "AMFI ARN", "Portfolio Management", "Risk Management", "Valuation"],
+    skills: ["NISM Series V-A", "NISM Series XIII", "NISM PMS", "Portfolio Management", "Risk Management", "Valuation"],
   },
 ];
 

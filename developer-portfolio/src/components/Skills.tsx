@@ -24,7 +24,7 @@ const skillCategories = [
   },
   {
     title: "Domains & Concepts",
-    skills: ["Finance (AMFI)", "Insurance", "System Design", "Agile", "CI/CD", "Cloud"],
+    skills: ["Finance (NISM PMS)", "Insurance", "System Design", "Agile", "CI/CD", "Cloud"],
   },
 ];
 

@@ -57,7 +57,7 @@ const PRINCIPLES = [
   {
     icon: <ShieldCheck size={16} strokeWidth={1.8} />,
     title: "Quantitative Rigor",
-    desc: "Strict risk metrics, drawdown control, and compliance under NISM/AMFI standards.",
+    desc: "Strict risk metrics, drawdown control, and compliance under NISM standards.",
   },
 ];
 

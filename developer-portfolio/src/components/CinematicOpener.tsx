@@ -239,7 +239,7 @@ export default function CinematicOpener({ onComplete }: CinematicOpenerProps) {
               userSelect: "none",
             }}
           >
-            Gen AI · Full Stack · Quant
+            Quant · Gen AI · Full Stack
           </span>
         </div>
 
