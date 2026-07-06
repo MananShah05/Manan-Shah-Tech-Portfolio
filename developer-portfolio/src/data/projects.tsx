@@ -78,7 +78,7 @@ export const projects: Project[] = [
     methods: ["Rolling Vol", "Max Drawdown", "Sharpe", "Pearson Corr"],
     icon: <LineChart size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://quant-vault-1.vercel.app/" }],
+    links: [{ label: "Live Link", url: "https://risk-matrix1.vercel.app/" }],
   },
   {
     title: "Financial Lens — Scenario & Sensitivity Analysis Platform",
