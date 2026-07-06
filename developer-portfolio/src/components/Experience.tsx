@@ -10,8 +10,11 @@ const experiences = [
     period: "Jun 2026 – Present",
     icon: <BarChart3 size={18} />,
     bullets: [
-      "Supported Python-based analytics by cleaning and structuring market and portfolio data, building reusable scripts, and assisting with exploratory analysis on time-series datasets.",
-      "Developed prototype insights and reports for multi-asset portfolios, including volatility and drawdown analysis, while collaborating with the team on modular, well-documented code.",
+      "Pension Strategy: Strategic advisory and long-term planning for institutional client pension schemes.",
+      "Portfolio Intelligence: Advanced analytics and performance attribution modeling to support multi-asset portfolios.",
+      "Quant & Alternative Investments: Quantitative research, asset modeling, and valuation analysis across private markets and alternative asset classes.",
+      "Research & Client Management: High-impact investment research and presentation deck preparation for senior client stakeholders.",
+      "Multi-Asset Allocation Details: Dynamic asset allocation analysis and risk calibration across global equities, fixed income, and real assets.",
     ],
   },
   {
@@ -96,26 +99,39 @@ export default function Experience() {
                     </span>
                   </div>
                   <ul className="space-y-3">
-                    {exp.bullets.map((bullet, j) => (
-                      <motion.li
-                        key={j}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{
-                          duration: 0.4,
-                          delay: i * 0.15 + j * 0.08,
-                        }}
-                        className="flex items-start gap-3 text-sm md:text-[15px] leading-relaxed"
-                        style={{ color: "var(--fg-muted)" }}
-                      >
-                        <span
-                          className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
-                          style={{ backgroundColor: "var(--accent)", opacity: 0.5 }}
-                        />
-                        {bullet}
-                      </motion.li>
-                    ))}
+                    {exp.bullets.map((bullet, j) => {
+                      const colonIdx = bullet.indexOf(": ");
+                      const hasHeader = colonIdx !== -1;
+                      const header = hasHeader ? bullet.substring(0, colonIdx) : "";
+                      const body = hasHeader ? bullet.substring(colonIdx + 2) : bullet;
+
+                      return (
+                        <motion.li
+                          key={j}
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{
+                            duration: 0.4,
+                            delay: i * 0.15 + j * 0.08,
+                          }}
+                          className="flex items-start gap-3 text-sm md:text-[15px] leading-relaxed"
+                          style={{ color: "var(--fg-muted)" }}
+                        >
+                          <span
+                            className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
+                            style={{ backgroundColor: "var(--accent)", opacity: 0.5 }}
+                          />
+                          {hasHeader ? (
+                            <span>
+                              <strong style={{ color: "var(--fg)" }}>{header}:</strong> {body}
+                            </span>
+                          ) : (
+                            bullet
+                          )}
+                        </motion.li>
+                      );
+                    })}
                   </ul>
                 </div>
               </div>

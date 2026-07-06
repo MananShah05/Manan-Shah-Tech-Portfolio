@@ -78,7 +78,10 @@ export const projects: Project[] = [
     methods: ["Rolling Vol", "Max Drawdown", "Sharpe", "Pearson Corr"],
     icon: <LineChart size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://risk-matrix1.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://risk-matrix1.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/Risk-Matrix" },
+    ],
   },
   {
     title: "Financial Lens — Scenario & Sensitivity Analysis Platform",
@@ -99,7 +102,10 @@ export const projects: Project[] = [
     methods: ["OLS Regression", "Stress Test", "Rolling Corr", "β Exposure"],
     icon: <TrendingUp size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://financial-lens.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://financial-lens.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/Financial-Lens" },
+    ],
   },
   {
     title: "StockIntel — AI-Powered Investment Decision Support System",
@@ -121,7 +127,10 @@ export const projects: Project[] = [
     methods: ["RSI", "MACD", "NLP Sentiment", "Valuation"],
     icon: <FileText size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://stock-intell.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://stock-intell.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/StockIntel" },
+    ],
   },
   {
     title: "FinSearch — Semantic Search for Financial Documents",
@@ -141,7 +150,10 @@ export const projects: Project[] = [
     methods: ["Dense Embeddings", "BM25", "Hybrid Retrieval"],
     icon: <Search size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://fin-searchh.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://fin-searchh.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/Fin_Search" },
+    ],
   },
   {
     title: "Vantage — Institutional Market Intelligence Platform",
@@ -162,7 +174,10 @@ export const projects: Project[] = [
     methods: ["Multi-Period Returns", "Volatility", "Momentum", "Correlation Matrix"],
     icon: <BarChart3 size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://vantage-vg.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://vantage-vg.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/Vantage" },
+    ],
   },
   {
     title: "DeepGuard — Deepfake Detection in Indian Media",
@@ -184,6 +199,7 @@ export const projects: Project[] = [
     color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
     links: [
       { label: "Paper", url: "https://drive.google.com/file/d/18ksc9KRMQ_dCvlaj3sISPSgaqiMPABZz/view?usp=sharing" },
+      { label: "GitHub", url: "https://github.com/MananShah05?tab=repositories" },
     ],
   },
   {
@@ -204,7 +220,10 @@ export const projects: Project[] = [
     methods: ["BERT", "OCR", "Entity Extraction"],
     icon: <FileText size={22} />,
     color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Under Development", url: "#" }],
+    links: [
+      { label: "Under Development", url: "#" },
+      { label: "GitHub", url: "https://github.com/MananShah05?tab=repositories" },
+    ],
   },
   {
     title: "RepoLens AI — AI-Powered Repository Understanding Platform",
@@ -225,7 +244,10 @@ export const projects: Project[] = [
     methods: ["AST Parsing", "LLM", "RAG", "Dependency Graph"],
     icon: <GitBranch size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://repo-lens-aii.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://repo-lens-aii.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/RepoLens-AI" },
+    ],
   },
   {
     title: "Health Tracker AI — Intelligent Personal Health Companion",
@@ -267,7 +289,10 @@ export const projects: Project[] = [
     methods: ["Canvas Rendering", "Responsive UI"],
     icon: <Calendar size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://wall-cal.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://wall-cal.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05?tab=repositories" },
+    ],
   },
   {
     title: "HungryNow — Premium Food Delivery Platform",
@@ -288,7 +313,10 @@ export const projects: Project[] = [
     methods: ["State Management", "Glassmorphism UI", "Responsive"],
     icon: <UtensilsCrossed size={22} />,
     color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://hungry-now-wow.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://hungry-now-wow.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/HungryNow" },
+    ],
   },
   {
     title: "MediFlow — Cloud Hospital Management System",
@@ -309,7 +337,10 @@ export const projects: Project[] = [
     methods: ["RBAC", "Scheduling", "Records Mgmt"],
     icon: <Stethoscope size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://medi-floww.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://medi-floww.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/MediFlow" },
+    ],
   },
   {
     title: "Rekindle — Local Repair-Economy Marketplace",
@@ -330,7 +361,10 @@ export const projects: Project[] = [
     methods: ["Geo Matching", "Marketplace", "Verification"],
     icon: <Recycle size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://rekindlee.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://rekindlee.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/Rekindle" },
+    ],
   },
   {
     title: "RigForge — PC Build Configurator & Thermal Analysis",
@@ -351,7 +385,10 @@ export const projects: Project[] = [
     methods: ["Compatibility Engine", "Telemetry UI", "Config Builder"],
     icon: <Cpu size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://rig-forge-xi.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://rig-forge-xi.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/RigForge" },
+    ],
   },
   {
     title: "Netflix Clone — High-Fidelity Streaming UI",
@@ -393,7 +430,10 @@ export const projects: Project[] = [
     methods: ["E-Commerce UX", "Cart State", "Editorial UI"],
     icon: <Shirt size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://monolith-cloth.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://monolith-cloth.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/MONOLITH" },
+    ],
   },
   {
     title: "FloodSight — 3D Flood Risk Visualizer",
@@ -423,7 +463,10 @@ export const projects: Project[] = [
     methods: ["BFS Flood Sim", "3D Terrain Shader", "Geocoding", "Elevation Profiling"],
     icon: <Waves size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://flood-sight.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://flood-sight.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/FloodSight" },
+    ],
   },
   {
     title: "Neon City — Generative 3D City Builder",
@@ -452,7 +495,10 @@ export const projects: Project[] = [
     methods: ["Mesh Instancing", "Procedural Gen", "Post-Process Shaders", "Camera Rigging"],
     icon: <Building size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://neon-city-omega.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://neon-city-omega.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/Neon-City" },
+    ],
   },
   {
     title: "Maharashtra Forts 3D Explorer",
@@ -482,7 +528,10 @@ export const projects: Project[] = [
     methods: ["GIS Mapping", "3D Terrain", "LLM Meta Gen", "Hotspot Narration"],
     icon: <Compass size={22} />,
     color: "from-[var(--secondary)]/10 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://maharashtra-forts-exploration.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://maharashtra-forts-exploration.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/maharashtra-forts-exploration" },
+    ],
   },
   {
     title: "Jugaad.dev — Indian Developer Workarounds",
@@ -503,7 +552,10 @@ export const projects: Project[] = [
     methods: ["Static Site Gen", "Zero-Budget Hosting", "API Tooling"],
     icon: <Terminal size={22} />,
     color: "from-[var(--accent)]/10 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://jugaad-dev.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://jugaad-dev.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/Jugaad.dev" },
+    ],
   },
   {
     title: "PeopleIQ — Governed AI HR Intelligence",
@@ -533,7 +585,10 @@ export const projects: Project[] = [
     methods: ["Role-Aware RAG", "Temporal Versioning", "Conflict Detection", "Anomaly Detection"],
     icon: <Users size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://people-iq-hr.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://people-iq-hr.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/PeopleIQ" },
+    ],
   },
   {
     title: "Meridian — Financial Intelligence Cockpit",
@@ -563,7 +618,10 @@ export const projects: Project[] = [
     methods: ["Volatility Analysis", "Asset Allocation", "Interactive Narrative", "Risk Calibration"],
     icon: <Layers size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://meridian-in.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://meridian-in.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/Meridian" },
+    ],
   },
   {
     title: "SIPvsLump — Cinematic Investment Path Visualizer",
@@ -593,7 +651,10 @@ export const projects: Project[] = [
     methods: ["Historical Backtest", "Rolling Returns", "Cost-Basis Tracking", "Regime Classification"],
     icon: <Percent size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://sip-vs-lump.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://sip-vs-lump.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/SIP-VS-LUMP" },
+    ],
   },
   {
     title: "SupplyRadar — Supplier Risk Intelligence Platform",
@@ -624,7 +685,10 @@ export const projects: Project[] = [
     methods: ["Geospatial Proximity", "Graph Traversal", "Composite Risk Scoring", "Historical Case Retrieval"],
     icon: <Radar size={22} />,
     color: "from-[var(--accent)]/15 to-[var(--accent-light)]/5",
-    links: [{ label: "Live Link", url: "https://supply-radars.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://supply-radars.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/SupplyRadar" },
+    ],
   },
   {
     title: "AlphaDecay — Quantitative Crowd Trade Detector",
@@ -645,7 +709,10 @@ export const projects: Project[] = [
     methods: ["Half-Life Decay", "Autopsy Analysis", "Capacity Estimation", "Competitor Tracking"],
     icon: <Activity size={22} />,
     color: "from-[var(--secondary)]/15 to-[var(--secondary-soft)]/5",
-    links: [{ label: "Live Link", url: "https://alpha-peach-rho.vercel.app/" }],
+    links: [
+      { label: "Live Link", url: "https://alpha-peach-rho.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/MananShah05/Alpha" },
+    ],
   },
 ];
 

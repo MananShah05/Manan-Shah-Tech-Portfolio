@@ -48,13 +48,16 @@ const EXPERIENCES: ExperienceItem[] = [
     shortPeriod: "JUN 2026",
     icon: <BarChart3 size={16} />,
     tag: "Active",
-    metricValue: "Python",
-    metricLabel: "Python-based analytics, time-series data structuring, and multi-asset insights",
+    metricValue: "Strategy",
+    metricLabel: "Pension strategy, portfolio intelligence, quant research, and alternative investments",
     bullets: [
-      "Supported Python-based analytics by cleaning and structuring market and portfolio data, building reusable scripts, and assisting with exploratory analysis on time-series datasets.",
-      "Developed prototype insights and reports for multi-asset portfolios, including volatility and drawdown analysis, while collaborating with the team on modular, well-documented code.",
+      "Pension Strategy: Strategic advisory and long-term planning for institutional client pension schemes.",
+      "Portfolio Intelligence: Advanced analytics and performance attribution modeling to support multi-asset portfolios.",
+      "Quant & Alternative Investments: Quantitative research, asset modeling, and valuation analysis across private markets and alternative asset classes.",
+      "Research & Client Management: High-impact investment research and presentation deck preparation for senior client stakeholders.",
+      "Multi-Asset Allocation Details: Dynamic asset allocation analysis and risk calibration across global equities, fixed income, and real assets.",
     ],
-    techStack: ["Python", "Portfolio Analytics", "Volatility Analysis", "Drawdown Analysis", "Time-Series Data"],
+    techStack: ["Pension Strategy", "Portfolio Intelligence", "Client Management", "Research", "Quant & Alternatives", "Asset Allocation"],
   },
   {
     role: "Data Analytics Intern",
@@ -263,18 +266,31 @@ export const QMExperience: React.FC = () => {
                         Core Deliverables
                       </p>
                       <ul className="space-y-3.5">
-                        {activeExp.bullets.map((bullet, j) => (
-                          <li
-                            key={j}
-                            className="flex items-start gap-3 text-[13.5px] leading-relaxed text-(--fg-muted)"
-                          >
-                            <span
-                              className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 bg-(--accent)"
-                              style={{ opacity: 0.65 }}
-                            />
-                            {bullet}
-                          </li>
-                        ))}
+                        {activeExp.bullets.map((bullet, j) => {
+                          const colonIdx = bullet.indexOf(": ");
+                          const hasHeader = colonIdx !== -1;
+                          const header = hasHeader ? bullet.substring(0, colonIdx) : "";
+                          const body = hasHeader ? bullet.substring(colonIdx + 2) : bullet;
+
+                          return (
+                            <li
+                              key={j}
+                              className="flex items-start gap-3 text-[13.5px] leading-relaxed text-(--fg-muted)"
+                            >
+                              <span
+                                className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 bg-(--accent)"
+                                style={{ opacity: 0.65 }}
+                              />
+                              {hasHeader ? (
+                                <span>
+                                  <strong style={{ color: "var(--fg)" }}>{header}:</strong> {body}
+                                </span>
+                              ) : (
+                                bullet
+                              )}
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
 
